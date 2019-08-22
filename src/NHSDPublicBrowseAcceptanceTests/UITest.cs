@@ -28,9 +28,6 @@ namespace NHSDPublicBrowseAcceptanceTests
 
         public void Dispose()
         {
-            var ss = ((ITakesScreenshot)driver).GetScreenshot();
-            ss.SaveAsFile($"{DateTime.Now.ToString("yyyyMMddHHmmss")}.png", ScreenshotImageFormat.Png);
-
             // Exits all browser windows and disposes of the driver instance
             driver.Close();
             driver.Quit();
