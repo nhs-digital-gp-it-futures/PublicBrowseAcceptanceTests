@@ -25,6 +25,9 @@ namespace NHSDPublicBrowseAcceptanceTests.Pages
             pages.SolutionsList.GetSolutionsCount().Should().Be(solutionsWithCapability);
         }
 
+        /// <summary>
+        /// Ensure that when a filter has previously been applied, that filter can be removed correctly
+        /// </summary>
         [Fact]
         public void FilterCanBeRemoved()
         {
@@ -32,11 +35,37 @@ namespace NHSDPublicBrowseAcceptanceTests.Pages
 
             var capabilityName = pages.CapabilityFilter.GetCapabilityName();
 
-            var solutionsWithCapability = pages.SolutionsList.GetSolutionsWithCapability(capabilityName);
-
             pages.CapabilityFilter.ToggleFilter(capabilityName);
 
             pages.CapabilityFilter.ToggleFilter(capabilityName);
+
+            pages.SolutionsList.GetSolutionsCount().Should().Be(totalSolutions);
+        }
+
+        /// <summary>
+        /// Ensure that the foundation capabilities can be filtered to in a single button press
+        /// </summary>
+        [Fact]
+        public void FilterToFoundationSolutionsOnly()
+        {
+            var totalSolutions = pages.SolutionsList.GetSolutionsCount();
+
+            pages.CapabilityFilter.FoundationSolutionsFilter();
+
+            pages.SolutionsList.GetSolutionsCount().Should().BeLessThan(totalSolutions);
+        }
+
+        /// <summary>
+        /// Ensure that when the NHS logo is clicked when a filter is applied that the filter is cleared
+        /// </summary>
+        [Fact]
+        public void FilterRemovedWhenLogoClicked()
+        {
+            var totalSolutions = pages.SolutionsList.GetSolutionsCount();
+
+            pages.CapabilityFilter.FoundationSolutionsFilter();
+
+            pages.Common.ClickLogo();
 
             pages.SolutionsList.GetSolutionsCount().Should().Be(totalSolutions);
         }

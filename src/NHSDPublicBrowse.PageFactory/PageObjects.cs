@@ -10,7 +10,8 @@ namespace NHSDPublicBrowseAcceptanceTests.Objects
             {
                 SolutionsList = new SolutionsList(),
                 ViewSolution = new ViewSolution(),
-                CapabilityFilter = new CapabilityFilter()
+                CapabilityFilter = new CapabilityFilter(),
+                Common = new Common()
             };
         }
 

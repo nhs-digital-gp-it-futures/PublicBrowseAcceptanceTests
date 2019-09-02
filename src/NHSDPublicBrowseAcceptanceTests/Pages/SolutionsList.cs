@@ -16,7 +16,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Pages
             pages.SolutionsList.SolutionHasTitle().Should().BeTrue();
         }
 
-        [Fact]
+        [Fact(Skip = "Funtionality not currently delivered")]
         public void SolutionCanBeOpened()
         {            
             var solutionName = pages.SolutionsList.SolutionCanBeViewed();

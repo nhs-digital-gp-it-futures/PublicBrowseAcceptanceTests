@@ -16,5 +16,13 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
         {
             wait.Until(s => s.FindElement(By.ClassName("nhsuk-footer")));
         }
+
+        /// <summary>
+        /// Click the NHS logoin the header
+        /// </summary>
+        public void ClickLogo()
+        {
+            driver.FindElement(pages.Common.NHSLogo).Click();
+        }
     }
 }

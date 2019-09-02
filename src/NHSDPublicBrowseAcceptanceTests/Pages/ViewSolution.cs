@@ -15,7 +15,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Pages
         /// <summary>
         /// Ensure a solution shows the same capabilities that the solution list displays
         /// </summary>
-        [Fact]
+        [Fact(Skip = "Funtionality not currently delivered")]
         public void SolutionDisplaysCorrectCapabilities()
         {
             solution = pages.SolutionsList.GetFirstSolution();
@@ -31,7 +31,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Pages
         /// <summary>
         /// Ensure a solution displays the same features that the solution list displays
         /// </summary>
-        [Fact]
+        [Fact(Skip = "Funtionality not currently delivered")]
         public void SolutionDisplaysCorrectFeatures()
         {
             solution = pages.SolutionsList.GetFirstSolution();

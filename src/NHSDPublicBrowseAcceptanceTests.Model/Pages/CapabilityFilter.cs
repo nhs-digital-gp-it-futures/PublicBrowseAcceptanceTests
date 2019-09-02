@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using System;
 using System.Linq;
 
 namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
@@ -34,6 +35,14 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
             capability.FindElement(By.TagName("input")).Click();
 
             driver.FindElement(pages.CapabilityFilter.ApplyFilter).Click();
+        }
+
+        /// <summary>
+        /// Click the `Foundation only` button
+        /// </summary>
+        public void FoundationSolutionsFilter()
+        {
+            driver.FindElement(pages.CapabilityFilter.ApplyFoundationFilter).Click();
         }
     }
 }
