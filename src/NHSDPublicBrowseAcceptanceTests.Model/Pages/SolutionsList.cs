@@ -1,19 +1,50 @@
 ﻿using NHSDPublicBrowseAcceptanceTests.Objects.Utils;
 using OpenQA.Selenium;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using Xunit.Abstractions;
 
 namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
 {
     public sealed class SolutionsList : Interactions
     {
-        public SolutionsList(IWebDriver driver) : base(driver)
+        public SolutionsList(IWebDriver driver, ITestOutputHelper helper) : base(driver, helper)
         {
         }
 
+        /// <summary>
+        /// Get the first solution in the list
+        /// </summary>
+        /// <returns></returns>
         public IWebElement GetFirstSolution()
         {
             return driver.FindElements(pages.SolutionsList.Solutions).First();
+        }
+
+        /// <summary>
+        /// Ensure the first solution has a Capabilities section
+        /// </summary>
+        /// <returns></returns>
+        public bool SolutionHasCapabilities()
+        {
+            IWebElement solution = GetFirstSolution();
+
+            return solution.FindElements(By.CssSelector("[data-test-id=solution-sections] label.nhsuk-label--s")).Where(s => s.Text == "Capabilities").Count() == 1;
+        }
+
+        public bool SolutionsHaveAllSelectedCapabilities()
+        {
+            IList<string> selectedCapabilities = driver.FindElements(pages.CapabilityFilter.Capabilities).Where(s => s.FindElement(By.TagName("input")).GetProperty("checked") == "checked").Select(s => s.Text).ToList();
+
+            var solutionsCount = GetSolutionsCount();
+
+            foreach(var cap in selectedCapabilities)
+            {
+                if (GetSolutionsWithCapability(cap) != solutionsCount) return false;
+            }
+
+            return true;
         }
 
         /// <summary>
@@ -33,8 +64,8 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
 
                 var capabilities = solution.FindElements(By.CssSelector("[data-test-id=capability-section-value]"));
 
-                foreach (var cap in capabilities.Select(s => s.Text))                
-                {   
+                foreach (var cap in capabilities.Select(s => s.Text))
+                {
                     if (cap.ToLower().Contains(capabilityName.ToLower()))
                     {
                         solCount++;
@@ -44,6 +75,17 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
             }
 
             return solCount;
+        }
+
+        /// <summary>
+        /// Ensure each solution has a summary section
+        /// </summary>
+        /// <returns></returns>
+        public bool SolutionHasSummary()
+        {
+            IWebElement solution = GetFirstSolution();
+
+            return solution.FindElement(CustomBy.DataTestId("summary-section-value")).Displayed;
         }
 
         /// <summary>
@@ -105,7 +147,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
         {
             var solutionName = solution.FindElement(By.TagName("h3")).Text;
 
-            solution.FindElement(By.TagName("h3")).Click();
+            solution.FindElement(By.TagName("h3")).Click();            
 
             return solutionName;
         }

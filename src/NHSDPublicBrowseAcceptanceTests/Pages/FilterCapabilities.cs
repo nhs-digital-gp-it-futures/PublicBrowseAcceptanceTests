@@ -1,58 +1,14 @@
 ﻿using FluentAssertions;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace NHSDPublicBrowseAcceptanceTests.Pages
 {
     public sealed class FilterCapabilities : UITest
     {
-        public FilterCapabilities()
+        public FilterCapabilities(ITestOutputHelper helper) : base (helper)
         {
             pages.SolutionsList.WaitForSolutionToBeDisplayed();
-        }
-
-        /// <summary>
-        /// Ensure a capability filter can be applied with the correct number of solutions returned
-        /// </summary>
-        [Fact]
-        public void FilterCanBeApplied()
-        {
-            var capabilityName = pages.CapabilityFilter.GetCapabilityName();
-
-            var solutionsWithCapability = pages.SolutionsList.GetSolutionsWithCapability(capabilityName);
-
-            pages.CapabilityFilter.ToggleFilter(capabilityName);
-
-            pages.SolutionsList.GetSolutionsCount().Should().Be(solutionsWithCapability);
-        }
-
-        /// <summary>
-        /// Ensure that when a filter has previously been applied, that filter can be removed correctly
-        /// </summary>
-        [Fact]
-        public void FilterCanBeRemoved()
-        {
-            var totalSolutions = pages.SolutionsList.GetSolutionsCount();
-
-            var capabilityName = pages.CapabilityFilter.GetCapabilityName();
-
-            pages.CapabilityFilter.ToggleFilter(capabilityName);
-
-            pages.CapabilityFilter.ToggleFilter(capabilityName);
-
-            pages.SolutionsList.GetSolutionsCount().Should().Be(totalSolutions);
-        }
-
-        /// <summary>
-        /// Ensure that the foundation capabilities can be filtered to in a single button press
-        /// </summary>
-        [Fact]
-        public void FilterToFoundationSolutionsOnly()
-        {
-            var totalSolutions = pages.SolutionsList.GetSolutionsCount();
-
-            pages.CapabilityFilter.FoundationSolutionsFilter();
-
-            pages.SolutionsList.GetSolutionsCount().Should().BeLessThan(totalSolutions);
         }
 
         /// <summary>

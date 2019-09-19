@@ -3,12 +3,13 @@ using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Xunit.Abstractions;
 
 namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
 {
     public sealed class ViewSolution : Interactions
     {
-        public ViewSolution(IWebDriver driver) : base(driver)
+        public ViewSolution(IWebDriver driver, ITestOutputHelper helper) : base(driver, helper)
         {
         }
 

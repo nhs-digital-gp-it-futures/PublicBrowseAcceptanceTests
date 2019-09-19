@@ -1,12 +1,13 @@
 ﻿using OpenQA.Selenium;
 using System;
 using System.Linq;
+using Xunit.Abstractions;
 
 namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
 {
     public class CapabilityFilter : Interactions
     {
-        public CapabilityFilter(IWebDriver driver) : base(driver)
+        public CapabilityFilter(IWebDriver driver, ITestOutputHelper helper) : base(driver, helper)
         {
         }
 
@@ -43,6 +44,15 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
         public void FoundationSolutionsFilter()
         {
             driver.FindElement(pages.CapabilityFilter.ApplyFoundationFilter).Click();
+        }
+
+        public void SelectLastCapability()
+        {
+            var capabilities = driver.FindElements(pages.CapabilityFilter.Capabilities);
+
+            var capName = GetCapabilityName(capabilities.Count - 1);
+
+            ToggleFilter(capName);
         }
     }
 }

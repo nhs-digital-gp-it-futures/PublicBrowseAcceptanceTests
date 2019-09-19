@@ -1,15 +1,27 @@
 ﻿using FluentAssertions;
 using OpenQA.Selenium;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace NHSDPublicBrowseAcceptanceTests.Pages
 {
     public sealed class ViewSolution : UITest
     {
         IWebElement solution;
-        public ViewSolution()
+        public ViewSolution(ITestOutputHelper helper) : base(helper)
         {
             pages.SolutionsList.WaitForSolutionToBeDisplayed();
+        }
+
+        /// <summary>
+        /// Ensure that a solution opens when the name is clicked
+        /// </summary>
+        [Fact(Skip = "Funtionality not currently delivered")]
+        public void SolutionCanBeOpened()
+        {
+            var solutionName = pages.SolutionsList.SolutionCanBeViewed();
+
+            pages.ViewSolution.GetSolutionName().Should().Be(solutionName);
         }
 
         /// <summary>
@@ -26,22 +38,6 @@ namespace NHSDPublicBrowseAcceptanceTests.Pages
             var solCapabilites = pages.ViewSolution.GetCapabilities();
 
             solCapabilites.Should().BeEquivalentTo(capabilties);
-        }
-
-        /// <summary>
-        /// Ensure a solution displays the same features that the solution list displays
-        /// </summary>
-        [Fact(Skip = "Funtionality not currently delivered")]
-        public void SolutionDisplaysCorrectFeatures()
-        {
-            solution = pages.SolutionsList.GetFirstSolution();
-            var features = pages.SolutionsList.GetFeaturesForSolution(solution);
-
-            pages.SolutionsList.SolutionCanBeViewed(solution);
-
-            var solFeatures = pages.ViewSolution.GetFeatures();
-
-            solFeatures.Should().BeEquivalentTo(features);
         }
     }
 }
