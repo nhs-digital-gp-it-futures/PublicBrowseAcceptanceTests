@@ -4,7 +4,7 @@
 The Acceptance tests are an ongoing project that will be expanded to match the public browse site as it is being developed. It utilises Selenium Grid (See [here](https://www.seleniumhq.org/docs/07_selenium_grid.jsp) for more info) to ensure driver and browser versions and types are independent of the solution.
 
 ## Environment Variables
-All environment variables used in this repo are at Process level (i.e. in the same console window as the `dotnet test` command is performed)
+All environment variables used in this repo are at Process level (i.e. in the same console window as the `dotnet test` command is performed). To set a process level environment variable in a CLI, use the `export` command, i.e. `export BROWSER=chrome`.
 
 | Variable | Example | Default |
 |---------------|------------------|------------------|
