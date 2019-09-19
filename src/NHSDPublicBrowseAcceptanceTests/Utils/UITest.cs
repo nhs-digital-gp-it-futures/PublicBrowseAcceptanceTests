@@ -3,22 +3,27 @@ using NHSDPublicBrowseAcceptanceTests.Actions.Pages;
 using NHSDPublicBrowseAcceptanceTests.Utils;
 using OpenQA.Selenium;
 using System;
+using Xunit.Abstractions;
 
 namespace NHSDPublicBrowseAcceptanceTests
 {
     public abstract class UITest : IDisposable
     {
         internal readonly IWebDriver driver;
-        internal readonly PageActionCollection pages;        
+        internal readonly PageActionCollection pages;
 
-        public UITest()
+        internal ITestOutputHelper helper;
+
+        public UITest(ITestOutputHelper helper)
         {
+            this.helper = helper;
+
             // Get process only environment variables
             var (url, hubUrl, browser) = EnvironmentVariables.Get();
 
             // Initialize the browser and get the page action collections
             driver = BrowserFactory.GetBrowser(browser, hubUrl);
-            pages = new PageActions(driver).PageActionCollection;
+            pages = new PageActions(driver, helper).PageActionCollection;
 
             // Navigate to the site url
             driver.Navigate().GoToUrl(url);

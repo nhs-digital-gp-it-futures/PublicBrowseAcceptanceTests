@@ -1,10 +1,11 @@
 ﻿using OpenQA.Selenium;
+using Xunit.Abstractions;
 
 namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
 {
     public class Common : Interactions
     {
-        public Common(IWebDriver driver) : base(driver)
+        public Common(IWebDriver driver, ITestOutputHelper helper) : base(driver, helper)
         {
         }
 
@@ -18,7 +19,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
         }
 
         /// <summary>
-        /// Click the NHS logoin the header
+        /// Click the NHS logo in the header
         /// </summary>
         public void ClickLogo()
         {
