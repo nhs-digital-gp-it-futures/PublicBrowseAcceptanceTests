@@ -23,3 +23,5 @@ To set a process level environment variable in a CLI see the below table
 <sup>1</sup> - `chrome-local` should only be used for debugging. It will use the local instance of chrome rather than the Selenium Grid nodes to run the tests
 
 <sup>2</sup> - `10.0.75.1:3000` is the external address when running the public browse site locally, this way the nodes in the hub can connect to it without issue
+
+_Note_ - For these tests to run correctly against the public browse, the public browse site must be run with a NODE_ENV other than `development`. This will disable the browser sync module so parallel running tests do not interfere with each other
