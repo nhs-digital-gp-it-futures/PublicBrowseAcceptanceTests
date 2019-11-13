@@ -1,7 +1,5 @@
-﻿using FluentAssertions;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
+using FluentAssertions;
 using Xunit.Abstractions;
 using Xunit.Gherkin.Quick;
 
@@ -11,11 +9,11 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps
     public sealed class NoSelectionCriteriaBrowse : TestSteps, IDisposable
     {
         private int solutionsCount;
-        
+
         public NoSelectionCriteriaBrowse(ITestOutputHelper helper) : base(helper)
         {
         }
-        
+
         [Given("no selection criteria are applied")]
         [Given("that Solutions are presented")]
         [When("no selection criteria are applied")]
@@ -37,7 +35,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps
             pages.SolutionsList.GetSolutionsCount().Should().Be(solutionsCount);
         }
 
-        
+
         [Then("the Card will contain the correct contents")]
         public void SolutionHasCorrectContents()
         {

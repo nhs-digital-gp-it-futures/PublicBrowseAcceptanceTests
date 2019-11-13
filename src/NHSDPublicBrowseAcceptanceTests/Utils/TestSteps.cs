@@ -1,8 +1,8 @@
-﻿using NHSDPublicBrowseAcceptanceTests.Actions;
+﻿using System;
+using NHSDPublicBrowseAcceptanceTests.Actions;
 using NHSDPublicBrowseAcceptanceTests.Actions.Pages;
 using NHSDPublicBrowseAcceptanceTests.Utils;
 using OpenQA.Selenium;
-using System;
 using Xunit.Abstractions;
 using Xunit.Gherkin.Quick;
 
@@ -24,7 +24,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps
 
             // Initialize the browser and get the page action collections
             driver = BrowserFactory.GetBrowser(browser, hubUrl);
-            pages = new PageActions(driver, helper).PageActionCollection;
+            pages = new PageActions(driver).PageActionCollection;
 
             // Navigate to the site url
             driver.Navigate().GoToUrl(url);

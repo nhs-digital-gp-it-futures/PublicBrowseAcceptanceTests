@@ -1,6 +1,5 @@
 ﻿using NHSDPublicBrowseAcceptanceTests.Actions.Pages;
 using OpenQA.Selenium;
-using Xunit.Abstractions;
 
 namespace NHSDPublicBrowseAcceptanceTests.Actions
 {

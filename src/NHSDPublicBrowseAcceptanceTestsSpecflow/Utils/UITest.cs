@@ -1,7 +1,6 @@
 ﻿using NHSDPublicBrowseAcceptanceTests.Actions;
 using NHSDPublicBrowseAcceptanceTests.Actions.Pages;
 using OpenQA.Selenium;
-using System;
 
 namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Utils
 {
@@ -18,7 +17,7 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Utils
             var (serverUrl, databaseName, dbUser, dbPassword) = EnvironmentVariables.GetDbConnectionDetails();
             connectionString = string.Format(ConnectionString.GPitFutures, serverUrl, databaseName, dbUser, dbPassword);
 
-            url = EnvironmentVariables.GetUrl();         
+            url = EnvironmentVariables.GetUrl();
 
             driver = new BrowserFactory().Driver;
 
