@@ -1,9 +1,5 @@
 ﻿using FluentAssertions;
 using NHSDPublicBrowseAcceptanceTestsSpecflow.Utils;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using TechTalk.SpecFlow;
 
 namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps
@@ -14,7 +10,7 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps
         private readonly UITest _test;
         private readonly ScenarioContext _context;
 
-        public CommonSteps(UITest test,  ScenarioContext context)
+        public CommonSteps(UITest test, ScenarioContext context)
         {
             _test = test;
             _context = context;
