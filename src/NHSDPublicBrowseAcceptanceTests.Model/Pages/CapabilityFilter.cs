@@ -7,7 +7,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
 {
     public class CapabilityFilter : Interactions
     {
-        public CapabilityFilter(IWebDriver driver, ITestOutputHelper helper) : base(driver, helper)
+        public CapabilityFilter(IWebDriver driver) : base(driver)
         {
         }
 

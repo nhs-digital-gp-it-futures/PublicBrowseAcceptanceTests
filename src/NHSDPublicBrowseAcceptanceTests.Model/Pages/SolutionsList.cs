@@ -9,7 +9,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
 {
     public sealed class SolutionsList : Interactions
     {
-        public SolutionsList(IWebDriver driver, ITestOutputHelper helper) : base(driver, helper)
+        public SolutionsList(IWebDriver driver) : base(driver)
         {
         }
 
