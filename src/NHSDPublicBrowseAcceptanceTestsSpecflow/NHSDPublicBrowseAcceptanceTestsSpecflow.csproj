@@ -24,4 +24,37 @@
     <ProjectReference Include="..\NHSDPublicBrowseAcceptanceTests.Model\NHSDPublicBrowseAcceptanceTests.Actions.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="Features\Homepage\Homepage.feature.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Homepage.feature</DependentUpon>
+    </Compile>
+    <Compile Update="Features\LayoutComponents\Footer.feature.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Footer.feature</DependentUpon>
+    </Compile>
+    <Compile Update="Features\LayoutComponents\Header.feature.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Header.feature</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <SpecFlowFeatureFiles Update="Features\Homepage\Homepage.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>Homepage.feature.cs</LastGenOutput>
+    </SpecFlowFeatureFiles>
+    <SpecFlowFeatureFiles Update="Features\LayoutComponents\Footer.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>Footer.feature.cs</LastGenOutput>
+    </SpecFlowFeatureFiles>
+    <SpecFlowFeatureFiles Update="Features\LayoutComponents\Header.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>Header.feature.cs</LastGenOutput>
+    </SpecFlowFeatureFiles>
+  </ItemGroup>
+
 </Project>
