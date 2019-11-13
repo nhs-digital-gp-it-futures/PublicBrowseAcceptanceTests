@@ -9,10 +9,8 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps
     {
         private UITest _test;
         private ScenarioContext _context;
-        private int solutionsCount;
         private string capabilityName;
         private string secondCapabilityName;
-        private int solutionsWithCapability;
 
         public CapabilityFilteredBrowse(UITest test, ScenarioContext context)
         {
@@ -24,8 +22,7 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps
         public void GivenOneOrMoreCapabilityIsSelected()
         {
             capabilityName = _test.pages.CapabilityFilter.GetCapabilityName();
-            solutionsWithCapability = _test.pages.SolutionsList.GetSolutionsWithCapability(capabilityName);
-
+            _test.expectedSolutionsCount = _test.pages.SolutionsList.GetSolutionsWithCapability(capabilityName);
             _test.pages.CapabilityFilter.ToggleFilter(capabilityName);
         }
 
@@ -43,30 +40,15 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps
         public void GivenThereIsOneOrMoreCapabilitySelected()
         {
             secondCapabilityName = _test.pages.CapabilityFilter.GetCapabilityName(1);
-            solutionsWithCapability = _test.pages.SolutionsList.GetSolutionsWithCapability(secondCapabilityName);
+            _test.expectedSolutionsCount = _test.pages.SolutionsList.GetSolutionsWithCapability(secondCapabilityName);
             _test.pages.CapabilityFilter.ToggleFilter(secondCapabilityName);
-        }
-
-        [Given(@"no Capability is selected")]
-        [StepDefinition(@"Solutions are presented")]
-        public void SolutionsArePresented()
-        {
-            _test.pages.SolutionsList.WaitForSolutionToBeDisplayed();
-            solutionsCount = _test.pages.SolutionsList.GetSolutionsCount();
         }
 
         [Then(@"no Solutions are excluded on the basis of the Capabilities they deliver")]
         public void ThenNoSolutionsAreExcludedOnTheBasisOfTheCapabilitiesTheyDeliver()
         {
-            _test.pages.SolutionsList.GetSolutionsCount().Should().Be(solutionsCount);
-        }
-
-        [Then(@"only Solutions that deliver all the Foundation Capabilities are included")]
-        [Then(@"only Solutions that deliver all of the selected Capabilities are included")]
-        [Then(@"Additional Services are not included in the results")]
-        public void SolutionsWithCapabilities()
-        {
-            solutionsCount.Should().Be(solutionsWithCapability);
+            var actualCount = _test.pages.SolutionsList.GetSolutionsCount();
+            actualCount.Should().BeGreaterThan(_test.expectedSolutionsCount);
         }
 
         [When(@"the nhs logo is clicked")]

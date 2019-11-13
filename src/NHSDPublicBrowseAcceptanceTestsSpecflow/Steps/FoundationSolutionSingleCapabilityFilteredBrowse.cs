@@ -1,4 +1,5 @@
-﻿using NHSDPublicBrowseAcceptanceTestsSpecflow.Utils;
+﻿using System;
+using NHSDPublicBrowseAcceptanceTestsSpecflow.Utils;
 using TechTalk.SpecFlow;
 
 namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps
@@ -19,12 +20,7 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps
         public void GivenAllTheFoundationCapabilitiesAreSelected()
         {
             _test.pages.CapabilityFilter.FoundationSolutionsFilter();
-        }
-
-        [Given(@"no other Capabilities are selected")]
-        public void GivenNoOtherCapabilitiesAreSelected()
-        {
-            //deliberately blank
+            _test.expectedSolutionsCount = _test.pages.SolutionsList.GetSolutionsCount();
         }
     }
 }

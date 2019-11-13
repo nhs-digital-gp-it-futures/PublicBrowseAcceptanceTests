@@ -11,6 +11,7 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Utils
         internal string connectionString;
         internal string url;
         internal string ExpectedSectionLinkInErrorMessage;
+        internal int expectedSolutionsCount;
 
         public UITest()
         {

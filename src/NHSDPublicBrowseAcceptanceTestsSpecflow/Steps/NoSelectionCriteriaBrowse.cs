@@ -9,7 +9,6 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps
     {
         private UITest _test;
         private ScenarioContext _context;
-        private int solutionsCount;
 
         public NoSelectionCriteriaBrowse(UITest test, ScenarioContext context)
         {
@@ -23,12 +22,14 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps
         public void GivenNoSelectionCriteriaAreApplied()
         {
             _test.pages.SolutionsList.WaitForSolutionToBeDisplayed();
+            _test.expectedSolutionsCount = _test.pages.SolutionsList.GetSolutionsCount();
         }
 
         [Then(@"no Solutions are excluded")]
         public void ThenNoSolutionsAreExcluded()
         {
-            _test.pages.SolutionsList.GetSolutionsCount().Should().Be(solutionsCount);
+            var actualCount = _test.pages.SolutionsList.GetSolutionsCount();
+            actualCount.Should().Be(_test.expectedSolutionsCount);
         }
 
         [Then(@"the Card will contain the correct contents")]
