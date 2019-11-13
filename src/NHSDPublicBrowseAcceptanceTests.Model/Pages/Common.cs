@@ -31,5 +31,10 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
         {
             driver.Url.Should().Contain(href);
         }
+
+        public string GetUrl()
+        {
+            return driver.Url;
+        }
     }
 }

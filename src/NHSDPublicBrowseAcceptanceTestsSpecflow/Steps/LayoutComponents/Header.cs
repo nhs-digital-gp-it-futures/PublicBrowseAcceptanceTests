@@ -1,4 +1,5 @@
-﻿using NHSDPublicBrowseAcceptanceTestsSpecflow.Utils;
+﻿using FluentAssertions;
+using NHSDPublicBrowseAcceptanceTestsSpecflow.Utils;
 using TechTalk.SpecFlow;
 
 namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.LayoutComponents
@@ -18,25 +19,26 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.LayoutComponents
         [Then(@"the Header is presented")]
         public void ThenTheHeaderIsPresented()
         {
-            _context.Pending();
+            _test.pages.Header.ComponentDisplayed();
         }
 
         [Given(@"the User chooses to select the logo in the Header")]
         public void GivenTheUserChoosesToSelectTheLogoInTheHeader()
         {
-            _context.Pending();
+            
         }
 
-        [When(@"they select the logo")]
-        public void WhenTheySelectTheLogo()
+        [When(@"they click the NHS Digital logo")]
+        public void WhenTheyClickTheNHSDigitalLogo()
         {
-            _context.Pending();
+            _test.pages.Header.ClickLogo();
         }
+
 
         [Then(@"they are directed to the domain URL")]
         public void ThenTheyAreDirectedToTheDomainURL()
         {
-            _context.Pending();
+            _test.pages.Common.GetUrl().Should().Be(_test.url + "/");
         }
 
     }

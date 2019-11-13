@@ -13,7 +13,8 @@ namespace NHSDPublicBrowseAcceptanceTests.Objects
                 CapabilityFilter = new CapabilityFilter(),
                 Common = new Common(),
                 Homepage = new Homepage(),
-                Footer = new Footer()
+                Footer = new Footer(),
+                Header = new Header()
             };
         }
 

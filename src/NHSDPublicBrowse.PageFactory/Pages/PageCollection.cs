@@ -8,5 +8,6 @@
         public Common Common { get; set; }
         public Homepage Homepage { get; set; }
         public Footer Footer { get; set; }
+        public Header Header { get; set; }
     }
 }

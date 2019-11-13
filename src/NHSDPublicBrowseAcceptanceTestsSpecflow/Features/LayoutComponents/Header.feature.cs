@@ -99,7 +99,7 @@ this.ScenarioInitialize(scenarioInfo);
 #line 12
  testRunner.Given("the User chooses to select the logo in the Header", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 13
- testRunner.When("they select the logo", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("they click the NHS Digital logo", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 14
  testRunner.Then("they are directed to the domain URL", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden

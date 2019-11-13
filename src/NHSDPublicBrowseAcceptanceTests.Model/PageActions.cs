@@ -14,7 +14,8 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions
                 CapabilityFilter = new CapabilityFilter(driver),
                 Homepage = new Homepage(driver),
                 Common = new Common(driver),
-                Footer = new Footer(driver)
+                Footer = new Footer(driver),
+                Header = new Header(driver)
             };
         }
 

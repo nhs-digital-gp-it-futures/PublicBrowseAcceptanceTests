@@ -10,5 +10,5 @@ Scenario: Header Presented
 
 Scenario: Header Logo
 	Given the User chooses to select the logo in the Header
-	When they select the logo
+	When they click the NHS Digital logo
 	Then they are directed to the domain URL
