@@ -1,9 +1,7 @@
-﻿using NHSDPublicBrowseAcceptanceTests.Objects.Utils;
-using OpenQA.Selenium;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using Xunit.Abstractions;
+using NHSDPublicBrowseAcceptanceTests.Objects.Utils;
+using OpenQA.Selenium;
 
 namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
 {
@@ -39,7 +37,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
 
             var solutionsCount = GetSolutionsCount();
 
-            foreach(var cap in selectedCapabilities)
+            foreach (var cap in selectedCapabilities)
             {
                 if (GetSolutionsWithCapability(cap) != solutionsCount) return false;
             }
@@ -147,7 +145,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
         {
             var solutionName = solution.FindElement(By.TagName("h3")).Text;
 
-            solution.FindElement(By.TagName("h3")).Click();            
+            solution.FindElement(By.TagName("h3")).Click();
 
             return solutionName;
         }

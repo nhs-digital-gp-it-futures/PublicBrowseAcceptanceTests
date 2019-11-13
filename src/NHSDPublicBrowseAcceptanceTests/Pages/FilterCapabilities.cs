@@ -6,7 +6,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Pages
 {
     public sealed class FilterCapabilities : UITest
     {
-        public FilterCapabilities(ITestOutputHelper helper) : base (helper)
+        public FilterCapabilities(ITestOutputHelper helper) : base(helper)
         {
             pages.SolutionsList.WaitForSolutionToBeDisplayed();
         }

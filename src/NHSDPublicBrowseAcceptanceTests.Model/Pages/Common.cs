@@ -1,5 +1,4 @@
 ﻿using OpenQA.Selenium;
-using Xunit.Abstractions;
 
 namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
 {

@@ -1,7 +1,5 @@
-﻿using OpenQA.Selenium;
-using System;
-using System.Linq;
-using Xunit.Abstractions;
+﻿using System.Linq;
+using OpenQA.Selenium;
 
 namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
 {
@@ -30,7 +28,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
         public void ToggleFilter(string capabilityName)
         {
             var capabilities = driver.FindElements(pages.CapabilityFilter.Capabilities);
-                
+
             var capability = capabilities.First(s => s.Text == capabilityName);
 
             capability.FindElement(By.TagName("input")).Click();
