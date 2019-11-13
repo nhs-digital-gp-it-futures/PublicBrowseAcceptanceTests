@@ -51,11 +51,5 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps
             actualCount.Should().BeGreaterThan(_test.expectedSolutionsCount);
         }
 
-        [When(@"the nhs logo is clicked")]
-        public void WhenTheNhsLogoIsClicked()
-        {
-            _test.pages.Common.ClickLogo();
-        }
-
     }
 }
