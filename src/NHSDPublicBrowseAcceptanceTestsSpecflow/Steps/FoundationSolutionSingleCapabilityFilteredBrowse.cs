@@ -1,5 +1,4 @@
-﻿using System;
-using NHSDPublicBrowseAcceptanceTestsSpecflow.Utils;
+﻿using NHSDPublicBrowseAcceptanceTestsSpecflow.Utils;
 using TechTalk.SpecFlow;
 
 namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps
