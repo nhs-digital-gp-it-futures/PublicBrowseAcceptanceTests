@@ -6,8 +6,8 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps
     [Binding]
     public class FoundationSolutionSingleCapabilityFilteredBrowse
     {
-        private UITest _test;
-        private ScenarioContext _context;
+        private readonly UITest _test;
+        private readonly ScenarioContext _context;
 
         public FoundationSolutionSingleCapabilityFilteredBrowse(UITest test, ScenarioContext context)
         {

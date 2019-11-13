@@ -15,18 +15,6 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.LayoutComponents
             _context = context;
         }
 
-        [Given(@"the User chooses any Page in the application")]
-        public void GivenTheUserChoosesAnyPageInTheApplication()
-        {
-            _context.Pending();
-        }
-
-        [When(@"they are on a Page")]
-        public void WhenTheyAreOnAPage()
-        {
-            _context.Pending();
-        }
-
         [Then(@"the Header is presented")]
         public void ThenTheHeaderIsPresented()
         {

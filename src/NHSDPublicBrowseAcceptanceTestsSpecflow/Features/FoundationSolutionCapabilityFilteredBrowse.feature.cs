@@ -72,19 +72,21 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Features
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("All the Foundation Capabilities and no other Capabilities are selected")]
+        [NUnit.Framework.IgnoreAttribute("Ignored scenario")]
         public virtual void AllTheFoundationCapabilitiesAndNoOtherCapabilitiesAreSelected()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("All the Foundation Capabilities and no other Capabilities are selected", null, ((string[])(null)));
-#line 6
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("All the Foundation Capabilities and no other Capabilities are selected", null, new string[] {
+                        "ignore"});
+#line 7
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
-#line 7
- testRunner.Given("all the Foundation Capabilities are selected", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 8
- testRunner.And("no other Capabilities are selected", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.Given("all the Foundation Capabilities are selected", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 9
- testRunner.When("Solutions are presented", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.And("no other Capabilities are selected", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 10
+ testRunner.When("Solutions are presented", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 11
  testRunner.Then("only Solutions that deliver all the Foundation Capabilities are included", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();

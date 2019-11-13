@@ -7,8 +7,8 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps
     [Binding]
     public class CapabilityFilteredBrowse
     {
-        private UITest _test;
-        private ScenarioContext _context;
+        private readonly UITest _test;
+        private readonly ScenarioContext _context;
         private string capabilityName;
         private string secondCapabilityName;
 

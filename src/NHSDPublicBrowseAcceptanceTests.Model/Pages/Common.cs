@@ -1,4 +1,6 @@
-﻿using OpenQA.Selenium;
+﻿using System;
+using FluentAssertions;
+using OpenQA.Selenium;
 
 namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
 {
@@ -23,6 +25,11 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
         public void ClickLogo()
         {
             driver.FindElement(pages.Common.NHSLogo).Click();
+        }
+
+        public void URLContains(string href)
+        {
+            driver.Url.Should().Contain(href);
         }
     }
 }
