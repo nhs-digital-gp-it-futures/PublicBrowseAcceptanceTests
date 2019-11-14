@@ -8,7 +8,6 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.LayoutComponents
     {
         private readonly UITest _test;
         private readonly ScenarioContext _context;
-        private string urlAmended;
 
         public Footer(UITest test, ScenarioContext context)
         {
@@ -16,6 +15,7 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.LayoutComponents
             _context = context;
         }
 
+        [Then(@"it contains a Footer")]
         [Then(@"the Footer is presented")]
         public void ThenTheFooterIsPresented()
         {

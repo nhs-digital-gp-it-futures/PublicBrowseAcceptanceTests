@@ -87,7 +87,7 @@ this.ScenarioInitialize(scenarioInfo);
 #line 10
  testRunner.And("content about the Buying Catalogue", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 11
- testRunner.And("a Footer", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("it contains a Footer", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 12
  testRunner.And("a control to access Browse Solutions", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 13

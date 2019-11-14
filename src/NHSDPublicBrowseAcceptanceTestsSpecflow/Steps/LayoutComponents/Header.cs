@@ -17,6 +17,7 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.LayoutComponents
         }
 
         [Then(@"the Header is presented")]
+        [Then(@"it contains a Header")]
         public void ThenTheHeaderIsPresented()
         {
             _test.pages.Header.ComponentDisplayed();

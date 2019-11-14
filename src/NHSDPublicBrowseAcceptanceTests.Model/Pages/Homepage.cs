@@ -1,4 +1,5 @@
 ﻿using System;
+using FluentAssertions;
 using OpenQA.Selenium;
 
 namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
@@ -12,6 +13,21 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
         public void PageDisplayed()
         {
             wait.Until(s => s.FindElement(pages.Homepage.Title).Displayed);
+        }
+
+        public void AboutUsSectionDisplayed()
+        {
+            driver.FindElement(pages.Homepage.AboutSection).Displayed.Should().BeTrue();
+        }
+
+        public void BrowseSolutionsControlDisplayed()
+        {
+            driver.FindElement(pages.Homepage.BrowseSolutions).Displayed.Should().BeTrue();
+        }
+
+        public void GuidanceContentControlDisplayed()
+        {
+            driver.FindElement(pages.Homepage.GuidanceContent).Displayed.Should().BeTrue();
         }
     }
 }
