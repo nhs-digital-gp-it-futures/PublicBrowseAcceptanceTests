@@ -1,5 +1,4 @@
-﻿@ignore
-Feature: Capability-filtered browse
+﻿Feature: Capability-filtered browse
 	As a Public User
 	I want to use Capabilities when browsing Solutions
 	So that I know what Solutions include those Capabilities
@@ -21,3 +20,4 @@ Scenario: A Capability is de-selected
 	When Solutions are presented
 	Then only Solutions that deliver all of the selected Capabilities are included
 	And Additional Services are not included in the results
+	

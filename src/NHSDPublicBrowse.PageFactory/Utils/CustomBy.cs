@@ -11,7 +11,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Objects.Utils
         /// <returns>By clause that can be used to find one or more elements with the data-test-id attribute</returns>
         public static By DataTestId(string locator)
         {
-            return CssSelector($"[data-test-id={locator}]");         
+            return CssSelector($"[data-test-id={locator}]");
         }
     }
 }

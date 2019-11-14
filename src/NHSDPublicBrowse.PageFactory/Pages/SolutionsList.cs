@@ -5,6 +5,6 @@ namespace NHSDPublicBrowseAcceptanceTests.Objects.Pages
 {
     public sealed class SolutionsList
     {
-        public By Solutions => CustomBy.DataTestId("solution-card");                
+        public By Solutions => CustomBy.DataTestId("solution-card");
     }
 }

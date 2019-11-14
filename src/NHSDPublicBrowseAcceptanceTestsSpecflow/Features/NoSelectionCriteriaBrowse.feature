@@ -1,5 +1,4 @@
-﻿@ignore
-Feature: No-selection criteria browse
+﻿Feature: No-selection criteria browse
 	As a Public User
 	I want to browse the Solutions
 	So that I know what those Solutions are

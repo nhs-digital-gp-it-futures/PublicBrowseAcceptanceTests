@@ -1,11 +1,10 @@
 ﻿using OpenQA.Selenium;
-using Xunit.Abstractions;
 
 namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
 {
     public class Common : Interactions
     {
-        public Common(IWebDriver driver, ITestOutputHelper helper) : base(driver, helper)
+        public Common(IWebDriver driver) : base(driver)
         {
         }
 
