@@ -13,8 +13,6 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
-- script: dotnet build src/ --configuration $(buildConfiguration)
-  displayName: 'dotnet build $(buildConfiguration)'
 - script: docker-compose up --scale chrome=4 -d
   displayName: docker-compose
 - bash: export BROWSER=chrome && export PBURL=https://gpitbuyingcataloguedocker.azurewebsites.net/ && dotnet test src/ -v n
