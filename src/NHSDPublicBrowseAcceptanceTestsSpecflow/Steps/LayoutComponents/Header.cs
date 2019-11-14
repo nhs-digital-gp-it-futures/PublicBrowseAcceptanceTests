@@ -42,5 +42,11 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.LayoutComponents
             _test.pages.Common.GetUrl().Should().Be(_test.url + "/");
         }
 
+        [Then(@"a Terms of use banner is displayed")]
+        public void ThenATermsOfUseBannerIsDisplayed()
+        {
+            _test.pages.Header.TermsBannerDisplayed();
+        }
+
     }
 }
