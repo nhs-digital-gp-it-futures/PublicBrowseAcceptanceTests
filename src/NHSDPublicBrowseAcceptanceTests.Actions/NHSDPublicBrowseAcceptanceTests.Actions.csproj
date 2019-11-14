@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NHSDPublicBrowse.PageFactory\NHSDPublicBrowseAcceptanceTests.Objects.csproj" />
+    <ProjectReference Include="..\NHSDPublicBrowseAcceptanceTests.Objects\NHSDPublicBrowseAcceptanceTests.Objects.csproj" />
   </ItemGroup>
 
 </Project>
