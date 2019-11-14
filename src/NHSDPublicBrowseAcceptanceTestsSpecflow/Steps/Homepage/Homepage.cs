@@ -1,5 +1,4 @@
 ﻿using NHSDPublicBrowseAcceptanceTestsSpecflow.Utils;
-using System;
 using TechTalk.SpecFlow;
 
 namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.Homepage
@@ -19,43 +18,31 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.Homepage
         [Given(@"the User chooses to view the Buying Catalogue Homepage")]
         public void GivenTheUserChoosesToViewTheBuyingCatalogueHomepage()
         {
-            _context.Pending();
+            _test.pages.Homepage.PageDisplayed();
         }
-        
+
         [When(@"the Homepage is presented")]
         public void WhenTheHomepageIsPresented()
         {
-            _context.Pending();
+            _test.pages.Homepage.PageDisplayed();
         }
-        
-        [Then(@"it contains a Header")]
-        public void ThenItContainsAHeader()
-        {
-            _context.Pending();
-        }
-        
+
         [Then(@"content about the Buying Catalogue")]
         public void ThenContentAboutTheBuyingCatalogue()
         {
-            _context.Pending();
+            _test.pages.Homepage.AboutUsSectionDisplayed();
         }
-        
-        [Then(@"a Footer")]
-        public void ThenAFooter()
-        {
-            _context.Pending();
-        }
-        
+
         [Then(@"a control to access Browse Solutions")]
         public void ThenAControlToAccessBrowseSolutions()
         {
-            _context.Pending();
+            _test.pages.Homepage.BrowseSolutionsControlDisplayed();
         }
-        
+
         [Then(@"a control to access Guidance Content for Buyers")]
         public void ThenAControlToAccessGuidanceContentForBuyers()
         {
-            _context.Pending();
+            _test.pages.Homepage.GuidanceContentControlDisplayed();
         }
     }
 }

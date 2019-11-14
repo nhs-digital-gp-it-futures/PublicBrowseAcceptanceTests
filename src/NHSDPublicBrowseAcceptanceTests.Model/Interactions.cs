@@ -1,8 +1,8 @@
-﻿using System;
-using NHSDPublicBrowseAcceptanceTests.Objects;
+﻿using NHSDPublicBrowseAcceptanceTests.Objects;
 using NHSDPublicBrowseAcceptanceTests.Objects.Pages;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
+using System;
 
 namespace NHSDPublicBrowseAcceptanceTests.Actions
 {
@@ -11,7 +11,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions
         internal readonly IWebDriver driver;
         internal readonly WebDriverWait wait;
 
-        internal PageCollection pages;
+        internal readonly PageCollection pages;
 
         public Interactions(IWebDriver driver)
         {

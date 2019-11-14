@@ -7,8 +7,9 @@ Scenario: Header Presented
 	Given the User chooses any Page in the application
 	When they are on a Page
 	Then the Header is presented
+	And a Terms of use banner is displayed
 
 Scenario: Header Logo
 	Given the User chooses to select the logo in the Header
-	When they select the logo
+	When they click the NHS Digital logo
 	Then they are directed to the domain URL

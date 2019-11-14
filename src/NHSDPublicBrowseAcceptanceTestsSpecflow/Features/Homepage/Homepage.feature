@@ -8,6 +8,6 @@ Scenario: View Homepage
 	When the Homepage is presented
 	Then it contains a Header
 	And content about the Buying Catalogue
-	And a Footer
+	And it contains a Footer
 	And a control to access Browse Solutions
 	And a control to access Guidance Content for Buyers

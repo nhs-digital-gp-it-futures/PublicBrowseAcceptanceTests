@@ -7,8 +7,8 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps
     [Binding]
     public class CapabilityFilteredBrowse
     {
-        private UITest _test;
-        private ScenarioContext _context;
+        private readonly UITest _test;
+        private readonly ScenarioContext _context;
         private string capabilityName;
         private string secondCapabilityName;
 
@@ -49,6 +49,12 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps
         {
             var actualCount = _test.pages.SolutionsList.GetSolutionsCount();
             actualCount.Should().BeGreaterThan(_test.expectedSolutionsCount);
+        }
+
+        [When(@"the nhs logo is clicked")]
+        public void WhenTheNhsLogoIsClicked()
+        {
+            _test.pages.Common.ClickLogo();
         }
 
     }

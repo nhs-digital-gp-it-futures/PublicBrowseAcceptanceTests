@@ -1,8 +1,4 @@
 ﻿using NHSDPublicBrowseAcceptanceTestsSpecflow.Utils;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using TechTalk.SpecFlow;
 
 namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.LayoutComponents
@@ -19,28 +15,29 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.LayoutComponents
             _context = context;
         }
 
+        [Then(@"it contains a Footer")]
         [Then(@"the Footer is presented")]
         public void ThenTheFooterIsPresented()
         {
-            _context.Pending();
+            _test.pages.Footer.ComponentDisplayed();
         }
 
         [Given(@"the User chooses to select a URL in the Footer")]
         public void GivenTheUserChoosesToSelectAURLInTheFooter()
         {
-            _context.Pending();
+            ThenTheFooterIsPresented();
         }
 
-        [When(@"they select a URL")]
-        public void WhenTheySelectAURL()
+        [When(@"they select (.*)")]
+        public void WhenTheySelectAURL(string linkText)
         {
-            _context.Pending();
+            _test.pages.Footer.SelectURL(linkText);
         }
 
-        [Then(@"they are directed according to the URL")]
-        public void ThenTheyAreDirectedAccordingToTheURL()
+        [Then(@"they are directed according to the URL (.*)")]
+        public void ThenTheyAreDirectedAccordingToTheURL(string href)
         {
-            _context.Pending();
+            _test.pages.Common.URLContains(href);
         }
 
     }

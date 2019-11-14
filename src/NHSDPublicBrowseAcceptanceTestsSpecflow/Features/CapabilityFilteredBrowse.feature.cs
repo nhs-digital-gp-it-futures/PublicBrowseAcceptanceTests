@@ -72,17 +72,19 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Features
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("No Capability selected")]
+        [NUnit.Framework.IgnoreAttribute("Ignored scenario")]
         public virtual void NoCapabilitySelected()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("No Capability selected", null, ((string[])(null)));
-#line 6
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("No Capability selected", null, new string[] {
+                        "ignore"});
+#line 7
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
-#line 7
- testRunner.Given("no Capability is selected", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 8
- testRunner.When("Solutions are presented", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.Given("no Capability is selected", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 9
+ testRunner.When("Solutions are presented", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 10
  testRunner.Then("no Solutions are excluded on the basis of the Capabilities they deliver", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -90,19 +92,21 @@ this.ScenarioInitialize(scenarioInfo);
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("One or more Capability selected")]
+        [NUnit.Framework.IgnoreAttribute("Ignored scenario")]
         public virtual void OneOrMoreCapabilitySelected()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("One or more Capability selected", null, ((string[])(null)));
-#line 11
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("One or more Capability selected", null, new string[] {
+                        "ignore"});
+#line 13
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
-#line 12
- testRunner.Given("one or more Capability is selected", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 13
- testRunner.When("Solutions are presented", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 14
- testRunner.Then("only Solutions that deliver all of the selected Capabilities are included", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Given("one or more Capability is selected", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 15
+ testRunner.When("Solutions are presented", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 16
+ testRunner.Then("only Solutions that deliver all of the selected Capabilities are included", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 17
  testRunner.And("Additional Services are not included in the results", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -110,21 +114,23 @@ this.ScenarioInitialize(scenarioInfo);
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("A Capability is de-selected")]
+        [NUnit.Framework.IgnoreAttribute("Ignored scenario")]
         public virtual void ACapabilityIsDe_Selected()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A Capability is de-selected", null, ((string[])(null)));
-#line 17
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A Capability is de-selected", null, new string[] {
+                        "ignore"});
+#line 20
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
-#line 18
- testRunner.Given("a Capability is de-selected", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 19
- testRunner.And("there is one or more Capability selected", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 20
- testRunner.When("Solutions are presented", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 21
- testRunner.Then("only Solutions that deliver all of the selected Capabilities are included", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Given("a Capability is de-selected", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 22
+ testRunner.And("there is one or more Capability selected", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 23
+ testRunner.When("Solutions are presented", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 24
+ testRunner.Then("only Solutions that deliver all of the selected Capabilities are included", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 25
  testRunner.And("Additional Services are not included in the results", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -132,19 +138,21 @@ this.ScenarioInitialize(scenarioInfo);
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Filter is removed when clicking the NHS logo")]
+        [NUnit.Framework.IgnoreAttribute("Ignored scenario")]
         public virtual void FilterIsRemovedWhenClickingTheNHSLogo()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Filter is removed when clicking the NHS logo", null, ((string[])(null)));
-#line 24
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Filter is removed when clicking the NHS logo", null, new string[] {
+                        "ignore"});
+#line 28
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
-#line 25
+#line 29
  testRunner.Given("one or more Capability is selected", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 26
+#line 30
  testRunner.And("Solutions are presented", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 27
+#line 31
  testRunner.When("the nhs logo is clicked", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 28
+#line 32
  testRunner.Then("no Solutions are excluded on the basis of the Capabilities they deliver", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();

@@ -12,7 +12,10 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions
                 SolutionsList = new SolutionsList(driver),
                 ViewSolution = new ViewSolution(driver),
                 CapabilityFilter = new CapabilityFilter(driver),
-                Common = new Common(driver)
+                Homepage = new Homepage(driver),
+                Common = new Common(driver),
+                Footer = new Footer(driver),
+                Header = new Header(driver)
             };
         }
 
