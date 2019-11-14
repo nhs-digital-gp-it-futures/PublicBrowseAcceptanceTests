@@ -14,7 +14,8 @@ namespace NHSDPublicBrowseAcceptanceTests.Objects
                 Common = new Common(),
                 Homepage = new Homepage(),
                 Footer = new Footer(),
-                Header = new Header()
+                Header = new Header(),
+                BrowseSolutions = new BrowseSolutions()
             };
         }
 

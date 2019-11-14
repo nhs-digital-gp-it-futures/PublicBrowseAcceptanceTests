@@ -25,6 +25,12 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
             driver.FindElement(pages.Homepage.BrowseSolutions).Displayed.Should().BeTrue();
         }
 
+        public void ClickBrowseSolutions()
+        {
+            driver.FindElement(pages.Homepage.BrowseSolutions).Click();
+            wait.Until(s => s.FindElement(pages.BrowseSolutions.BrowseLinkSections).Displayed);
+        }
+
         public void GuidanceContentControlDisplayed()
         {
             driver.FindElement(pages.Homepage.GuidanceContent).Displayed.Should().BeTrue();

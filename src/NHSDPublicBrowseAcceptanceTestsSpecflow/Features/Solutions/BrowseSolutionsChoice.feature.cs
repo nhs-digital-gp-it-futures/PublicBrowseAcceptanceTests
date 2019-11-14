@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Features.LayoutComponents
+namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Features.Solutions
 {
     using TechTalk.SpecFlow;
     
@@ -18,21 +18,21 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Features.LayoutComponents
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.0.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
-    [NUnit.Framework.DescriptionAttribute("Footer")]
-    public partial class FooterFeature
+    [NUnit.Framework.DescriptionAttribute("Browse Solutions by Foundation Solutions or All Solutions")]
+    public partial class BrowseSolutionsByFoundationSolutionsOrAllSolutionsFeature
     {
         
         private TechTalk.SpecFlow.ITestRunner testRunner;
         
-#line 1 "Footer.feature"
+#line 1 "BrowseSolutionsChoice.feature"
 #line hidden
         
         [NUnit.Framework.OneTimeSetUpAttribute()]
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Footer", "\tAs a Public User\r\n\tI want a Footer on every page of the application\r\n\tSo that I " +
-                    "have a familiar experience throughout the application", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Browse Solutions by Foundation Solutions or All Solutions", "\tAs a Public User\r\n\tI want to browse all the Solutions according to their Foundat" +
+                    "ion or Non-Foundation type\r\n\tSo that I can view all the Solutions of both type", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -71,42 +71,41 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Features.LayoutComponents
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Footer Presented")]
-        public virtual void FooterPresented()
+        [NUnit.Framework.DescriptionAttribute("Browse Foundation Solutions Only")]
+        public virtual void BrowseFoundationSolutionsOnly()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Footer Presented", null, ((string[])(null)));
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Browse Foundation Solutions Only", null, ((string[])(null)));
 #line 6
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line 7
- testRunner.Given("the User chooses any Page in the application", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("the User wants to view Foundation Solutions only", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 8
- testRunner.When("they are on a Page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("the User chooses to view Foundation Solutions", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 9
- testRunner.Then("the Footer is presented", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("only Foundation Solutions are presented in the results", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 10
+ testRunner.And("all the Foundation Solutions are included in the results", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Link in Footer")]
-        [NUnit.Framework.TestCaseAttribute("Catalogue Submissions", "/", null)]
-        [NUnit.Framework.TestCaseAttribute("NHS Digital", "https://digital.nhs.uk/", null)]
-        [NUnit.Framework.TestCaseAttribute("NHS Digital service desk", "/", null)]
-        [NUnit.Framework.TestCaseAttribute("About GPIT Futures", "https://digital.nhs.uk/services/future-gp-it-systems-and-services", null)]
-        [NUnit.Framework.TestCaseAttribute("Capabilities and Standards Model", "https://gpitbjss.atlassian.net/wiki/spaces/GPITF/overview", null)]
-        public virtual void LinkInFooter(string text, string href, string[] exampleTags)
+        [NUnit.Framework.DescriptionAttribute("Browse All Solutions")]
+        public virtual void BrowseAllSolutions()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Link in Footer", null, exampleTags);
-#line 11
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Browse All Solutions", null, ((string[])(null)));
+#line 12
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
-#line 12
- testRunner.Given("the User chooses to select a URL in the Footer", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 13
- testRunner.When(string.Format("they select {0}", text), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.Given("the User wants to view all Solutions", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 14
- testRunner.Then(string.Format("they are directed according to the URL {0}", href), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.When("the User chooses to view all Solutions", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 15
+ testRunner.Then("all Foundation Solutions are presented in the results", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 16
+ testRunner.And("all Non-Foundation Solutions are included in the results", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }

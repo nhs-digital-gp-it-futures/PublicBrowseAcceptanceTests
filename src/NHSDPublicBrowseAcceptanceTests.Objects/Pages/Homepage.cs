@@ -9,8 +9,8 @@ namespace NHSDPublicBrowseAcceptanceTests.Objects.Pages
 
         public By AboutSection => CustomBy.DataTestId("about-us");
 
-        public By BrowseSolutions => CustomBy.DataTestId("browse-promo", "a");
+        public By BrowseSolutions => CustomBy.DataTestId("browse-promo", "a h3.nhsuk-promo__heading");
 
-        public By GuidanceContent => CustomBy.DataTestId("guidance-promo", "a");
+        public By GuidanceContent => CustomBy.DataTestId("guidance-promo", "a h3.nhsuk-promo__heading");
     }
 }
