@@ -6,7 +6,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Pages
 {
     public sealed class FilterCapabilities : UITest
     {
-        public FilterCapabilities(ITestOutputHelper helper) : base (helper)
+        public FilterCapabilities(ITestOutputHelper helper) : base(helper)
         {
             pages.SolutionsList.WaitForSolutionToBeDisplayed();
         }
@@ -14,7 +14,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Pages
         /// <summary>
         /// Ensure that when the NHS logo is clicked when a filter is applied that the filter is cleared
         /// </summary>
-        [Fact]
+        [Fact(Skip = "Test has been replaced")]
         public void FilterRemovedWhenLogoClicked()
         {
             var totalSolutions = pages.SolutionsList.GetSolutionsCount();

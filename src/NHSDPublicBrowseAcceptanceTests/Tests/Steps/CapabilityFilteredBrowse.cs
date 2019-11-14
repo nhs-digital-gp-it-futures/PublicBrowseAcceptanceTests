@@ -36,9 +36,9 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps
             capabilityName = pages.CapabilityFilter.GetCapabilityName();
             solutionsWithCapability = pages.SolutionsList.GetSolutionsWithCapability(capabilityName);
 
-            pages.CapabilityFilter.ToggleFilter(capabilityName);            
+            pages.CapabilityFilter.ToggleFilter(capabilityName);
         }
-        
+
         [Then("only Solutions that deliver all of the selected Capabilities are included")]
         [And("Additional Services are not included in the results")]
         public void SolutionsWithCapabilities()
@@ -46,13 +46,13 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps
             solutionsCount.Should().Be(solutionsWithCapability);
         }
 
-        [Given("a Capability is de-selected")]        
+        [Given("a Capability is de-selected")]
         public void CapabilityDeselectedAdditionalSelected()
         {
-            capabilityName = pages.CapabilityFilter.GetCapabilityName();            
+            capabilityName = pages.CapabilityFilter.GetCapabilityName();
 
             // Toggle 2 capability checkboxes, then uncheck the first capability
-            pages.CapabilityFilter.ToggleFilter(capabilityName);            
+            pages.CapabilityFilter.ToggleFilter(capabilityName);
             pages.CapabilityFilter.ToggleFilter(capabilityName);
         }
 
