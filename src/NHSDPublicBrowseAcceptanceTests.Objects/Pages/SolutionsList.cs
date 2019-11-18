@@ -7,6 +7,6 @@ namespace NHSDPublicBrowseAcceptanceTests.Objects.Pages
     {
         public By Solutions => CustomBy.DataTestId("solution-card");
 
-        public By FoundationSolutionIndicators => CustomBy.DataTestId("solution-card-foundation-indicator");
+        public By FoundationSolutionIndicators => CustomBy.DataTestId("solution-card-foundation-tag");
     }
 }

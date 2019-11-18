@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using NHSDPublicBrowseAcceptanceTests.TestData.Utils;
 using NHSDPublicBrowseAcceptanceTestsSpecflow.Utils;
 using System;
 using TechTalk.SpecFlow;
@@ -47,10 +48,10 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
         [Then(@"all the Foundation Solutions are included in the results")]
         public void ThenAllTheFoundationSolutionsAreIncludedInTheResults()
         {
-            _context.Pending();
-            //get count from DB
-            //get count from UI
-            //should equal
+            var numberOfFoundationSolutionsFromDb = SqlHelper.GetNumberOfFoundationSolutions(_test.connectionString);
+            var numberOfFoundationSolutionIndicatorsOnUi = _test.pages.SolutionsList.GetFoundationSolutionIndicatorCount();
+            numberOfFoundationSolutionsFromDb.Should().Be(numberOfFoundationSolutionIndicatorsOnUi);
+
         }
         
         [Then(@"all Foundation Solutions are presented in the results")]
@@ -65,7 +66,11 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
         [Then(@"all Non-Foundation Solutions are included in the results")]
         public void ThenAllNon_FoundationSolutionsAreIncludedInTheResults()
         {
-            _context.Pending();
+            var numberOfNonFoundationSolutionsFromDb = SqlHelper.GetNumberOfNonFoundationSolutions(_test.connectionString);
+            var numberOfFoundationSolutionsFromDb = SqlHelper.GetNumberOfFoundationSolutions(_test.connectionString);
+            var totalNumberOfSolutionsOnUi = _test.pages.SolutionsList.GetSolutionsCount();
+            var numberOfNonFoundationsOnUI = totalNumberOfSolutionsOnUi - numberOfFoundationSolutionsFromDb;
+            numberOfNonFoundationsOnUI.Should().Be(numberOfNonFoundationSolutionsFromDb);
         }
     }
 }
