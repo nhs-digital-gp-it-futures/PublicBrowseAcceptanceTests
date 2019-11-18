@@ -1,4 +1,5 @@
-﻿using NHSDPublicBrowseAcceptanceTestsSpecflow.Utils;
+﻿using FluentAssertions;
+using NHSDPublicBrowseAcceptanceTestsSpecflow.Utils;
 using System;
 using TechTalk.SpecFlow;
 
@@ -38,19 +39,27 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
         [Then(@"only Foundation Solutions are presented in the results")]
         public void ThenOnlyFoundationSolutionsArePresentedInTheResults()
         {
-            _context.Pending();
+            var numberOfSolutionCards = _test.pages.SolutionsList.GetSolutionsCount();
+            var numberOfFoundationSolutionIndicators = _test.pages.SolutionsList.GetFoundationSolutionIndicatorCount();
+            numberOfFoundationSolutionIndicators.Should().Be(numberOfSolutionCards);
         }
         
         [Then(@"all the Foundation Solutions are included in the results")]
         public void ThenAllTheFoundationSolutionsAreIncludedInTheResults()
         {
             _context.Pending();
+            //get count from DB
+            //get count from UI
+            //should equal
         }
         
         [Then(@"all Foundation Solutions are presented in the results")]
         public void ThenAllFoundationSolutionsArePresentedInTheResults()
         {
-            _context.Pending();
+            var numberOfSolutionCards = _test.pages.SolutionsList.GetSolutionsCount();
+            var numberOfFoundationSolutionIndicators = _test.pages.SolutionsList.GetFoundationSolutionIndicatorCount();
+            numberOfFoundationSolutionIndicators.Should().BeGreaterThan(0);
+            numberOfSolutionCards.Should().BeGreaterThan(numberOfFoundationSolutionIndicators);
         }
         
         [Then(@"all Non-Foundation Solutions are included in the results")]

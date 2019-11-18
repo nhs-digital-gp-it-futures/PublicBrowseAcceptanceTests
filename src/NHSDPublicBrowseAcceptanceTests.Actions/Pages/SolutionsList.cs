@@ -161,5 +161,16 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
 
             return capabilities.Select(s => s.Text).ToList();
         }
+
+
+        /// <summary>
+        /// Get total number of foundation solution indicators
+        /// used to tell the number of foundation solutions on screen
+        /// </summary>
+        /// <returns></returns>
+        public int GetFoundationSolutionIndicatorCount()
+        {
+            return driver.FindElements(pages.SolutionsList.FoundationSolutionIndicators).Count;
+        }
     }
 }
