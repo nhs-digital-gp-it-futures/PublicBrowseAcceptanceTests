@@ -1,5 +1,4 @@
-﻿using System;
-using FluentAssertions;
+﻿using FluentAssertions;
 using NHSDPublicBrowseAcceptanceTests.TestData.Utils;
 using NHSDPublicBrowseAcceptanceTestsSpecflow.Utils;
 using TechTalk.SpecFlow;
@@ -27,7 +26,7 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
             bs.GivenIBrowseSolutions();
             bs.WhenTheUserChoosesToViewAllSolutions();
         }
-        
+
         [Then(@"there is a Card for each Solution")]
         public void ThenThereIsACardForEachSolution()
         {
@@ -35,35 +34,35 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
             var actualNumberOfSolutionCards = _test.pages.SolutionsList.GetSolutionsCount();
             actualNumberOfSolutionCards.Should().Be(expectedNumberOfSolutions);
         }
-        
+
         [Then(@"the Card contains the Organisation Name")]
         public void ThenTheCardContainsTheOrganisationName()
         {
             var actualNumberOfOrganisationNames = _test.pages.SolutionsList.GetSolutionOrganisationNameCount();
             actualNumberOfOrganisationNames.Should().Be(expectedNumberOfSolutions);
         }
-        
+
         [Then(@"the Solution Name")]
         public void ThenTheSolutionName()
         {
             var actualNumberOfSolutionNames = _test.pages.SolutionsList.GetSolutionNameCount();
             actualNumberOfSolutionNames.Should().Be(expectedNumberOfSolutions);
         }
-        
+
         [Then(@"the Solution Summary Description")]
         public void ThenTheSolutionSummaryDescription()
         {
             var actualNumberOfSolutionSummaries = _test.pages.SolutionsList.GetSolutionSummaryCount();
             actualNumberOfSolutionSummaries.Should().Be(expectedNumberOfSolutions);
         }
-        
+
         [Then(@"the names of the Capabilities provided by the Solution")]
         public void ThenTheNamesOfTheCapabilitiesProvidedByTheSolution()
         {
             var actualNumberOfSolutionCapabilitiesList = _test.pages.SolutionsList.GetSolutionCapabilityListCount();
             actualNumberOfSolutionCapabilitiesList.Should().Be(expectedNumberOfSolutions);
         }
-        
+
         [Then(@"capability '(.*)' is listed in the solution capabilities")]
         public void ThenCapabilityIsListedInTheSolutionCapabilities(string expectedCapabilityName)
         {

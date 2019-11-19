@@ -88,6 +88,8 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.And("the Card contains the Organisation Name", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 11
  testRunner.And("the Solution Name", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 12
+ testRunner.And("the Solution Summary Description", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 13
  testRunner.And("the names of the Capabilities provided by the Solution", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 14
