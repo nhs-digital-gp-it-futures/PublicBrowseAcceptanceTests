@@ -20,7 +20,7 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
 
         [Given(@"the User wants to view Foundation Solutions only")]
         [Given(@"the User wants to view all Solutions")]
-        public void GivenTheUserWantsToViewFoundationSolutionsOnly()
+        public void GivenIBrowseSolutions()
         {
             _test.pages.Homepage.ClickBrowseSolutions(); 
         }

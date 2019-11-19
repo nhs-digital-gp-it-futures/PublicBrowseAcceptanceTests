@@ -1,5 +1,6 @@
 ﻿using NHSDPublicBrowseAcceptanceTests.Objects.Utils;
 using OpenQA.Selenium;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -45,6 +46,16 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
             return true;
         }
 
+        public int GetSolutionOrganisationNameCount()
+        {
+            return driver.FindElements(pages.SolutionsList.SolutionOrganisationName).Count();
+        }
+
+        public int GetSolutionNameCount()
+        {
+            return driver.FindElements(pages.SolutionsList.SolutionName).Count();
+        }
+
         /// <summary>
         /// Get number of solutions that contain a named capability
         /// </summary>
@@ -73,6 +84,21 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
             }
 
             return solCount;
+        }
+
+        public int GetSolutionCapabilityListCount()
+        {
+            return driver.FindElements(pages.SolutionsList.SolutionCapabilityList).Count();
+        }
+
+        public int GetSolutionSummaryCount()
+        {
+            return driver.FindElements(pages.SolutionsList.SolutionSummary).Where(s => s.Text.Length > 0).Count();
+        }
+
+        public int GetSolutionsWithCapabilityCount(string capabilityName)
+        {
+            return driver.FindElements(pages.SolutionsList.SolutionCapabilityName).Where(s => s.Text.Equals(capabilityName)).Count();
         }
 
         /// <summary>
