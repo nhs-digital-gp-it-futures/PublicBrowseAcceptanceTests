@@ -40,7 +40,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
             solution.Click();
         }
 
-        public void OpenFoundationSolution()
+        public void OpenRandomFoundationSolution()
         {
             var solutions = driver.FindElements(pages.SolutionsList.Solutions).Where(s => FoundationIndicatorDisplayed(s)).ToList();
             var random = new Random();
