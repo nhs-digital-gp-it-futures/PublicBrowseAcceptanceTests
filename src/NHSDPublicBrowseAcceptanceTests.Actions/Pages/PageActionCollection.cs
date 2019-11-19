@@ -10,5 +10,6 @@
         public Footer Footer { get; set; }
         public Header Header { get; set; }
         public BrowseSolutions BrowseSolutions { get; set; }
+        public ViewASolution ViewASolution { get; set; }
     }
 }

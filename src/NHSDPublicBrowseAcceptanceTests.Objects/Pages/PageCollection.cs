@@ -1,4 +1,6 @@
-﻿namespace NHSDPublicBrowseAcceptanceTests.Objects.Pages
+﻿using OpenQA.Selenium;
+
+namespace NHSDPublicBrowseAcceptanceTests.Objects.Pages
 {
     public sealed class PageCollection
     {
@@ -10,5 +12,6 @@
         public Footer Footer { get; set; }
         public Header Header { get; set; }
         public BrowseSolutions BrowseSolutions { get; set; }
+        public ViewSingleSolution ViewSingleSolution { get; set; }
     }
 }

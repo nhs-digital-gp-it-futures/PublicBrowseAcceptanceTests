@@ -114,5 +114,31 @@ namespace NHSDPublicBrowseAcceptanceTests.TestData.Utils
 
             return result;
         }
+
+        public static SolutionDto GetSolutionDetailsObject(string solutionId, string connectionString)
+        {
+            var query = Queries.GetSingleSolution;
+
+            SqlParameter[] parameters = new SqlParameter[] {
+                new SqlParameter("@solutionId", solutionId)
+            };
+
+            var result = SqlReader.Read(connectionString, query, parameters, DataReaders.GetSolutionObject);
+
+            return result;
+        }
+
+        public static string GetSolutionCapabilities(string solutionId, string connectionString)
+        {
+            var query = Queries.GetSingleSolutionCapabilities;
+
+            SqlParameter[] parameters = new SqlParameter[] {
+                new SqlParameter("@solutionId", solutionId)
+            };
+
+            var result = SqlReader.Read(connectionString, query, parameters, DataReaders.GetSolutionCapabilities);
+
+            return result;
+        }
     }
 }

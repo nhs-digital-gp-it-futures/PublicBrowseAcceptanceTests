@@ -1,4 +1,8 @@
-﻿using System.Data;
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Reflection;
 
 namespace NHSDPublicBrowseAcceptanceTests.TestData.Utils.SqlDataReaders
 {
@@ -40,6 +44,29 @@ namespace NHSDPublicBrowseAcceptanceTests.TestData.Utils.SqlDataReaders
             dr.Read();
             int.TryParse(dr["count"].ToString(), out int result);
             return result;
+        }
+
+        internal static SolutionDto GetSolutionObject(IDataReader dr)
+        {
+            dr.Read();
+
+            SolutionDto dto = new SolutionDto
+            {
+                Id = dr["Id"].ToString(),
+                Name = dr["Name"].ToString(),
+                Summary = dr["Summary"].ToString(),
+                LastUpdated = DateTime.Parse(dr["LastUpdated"].ToString()),
+                SupplierName = dr["SupplierName"].ToString(),
+                AboutUrl = dr["AboutUrl"].ToString()
+            };
+
+            return dto;
+        }
+
+        internal static string GetSolutionCapabilities(IDataReader dr)
+        {
+            dr.Read();
+            return dr["Capabilities"].ToString();
         }
     }
 }

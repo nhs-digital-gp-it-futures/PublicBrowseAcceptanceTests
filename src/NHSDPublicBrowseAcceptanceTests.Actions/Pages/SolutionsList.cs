@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using NHSDPublicBrowseAcceptanceTests.Objects.Utils;
 using OpenQA.Selenium;
@@ -29,6 +30,22 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
             IWebElement solution = GetFirstSolution();
 
             return solution.FindElements(By.CssSelector("[data-test-id=solution-sections] label.nhsuk-label--s")).Where(s => s.Text == "Capabilities").Count() == 1;
+        }
+
+        public void OpenRandomSolution()
+        {
+            var solutions = driver.FindElements(pages.SolutionsList.Solutions);
+            var random = new Random();
+            var solution = solutions[random.Next(solutions.Count)].FindElement(pages.SolutionsList.SolutionName).FindElement(By.TagName("a"));
+            solution.Click();
+        }
+
+        public void OpenFoundationSolution()
+        {
+            var solutions = driver.FindElements(pages.SolutionsList.Solutions).Where(s => FoundationIndicatorDisplayed(s)).ToList();
+            var random = new Random();
+            var solution = solutions[random.Next(solutions.Count())].FindElement(pages.SolutionsList.SolutionName).FindElement(By.TagName("a"));
+            solution.Click();
         }
 
         public bool SolutionsHaveAllSelectedCapabilities()
@@ -196,6 +213,19 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
         public int GetFoundationSolutionIndicatorCount()
         {
             return driver.FindElements(pages.SolutionsList.FoundationSolutionIndicators).Count;
+        }
+
+        private bool FoundationIndicatorDisplayed(IWebElement element) 
+        {
+            try
+            {
+                element.FindElement(pages.SolutionsList.FoundationSolutionIndicators);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }
