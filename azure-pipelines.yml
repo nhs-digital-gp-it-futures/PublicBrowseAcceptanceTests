@@ -1,0 +1,18 @@
+# ASP.NET Core
+# Build and test ASP.NET Core projects targeting .NET Core.
+# Add steps that run tests, create a NuGet package, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+
+trigger:
+- development
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  buildConfiguration: 'Release'
+
+steps:
+- script: docker-compose up --scale chrome=4 -d
+  displayName: docker-compose
+- bash: export BROWSER=chrome && export PBURL=https://gpitbuyingcataloguedocker.azurewebsites.net && dotnet test src/ -v n
