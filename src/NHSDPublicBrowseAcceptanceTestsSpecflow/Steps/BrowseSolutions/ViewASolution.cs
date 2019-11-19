@@ -31,7 +31,7 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
         public void GivenThatAUserViewsAFoundationSolution()
         {
             new ViewSolutionsList(_test, _context).GivenThatAUserHasChosenToViewAListOfAllSolutions();
-            _test.pages.SolutionsList.OpenFoundationSolution();
+            _test.pages.SolutionsList.OpenRandomFoundationSolution();
         }
 
         [When(@"the User is viewing the Solution Page")]
