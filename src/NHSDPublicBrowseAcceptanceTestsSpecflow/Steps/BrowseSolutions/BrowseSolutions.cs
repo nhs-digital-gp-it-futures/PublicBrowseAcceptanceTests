@@ -54,15 +54,6 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
 
         }
         
-        [Then(@"all Foundation Solutions are presented in the results")]
-        public void ThenAllFoundationSolutionsArePresentedInTheResults()
-        {
-            var numberOfSolutionCards = _test.pages.SolutionsList.GetSolutionsCount();
-            var numberOfFoundationSolutionIndicators = _test.pages.SolutionsList.GetFoundationSolutionIndicatorCount();
-            numberOfFoundationSolutionIndicators.Should().BeGreaterThan(0);
-            numberOfSolutionCards.Should().BeGreaterThan(numberOfFoundationSolutionIndicators);
-        }
-        
         [Then(@"all Non-Foundation Solutions are included in the results")]
         public void ThenAllNon_FoundationSolutionsAreIncludedInTheResults()
         {

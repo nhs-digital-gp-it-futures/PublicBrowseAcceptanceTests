@@ -103,7 +103,7 @@ this.ScenarioInitialize(scenarioInfo);
 #line 14
  testRunner.When("the User chooses to view all Solutions", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 15
- testRunner.Then("all Foundation Solutions are presented in the results", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("all the Foundation Solutions are included in the results", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 16
  testRunner.And("all Non-Foundation Solutions are included in the results", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
