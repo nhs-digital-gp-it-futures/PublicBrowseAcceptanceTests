@@ -18,21 +18,21 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Features.Solutions
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.0.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
-    [NUnit.Framework.DescriptionAttribute("Browse Solutions by Foundation Solutions or All Solutions")]
-    public partial class BrowseSolutionsByFoundationSolutionsOrAllSolutionsFeature
+    [NUnit.Framework.DescriptionAttribute("ViewSolutionsList")]
+    public partial class ViewSolutionsListFeature
     {
         
         private TechTalk.SpecFlow.ITestRunner testRunner;
         
-#line 1 "BrowseSolutionsChoice.feature"
+#line 1 "ViewSolutionsList.feature"
 #line hidden
         
         [NUnit.Framework.OneTimeSetUpAttribute()]
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Browse Solutions by Foundation Solutions or All Solutions", "\tAs a Public User\r\n\tI want to browse all the Solutions according to their Foundat" +
-                    "ion or Non-Foundation type\r\n\tSo that I can view all the Solutions of both type", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "ViewSolutionsList", "\tAs a Public User\r\n\tI want to view a list of Solutions\r\n\tSo that I know what thos" +
+                    "e Solutions are", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -71,41 +71,29 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Features.Solutions
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Browse Foundation Solutions Only")]
-        public virtual void BrowseFoundationSolutionsOnly()
+        [NUnit.Framework.DescriptionAttribute("List of Solution Cards")]
+        public virtual void ListOfSolutionCards()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Browse Foundation Solutions Only", null, ((string[])(null)));
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("List of Solution Cards", null, ((string[])(null)));
 #line 6
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line 7
- testRunner.Given("the User wants to view Foundation Solutions only", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("that a User has chosen to view a list of all Solutions", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 8
- testRunner.When("the User chooses to view Foundation Solutions", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("Solutions are presented", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 9
- testRunner.Then("only Foundation Solutions are presented in the results", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("there is a Card for each Solution", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 10
- testRunner.And("all the Foundation Solutions are included in the results", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-            this.ScenarioCleanup();
-        }
-        
-        [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Browse All Solutions")]
-        public virtual void BrowseAllSolutions()
-        {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Browse All Solutions", null, ((string[])(null)));
+ testRunner.And("the Card contains the Organisation Name", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 11
+ testRunner.And("the Solution Name", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 12
-this.ScenarioInitialize(scenarioInfo);
-            this.ScenarioStart();
+ testRunner.And("the Solution Summary Description", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 13
- testRunner.Given("the User wants to view all Solutions", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.And("the names of the Capabilities provided by the Solution", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 14
- testRunner.When("the User chooses to view all Solutions", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 15
- testRunner.Then("all the Foundation Solutions are included in the results", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 16
- testRunner.And("all Non-Foundation Solutions are included in the results", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("capability \'Productivity\' is listed in the solution capabilities", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }

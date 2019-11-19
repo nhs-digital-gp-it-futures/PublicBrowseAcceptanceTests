@@ -1,5 +1,6 @@
-﻿using NHSDPublicBrowseAcceptanceTestsSpecflow.Utils;
-using System;
+﻿using FluentAssertions;
+using NHSDPublicBrowseAcceptanceTests.TestData.Utils;
+using NHSDPublicBrowseAcceptanceTestsSpecflow.Utils;
 using TechTalk.SpecFlow;
 
 namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
@@ -18,45 +19,48 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
 
         [Given(@"the User wants to view Foundation Solutions only")]
         [Given(@"the User wants to view all Solutions")]
-        public void GivenTheUserWantsToViewFoundationSolutionsOnly()
+        public void GivenIBrowseSolutions()
         {
-            _test.pages.Homepage.ClickBrowseSolutions(); 
+            _test.pages.Homepage.ClickBrowseSolutions();
         }
-        
+
         [When(@"the User chooses to view Foundation Solutions")]
         public void WhenTheUserChoosesToViewFoundationSolutions()
         {
             _test.pages.BrowseSolutions.OpenFoundationSolutions();
         }
-        
+
         [When(@"the User chooses to view all Solutions")]
         public void WhenTheUserChoosesToViewAllSolutions()
         {
             _test.pages.BrowseSolutions.OpenAllSolutions();
         }
-        
+
         [Then(@"only Foundation Solutions are presented in the results")]
         public void ThenOnlyFoundationSolutionsArePresentedInTheResults()
         {
-            _context.Pending();
+            var numberOfSolutionCards = _test.pages.SolutionsList.GetSolutionsCount();
+            var numberOfFoundationSolutionIndicators = _test.pages.SolutionsList.GetFoundationSolutionIndicatorCount();
+            numberOfFoundationSolutionIndicators.Should().Be(numberOfSolutionCards);
         }
-        
+
         [Then(@"all the Foundation Solutions are included in the results")]
         public void ThenAllTheFoundationSolutionsAreIncludedInTheResults()
         {
-            _context.Pending();
+            var numberOfFoundationSolutionsFromDb = SqlHelper.GetNumberOfFoundationSolutions(_test.connectionString);
+            var numberOfFoundationSolutionIndicatorsOnUi = _test.pages.SolutionsList.GetFoundationSolutionIndicatorCount();
+            numberOfFoundationSolutionsFromDb.Should().Be(numberOfFoundationSolutionIndicatorsOnUi);
+
         }
-        
-        [Then(@"all Foundation Solutions are presented in the results")]
-        public void ThenAllFoundationSolutionsArePresentedInTheResults()
-        {
-            _context.Pending();
-        }
-        
+
         [Then(@"all Non-Foundation Solutions are included in the results")]
         public void ThenAllNon_FoundationSolutionsAreIncludedInTheResults()
         {
-            _context.Pending();
+            var numberOfNonFoundationSolutionsFromDb = SqlHelper.GetNumberOfNonFoundationSolutions(_test.connectionString);
+            var numberOfFoundationSolutionsFromDb = SqlHelper.GetNumberOfFoundationSolutions(_test.connectionString);
+            var totalNumberOfSolutionsOnUi = _test.pages.SolutionsList.GetSolutionsCount();
+            var numberOfNonFoundationsOnUI = totalNumberOfSolutionsOnUi - numberOfFoundationSolutionsFromDb;
+            numberOfNonFoundationsOnUI.Should().Be(numberOfNonFoundationSolutionsFromDb);
         }
     }
 }

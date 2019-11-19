@@ -1,7 +1,7 @@
-﻿using NHSDPublicBrowseAcceptanceTests.Objects.Utils;
-using OpenQA.Selenium;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using NHSDPublicBrowseAcceptanceTests.Objects.Utils;
+using OpenQA.Selenium;
 
 namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
 {
@@ -45,6 +45,16 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
             return true;
         }
 
+        public int GetSolutionOrganisationNameCount()
+        {
+            return driver.FindElements(pages.SolutionsList.SolutionOrganisationName).Count();
+        }
+
+        public int GetSolutionNameCount()
+        {
+            return driver.FindElements(pages.SolutionsList.SolutionName).Count();
+        }
+
         /// <summary>
         /// Get number of solutions that contain a named capability
         /// </summary>
@@ -73,6 +83,21 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
             }
 
             return solCount;
+        }
+
+        public int GetSolutionCapabilityListCount()
+        {
+            return driver.FindElements(pages.SolutionsList.SolutionCapabilityList).Count();
+        }
+
+        public int GetSolutionSummaryCount()
+        {
+            return driver.FindElements(pages.SolutionsList.SolutionSummary).Where(s => s.Text.Length > 0).Count();
+        }
+
+        public int GetSolutionsWithCapabilityCount(string capabilityName)
+        {
+            return driver.FindElements(pages.SolutionsList.SolutionCapabilityName).Where(s => s.Text.Equals(capabilityName)).Count();
         }
 
         /// <summary>
@@ -160,6 +185,17 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
             IList<IWebElement> capabilities = solution.FindElements(CustomBy.DataTestId("capability-section-value"));
 
             return capabilities.Select(s => s.Text).ToList();
+        }
+
+
+        /// <summary>
+        /// Get total number of foundation solution indicators
+        /// used to tell the number of foundation solutions on screen
+        /// </summary>
+        /// <returns></returns>
+        public int GetFoundationSolutionIndicatorCount()
+        {
+            return driver.FindElements(pages.SolutionsList.FoundationSolutionIndicators).Count;
         }
     }
 }
