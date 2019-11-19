@@ -78,6 +78,14 @@ namespace NHSDPublicBrowseAcceptanceTests.TestData.Utils
             return result;
         }
 
+        public static int GetNumberOfSolutions(string connectionString)
+        {
+            var query = Queries.GetSolutionsCount;
+            var result = SqlReader.Read(connectionString, query, new SqlParameter[0], DataReaders.GetCount);
+
+            return result;
+        }
+
         public static int GetNumberOfFoundationSolutions(string connectionString)
         {
             var query = Queries.GetFoundationSolutionsCount;
@@ -90,6 +98,45 @@ namespace NHSDPublicBrowseAcceptanceTests.TestData.Utils
         {
             var query = Queries.GetNonFoundationSolutionsCount;
             var result = SqlReader.Read(connectionString, query, new SqlParameter[0], DataReaders.GetCount);
+
+            return result;
+        }
+
+        public static int GetSolutionsWithCapabilityCount(string capabilityName, string connectionString)
+        {
+            var query = Queries.GetSolutionsWithCapabilityCount;
+
+            SqlParameter[] parameters = new SqlParameter[] {
+                new SqlParameter("@capabilityName", capabilityName)
+            };
+
+            var result = SqlReader.Read(connectionString, query, parameters, DataReaders.GetCount);
+
+            return result;
+        }
+
+        public static SolutionDto GetSolutionDetailsObject(string solutionId, string connectionString)
+        {
+            var query = Queries.GetSingleSolution;
+
+            SqlParameter[] parameters = new SqlParameter[] {
+                new SqlParameter("@solutionId", solutionId)
+            };
+
+            var result = SqlReader.Read(connectionString, query, parameters, DataReaders.GetSolutionObject);
+
+            return result;
+        }
+
+        public static string GetSolutionCapabilities(string solutionId, string connectionString)
+        {
+            var query = Queries.GetSingleSolutionCapabilities;
+
+            SqlParameter[] parameters = new SqlParameter[] {
+                new SqlParameter("@solutionId", solutionId)
+            };
+
+            var result = SqlReader.Read(connectionString, query, parameters, DataReaders.GetSolutionCapabilities);
 
             return result;
         }

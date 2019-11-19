@@ -26,7 +26,7 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.LayoutComponents
         [Given(@"the User chooses to select the logo in the Header")]
         public void GivenTheUserChoosesToSelectTheLogoInTheHeader()
         {
-            
+
         }
 
         [When(@"they click the NHS Digital logo")]

@@ -1,7 +1,8 @@
-﻿using NHSDPublicBrowseAcceptanceTests.Objects.Utils;
-using OpenQA.Selenium;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using NHSDPublicBrowseAcceptanceTests.Objects.Utils;
+using OpenQA.Selenium;
 
 namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
 {
@@ -31,6 +32,22 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
             return solution.FindElements(By.CssSelector("[data-test-id=solution-sections] label.nhsuk-label--s")).Where(s => s.Text == "Capabilities").Count() == 1;
         }
 
+        public void OpenRandomSolution()
+        {
+            var solutions = driver.FindElements(pages.SolutionsList.Solutions);
+            var random = new Random();
+            var solution = solutions[random.Next(solutions.Count)].FindElement(pages.SolutionsList.SolutionName).FindElement(By.TagName("a"));
+            solution.Click();
+        }
+
+        public void OpenRandomFoundationSolution()
+        {
+            var solutions = driver.FindElements(pages.SolutionsList.Solutions).Where(s => FoundationIndicatorDisplayed(s)).ToList();
+            var random = new Random();
+            var solution = solutions[random.Next(solutions.Count())].FindElement(pages.SolutionsList.SolutionName).FindElement(By.TagName("a"));
+            solution.Click();
+        }
+
         public bool SolutionsHaveAllSelectedCapabilities()
         {
             IList<string> selectedCapabilities = driver.FindElements(pages.CapabilityFilter.Capabilities).Where(s => s.FindElement(By.TagName("input")).GetProperty("checked") == "checked").Select(s => s.Text).ToList();
@@ -43,6 +60,16 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
             }
 
             return true;
+        }
+
+        public int GetSolutionOrganisationNameCount()
+        {
+            return driver.FindElements(pages.SolutionsList.SolutionOrganisationName).Count();
+        }
+
+        public int GetSolutionNameCount()
+        {
+            return driver.FindElements(pages.SolutionsList.SolutionName).Count();
         }
 
         /// <summary>
@@ -73,6 +100,21 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
             }
 
             return solCount;
+        }
+
+        public int GetSolutionCapabilityListCount()
+        {
+            return driver.FindElements(pages.SolutionsList.SolutionCapabilityList).Count();
+        }
+
+        public int GetSolutionSummaryCount()
+        {
+            return driver.FindElements(pages.SolutionsList.SolutionSummary).Where(s => s.Text.Length > 0).Count();
+        }
+
+        public int GetSolutionsWithCapabilityCount(string capabilityName)
+        {
+            return driver.FindElements(pages.SolutionsList.SolutionCapabilityName).Where(s => s.Text.Equals(capabilityName)).Count();
         }
 
         /// <summary>
@@ -171,6 +213,19 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
         public int GetFoundationSolutionIndicatorCount()
         {
             return driver.FindElements(pages.SolutionsList.FoundationSolutionIndicators).Count;
+        }
+
+        private bool FoundationIndicatorDisplayed(IWebElement element) 
+        {
+            try
+            {
+                element.FindElement(pages.SolutionsList.FoundationSolutionIndicators);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }
