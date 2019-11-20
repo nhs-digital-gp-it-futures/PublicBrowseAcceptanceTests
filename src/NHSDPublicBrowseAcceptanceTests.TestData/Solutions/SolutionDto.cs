@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NHSDPublicBrowseAcceptanceTests.TestData.Utils
+namespace NHSDPublicBrowseAcceptanceTests.TestData.Solutions
 {
     public class SolutionDto
     {
@@ -11,5 +11,6 @@ namespace NHSDPublicBrowseAcceptanceTests.TestData.Utils
         public string Summary { get; set; }
         public string SupplierName{ get; set; }
         public string FullDescription { get; set; }
+        public SolutionContactDetails SolutionContactDetails { get; set; }
     }
 }

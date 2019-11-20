@@ -11,7 +11,7 @@ Scenario: Solution Details
 	And Solution Summary
 	And Solution Full Description
 	And About Solution URL
-	# And Contact Details
+	And Contact Details
 	And Last Updated Date
 	And list of Capabilities
 	And Solution ID

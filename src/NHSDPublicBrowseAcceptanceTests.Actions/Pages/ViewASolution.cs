@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using NHSDPublicBrowseAcceptanceTests.TestData.Solutions;
 using OpenQA.Selenium;
 
 namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
@@ -75,6 +76,19 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
         public string GetSolutionFullDescription()
         {
             return driver.FindElement(pages.ViewSingleSolution.SolutionFullDescription).Text;
+        }
+
+        public SolutionContactDetails GetSolutionContactDetails()
+        {
+            SolutionContactDetails contactDetails = new SolutionContactDetails
+            {
+                ContactName = driver.FindElement(pages.ViewSingleSolution.SolutionContactName).Text,
+                Department = driver.FindElement(pages.ViewSingleSolution.SolutionContactDepartment).Text,
+                PhoneNumber = driver.FindElement(pages.ViewSingleSolution.SolutionContactPhoneNumber).Text,
+                Email = driver.FindElement(pages.ViewSingleSolution.SolutionContactEmail).Text
+            };
+
+            return contactDetails;
         }
     }
 }
