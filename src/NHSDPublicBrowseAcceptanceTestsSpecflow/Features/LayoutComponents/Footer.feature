@@ -15,7 +15,7 @@ Scenario Outline: Link in Footer
 
 	# Add href when available
 	Examples: 
-	| text                             | href                                                              |	                                                              |
+	| text                             | href                                                              |
 	| NHS Digital                      | https://digital.nhs.uk/                                           |
 	| NHS Digital service desk         | /                                                                 |
 	| About GPIT Futures               | https://digital.nhs.uk/services/future-gp-it-systems-and-services |
