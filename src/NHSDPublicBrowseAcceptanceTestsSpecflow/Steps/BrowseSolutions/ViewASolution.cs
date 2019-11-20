@@ -1,8 +1,8 @@
 ﻿using FluentAssertions;
-using NHSDPublicBrowseAcceptanceTests.TestData.Solutions;
 using NHSDPublicBrowseAcceptanceTests.TestData.Utils;
 using NHSDPublicBrowseAcceptanceTestsSpecflow.Utils;
-using System;
+using System.Linq;
+using System.Net;
 using TechTalk.SpecFlow;
 
 namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
@@ -59,10 +59,18 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
         [Then(@"Solution Summary")]
         public void ThenSolutionSummary()
         {
-            var solutionSummary = _test.pages.ViewASolution.GetSolutionSummary();
-            solutionSummary.Should().Be(SolutionDetails.Summary);
+            var solutionSummary = _test.pages.ViewASolution.GetSolutionSummary().TrimEnd();
+            solutionSummary.Should().Be(SolutionDetails.Summary.TrimEnd());
         }
-        
+
+        [Then(@"Solution Full Description")]
+        public void ThenSolutionFullDescription()
+        {
+            var solutionFullDescription = _test.pages.ViewASolution.GetSolutionFullDescription().TrimEnd();
+            solutionFullDescription.Should().Be(SolutionDetails.FullDescription);
+        }
+
+
         [Then(@"About Solution URL")]
         public void ThenAboutSolutionURL()
         {
@@ -112,5 +120,29 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
             _test.pages.ViewASolution.FoundationSolutionIndicatorDisplayed().Should().BeTrue();
         }
 
+        [Then(@"the capabilities listed match the expected capabilities in the database")]
+        public void ThenTheCapabilitiesListedMatchTheExpectedCapabilitiesInTheDatabase()
+        {
+            var solutionId = _test.pages.ViewASolution.GetSolutionId();
+            var capabilities = SqlHelper.GetSolutionCapabilities(solutionId, _test.connectionString).Split(',').ToList();
+            var actualCapabilities = _test.pages.ViewASolution.GetSolutionCapabilities();
+            actualCapabilities.Should().BeEquivalentTo(capabilities);
+        }
+
+        [Then(@"the Download more information button downloads a '(.*)' file")]
+        public void ThenTheDownloadMoreInformationButtonDownloadsAFile(string fileFormat)
+        {
+            // Filename is to match the solution ID at all times
+            var solId = _test.pages.ViewASolution.GetSolutionId();
+            var fileName = $"{solId}.{fileFormat.ToLower()}";
+            var downloadLink = _test.pages.ViewASolution.GetDownloadUrl();
+
+            downloadLink.Should().Contain(fileName);
+            
+            // Does the download. Will fail test if download fails
+             using(WebClient client = new WebClient()){
+                client.DownloadFile(downloadLink, $"C:\\temp\\{fileName}");
+            }
+        }
     }
 }

@@ -90,7 +90,6 @@ this.ScenarioInitialize(scenarioInfo);
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Link in Footer")]
-        [NUnit.Framework.TestCaseAttribute("Catalogue Submissions", "/", null)]
         [NUnit.Framework.TestCaseAttribute("NHS Digital", "https://digital.nhs.uk/", null)]
         [NUnit.Framework.TestCaseAttribute("NHS Digital service desk", "/", null)]
         [NUnit.Framework.TestCaseAttribute("About GPIT Futures", "https://digital.nhs.uk/services/future-gp-it-systems-and-services", null)]

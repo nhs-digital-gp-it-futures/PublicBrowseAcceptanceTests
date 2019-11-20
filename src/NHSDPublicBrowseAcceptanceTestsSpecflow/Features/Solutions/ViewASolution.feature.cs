@@ -89,12 +89,14 @@ this.ScenarioInitialize(scenarioInfo);
 #line 11
  testRunner.And("Solution Summary", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 12
+ testRunner.And("Solution Full Description", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 13
  testRunner.And("About Solution URL", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 14
- testRunner.And("Last Updated Date", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 15
- testRunner.And("list of Capabilities", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("Last Updated Date", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 16
+ testRunner.And("list of Capabilities", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 17
  testRunner.And("Solution ID", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -105,14 +107,14 @@ this.ScenarioInitialize(scenarioInfo);
         public virtual void AttachmentDownloadLinkDisplayed()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Attachment Download Link Displayed", null, ((string[])(null)));
-#line 18
+#line 19
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
-#line 19
- testRunner.Given("that a User views a Solution", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 20
- testRunner.When("the User is viewing the Solution Page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.Given("that a User views a Solution", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 21
+ testRunner.When("the User is viewing the Solution Page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 22
  testRunner.Then("there is a link for the User to download an attachment", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -123,16 +125,52 @@ this.ScenarioInitialize(scenarioInfo);
         public virtual void FoundationSolutionIndicator()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Foundation Solution Indicator", null, ((string[])(null)));
-#line 23
+#line 24
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
-#line 24
- testRunner.Given("that a User views a Foundation Solution", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 25
- testRunner.When("the User is viewing the Solution Page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.Given("that a User views a Foundation Solution", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 26
+ testRunner.When("the User is viewing the Solution Page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 27
  testRunner.Then("the page will contain an indication that the Solution meets the criteria for a Fo" +
                     "undation Solution Set", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Capabilities displayed correctly")]
+        public virtual void CapabilitiesDisplayedCorrectly()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Capabilities displayed correctly", null, ((string[])(null)));
+#line 29
+this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line 30
+ testRunner.Given("that a User views a Solution", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 31
+ testRunner.When("the User is viewing the Solution Page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 32
+ testRunner.Then("the capabilities listed match the expected capabilities in the database", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Download more information")]
+        public virtual void DownloadMoreInformation()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Download more information", null, ((string[])(null)));
+#line 34
+this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line 35
+ testRunner.Given("that a User views a Solution", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 36
+ testRunner.When("the User is viewing the Solution Page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 37
+ testRunner.Then("the Download more information button downloads a \'PDF\' file", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

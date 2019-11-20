@@ -10,5 +10,6 @@ namespace NHSDPublicBrowseAcceptanceTests.TestData.Utils
         public string AboutUrl { get; set; }
         public string Summary { get; set; }
         public string SupplierName{ get; set; }
+        public string FullDescription { get; set; }
     }
 }
