@@ -57,7 +57,8 @@ namespace NHSDPublicBrowseAcceptanceTests.TestData.Utils.SqlDataReaders
                 Summary = dr["Summary"].ToString(),
                 LastUpdated = DateTime.Parse(dr["LastUpdated"].ToString()),
                 SupplierName = dr["SupplierName"].ToString(),
-                AboutUrl = dr["AboutUrl"].ToString()
+                AboutUrl = dr["AboutUrl"].ToString(),
+                FullDescription = dr["FullDescription"].ToString()
             };
 
             return dto;
