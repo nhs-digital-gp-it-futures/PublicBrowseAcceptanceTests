@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using NHSDPublicBrowseAcceptanceTests.TestData.Solutions;
 using NHSDPublicBrowseAcceptanceTests.TestData.Utils;
 using NHSDPublicBrowseAcceptanceTestsSpecflow.Utils;
 using System;
@@ -86,7 +87,9 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
         [Then(@"Contact Details")]
         public void ThenContactDetails()
         {
-            _context.Pending();
+            var contactDetails = _test.pages.ViewASolution.GetSolutionContactDetails();
+
+            contactDetails.Should().BeEquivalentTo(SolutionDetails.SolutionContactDetails);
         }
         
         [Then(@"Last Updated Date")]

@@ -11,7 +11,8 @@
         internal const string GetNonFoundationSolutionsCount = "SELECT COUNT (Solution.Id) as count FROM [dbo].Solution WHERE Solution.Id NOT IN ( SELECT SolutionId FROM [dbo].FrameworkSolutions WHERE IsFoundation = 1 ) AND Solution.PublishedStatusId = 4";
         internal const string GetSolutionsWithCapabilityCount = "SELECT COUNT(*) as count FROM [dbo].[SolutionCapability] AS sc LEFT JOIN .[dbo].[Capability] AS c ON c.Id = sc.CapabilityId WHERE Name = @capabilityName";
         
-        internal const string GetSingleSolution = "SELECT Sol.[Id],Sol.[Name],Sol.[LastUpdated],Det.[AboutUrl],Det.[Summary], Det.[FullDescription],Org.[Name] as SupplierName FROM .[dbo].[Solution] as Sol LEFT JOIN [dbo].[SolutionDetail] as Det ON Det.[Id] = Sol.[SolutionDetailId] LEFT JOIN [dbo].[Organisation] as Org ON Sol.OrganisationId = Org.Id WHERE Sol.Id = @solutionId";
-        internal const string GetSingleSolutionCapabilities = "SELECT STRING_AGG(CAPS.Name, ',') as Capabilities FROM Capability as CAPS Where CAPS.Id in (SELECT CapabilityId FROM SolutionCapability as SC where SC.SolutionId = @solutionId )";        
+        internal const string GetSingleSolution = "SELECT Sol.[Id],Sol.[Name],Sol.[LastUpdated],Det.[AboutUrl],Det.[Summary],Det.[FullDescription],Org.[Name] as SupplierName,RTrim(Coalesce(MC.FirstName + ' ','') + Coalesce(MC.LastName + ' ', '')) as ContactName,MC.[PhoneNumber],MC.[Email],MC.[Department] FROM [dbo].[Solution] as Sol LEFT JOIN [dbo].[SolutionDetail] as Det ON Det.[Id] = Sol.[SolutionDetailId] LEFT JOIN [dbo].[Organisation] as Org ON Sol.OrganisationId = Org.Id LEFT JOIN [dbo].[MarketingContact] as MC ON Sol.Id = MC.SolutionId WHERE Sol.Id = @solutionId";
+        internal const string GetSingleSolutionCapabilities = "SELECT STRING_AGG(CAPS.Name, ',') as Capabilities FROM Capability as CAPS Where CAPS.Id in (SELECT CapabilityId FROM SolutionCapability as SC where SC.SolutionId = @solutionId )";
+        internal const string GetSingleSolutionMarketingContact = "";
     }
 }

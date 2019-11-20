@@ -92,6 +92,8 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.And("Solution Full Description", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 13
  testRunner.And("About Solution URL", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 14
+ testRunner.And("Contact Details", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 15
  testRunner.And("Last Updated Date", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 16

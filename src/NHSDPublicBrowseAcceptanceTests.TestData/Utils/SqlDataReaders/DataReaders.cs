@@ -1,3 +1,4 @@
+using NHSDPublicBrowseAcceptanceTests.TestData.Solutions;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -58,8 +59,18 @@ namespace NHSDPublicBrowseAcceptanceTests.TestData.Utils.SqlDataReaders
                 LastUpdated = DateTime.Parse(dr["LastUpdated"].ToString()),
                 SupplierName = dr["SupplierName"].ToString(),
                 AboutUrl = dr["AboutUrl"].ToString(),
-                FullDescription = dr["FullDescription"].ToString()
+                FullDescription = dr["FullDescription"].ToString(),                
             };
+
+            SolutionContactDetails contactDetails = new SolutionContactDetails
+            {
+                ContactName = dr["Contactname"].ToString(),
+                Email = dr["Email"].ToString(),
+                PhoneNumber = dr["PhoneNumber"].ToString(),
+                Department = dr["Department"].ToString()
+            };
+
+            dto.SolutionContactDetails = contactDetails;
 
             return dto;
         }

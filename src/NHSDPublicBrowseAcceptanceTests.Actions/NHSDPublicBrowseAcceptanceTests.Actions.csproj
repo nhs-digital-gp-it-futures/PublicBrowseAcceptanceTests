@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\NHSDPublicBrowseAcceptanceTests.Objects\NHSDPublicBrowseAcceptanceTests.Objects.csproj" />
+    <ProjectReference Include="..\NHSDPublicBrowseAcceptanceTests.TestData\NHSDPublicBrowseAcceptanceTests.TestData.csproj" />
   </ItemGroup>
 
 </Project>

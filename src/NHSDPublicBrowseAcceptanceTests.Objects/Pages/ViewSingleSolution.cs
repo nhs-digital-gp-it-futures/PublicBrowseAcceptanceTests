@@ -25,5 +25,10 @@ namespace NHSDPublicBrowseAcceptanceTests.Objects.Pages
         public By FoundationSolutionIndicator => CustomBy.DataTestId("solution-foundation-tag");
 
         public By SolutionFullDescription => CustomBy.DataTestId("view-question-data-text-description");
+
+        public By SolutionContactName => CustomBy.DataTestId("view-question-data-text-contact-name", "label");
+        public By SolutionContactDepartment => CustomBy.DataTestId("view-question-data-text-department-name", "label");
+        public By SolutionContactPhoneNumber => CustomBy.DataTestId("view-question-data-text-phone-number", "label");
+        public By SolutionContactEmail => CustomBy.DataTestId("view-question-data-text-email-address", "label");
     }
 }
