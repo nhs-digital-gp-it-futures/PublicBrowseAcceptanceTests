@@ -1,6 +1,8 @@
 ﻿using FluentAssertions;
 using NHSDPublicBrowseAcceptanceTests.TestData.Utils;
 using NHSDPublicBrowseAcceptanceTestsSpecflow.Utils;
+using System;
+using System.IO;
 using System.Linq;
 using System.Net;
 using TechTalk.SpecFlow;
@@ -136,12 +138,13 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
             var solId = _test.pages.ViewASolution.GetSolutionId();
             var fileName = $"{solId}.{fileFormat.ToLower()}";
             var downloadLink = _test.pages.ViewASolution.GetDownloadUrl();
+            var downloadPath = Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory);
 
             downloadLink.Should().Contain(fileName);
             
             // Does the download. Will fail test if download fails
              using(WebClient client = new WebClient()){
-                client.DownloadFile(downloadLink, $"C:\\temp\\{fileName}");
+                client.DownloadFile(downloadLink, Path.Combine(downloadPath,fileName));
             }
         }
     }
