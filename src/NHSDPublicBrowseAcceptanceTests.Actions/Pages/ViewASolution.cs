@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using OpenQA.Selenium;
 
 namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
@@ -57,6 +59,22 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
         public bool FoundationSolutionIndicatorDisplayed()
         {
             return driver.FindElement(pages.ViewSingleSolution.FoundationSolutionIndicator).Displayed;
+        }
+
+        public IList<string> GetSolutionCapabilities()
+        {
+            var capabilities = driver.FindElements(pages.ViewSingleSolution.SolutionCapabilities).Select(s => s.Text).ToList();
+            return capabilities;
+        }
+
+        public string GetDownloadUrl()
+        {
+            return driver.FindElement(pages.ViewSingleSolution.AttachmentDownloadLink).GetAttribute("href");            
+        }
+
+        public string GetSolutionFullDescription()
+        {
+            return driver.FindElement(pages.ViewSingleSolution.SolutionFullDescription).Text;
         }
     }
 }
