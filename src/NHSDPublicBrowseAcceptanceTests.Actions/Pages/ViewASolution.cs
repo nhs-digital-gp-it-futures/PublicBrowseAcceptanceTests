@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
+using FluentAssertions;
 using NHSDPublicBrowseAcceptanceTests.TestData.Solutions;
 using OpenQA.Selenium;
 
@@ -12,9 +14,10 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
         {
         }
 
-        public void PageDisplayed()
+        public void PageDisplayed(string url)
         {
-            wait.Until(s => s.Url.Contains("/view-solution/"));
+            // Should be a better way to do this that doesn't rely on RegEx matching
+            Regex.Match(driver.Url, $@"{url}/solutions/(foundation|all)/(.*)").Success.Should().BeTrue();            
         }
 
         public string GetSolutionId()
