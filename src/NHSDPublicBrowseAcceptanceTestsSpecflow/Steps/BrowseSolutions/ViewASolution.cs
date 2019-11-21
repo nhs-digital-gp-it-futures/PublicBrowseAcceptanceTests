@@ -39,8 +39,8 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
 
         [When(@"the User is viewing the Solution Page")]
         public void WhenTheUserIsViewingTheSolutionPage()
-        {
-            _test.pages.ViewASolution.PageDisplayed();
+        {   
+            _test.pages.ViewASolution.PageDisplayed(_test.url);
             var id = _test.pages.ViewASolution.GetSolutionId();
             SolutionDetails = SqlHelper.GetSolutionDetailsObject(id, _test.connectionString);
         }
@@ -70,7 +70,7 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
         public void ThenSolutionFullDescription()
         {
             var solutionFullDescription = _test.pages.ViewASolution.GetSolutionFullDescription().TrimEnd();
-            solutionFullDescription.Should().Be(SolutionDetails.FullDescription);
+            solutionFullDescription.Should().Be(SolutionDetails.FullDescription.TrimEnd());
         }
 
 
