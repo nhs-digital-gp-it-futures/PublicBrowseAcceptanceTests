@@ -22,7 +22,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Objects.Pages
 
         public By AttachmentDownloadLink => CustomBy.DataTestId("view-solution-page-download-info-button", "a");
 
-        public By FoundationSolutionIndicator => CustomBy.DataTestId("solution-foundation-tag");
+        public By FoundationSolutionIndicator => CustomBy.DataTestId("view-solution-foundation-tag");
 
         public By SolutionFullDescription => CustomBy.DataTestId("view-question-data-text-description");
 
