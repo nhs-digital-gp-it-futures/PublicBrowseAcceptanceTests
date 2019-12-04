@@ -39,7 +39,7 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.LayoutComponents
         [Then(@"they are directed to the domain URL")]
         public void ThenTheyAreDirectedToTheDomainURL()
         {
-            _test.pages.Common.GetUrl().Should().Be(_test.url + "/");
+            _test.pages.Common.GetUrl().Should().Be(_test.url + '/');
         }
 
         [Then(@"a Terms of use banner is displayed")]
