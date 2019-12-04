@@ -20,19 +20,16 @@ variables:
 steps:
 - script: docker-compose up --scale chrome=4 -d
   displayName: docker-compose
-#- bash: "export BROWSER=chrome && 
-#  export SERVERURL=$(SERVERURL) && 
-#  export DATABASENAME=$(DATABASENAME) && 
-#  export DBUSER=$(DBUSER) && 
-#  export DBPASSWORD=$(DBPASSWORD) && 
-#  export PBURL=$(URL)"
+- bash: "export BROWSER=chrome && 
+  export SERVERURL=$(SERVERURL) && 
+  export DATABASENAME=$(DATABASENAME) && 
+  export DBUSER=$(DBUSER) && 
+  export DBPASSWORD=$(DBPASSWORD) && 
+  export PBURL=$(URL) &&
+  dotnet test src/ -v n -l:trx;LogFileName=/test/results.trx"
 
-- task: UseDotNet@2
+- task: PublishTestResults@2
   inputs:
-    version: '2.2.x'
-    packageType: runtime
-- task: DotNetCoreCLI@2
-  inputs:
-    command: test
-    projects: '**/src/*.sln'
-    arguments: '-v n'
+    testResultsFiles: '**/*.trx'
+    failTaskOnFailedTests: true
+    testRunner: VSTest
