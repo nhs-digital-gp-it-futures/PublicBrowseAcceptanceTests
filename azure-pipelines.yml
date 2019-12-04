@@ -11,16 +11,21 @@ pool:
 
 variables:
   buildConfiguration: 'Release'
+  SERVERURL: $(SERVERURL)
+  DATABASENAME: $(DATABASENAME)
+  DBUSER: $(DBUSER)
+  DBPASSWORD: $(DBPASSWORD)
+  PBURL: $(URL)
 
 steps:
 - script: docker-compose up --scale chrome=4 -d
   displayName: docker-compose
-- bash: "export BROWSER=chrome && 
-  export SERVERURL=$(SERVERURL) && 
-  export DATABASENAME=$(DATABASENAME) && 
-  export DBUSER=$(DBUSER) && 
-  export DBPASSWORD=$(DBPASSWORD) && 
-  export PBURL=$(URL)"
+#- bash: "export BROWSER=chrome && 
+#  export SERVERURL=$(SERVERURL) && 
+#  export DATABASENAME=$(DATABASENAME) && 
+#  export DBUSER=$(DBUSER) && 
+#  export DBPASSWORD=$(DBPASSWORD) && 
+#  export PBURL=$(URL)"
 
 - task: UseDotNet@2
   inputs:
