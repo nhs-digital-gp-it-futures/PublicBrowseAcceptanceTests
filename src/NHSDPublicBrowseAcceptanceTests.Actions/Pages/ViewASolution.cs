@@ -17,7 +17,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
         public void PageDisplayed(string url)
         {
             // Should be a better way to do this that doesn't rely on RegEx matching
-            Regex.Match(driver.Url, $@"{url}/solutions/(foundation|all)/*").Success.Should().BeTrue();            
+            Regex.Match(driver.Url, $@"{url}/solutions/(foundation|all)/.*").Success.Should().BeTrue();            
         }
 
         public string GetSolutionId()
