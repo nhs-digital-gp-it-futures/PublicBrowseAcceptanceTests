@@ -15,4 +15,4 @@ variables:
 steps:
 - script: docker-compose up --scale chrome=4 -d
   displayName: docker-compose
-- bash: export BROWSER=chrome && export PBURL=https://gpitbuyingcataloguedocker.azurewebsites.net && dotnet test src/ -v n
+- bash: export BROWSER=chrome && export PBURL=http://gpitfuturesdev.uksouth.cloudapp.azure.com/ && dotnet test src/ -v n
