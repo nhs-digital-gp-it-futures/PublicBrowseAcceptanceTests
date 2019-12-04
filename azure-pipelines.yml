@@ -20,5 +20,5 @@ steps:
   export DATABASENAME=$(DATABASENAME) && 
   export DBUSER=$(DBUSER) && 
   export DBPASSWORD=$(DBPASSWORD) && 
-  export PBURL=http://gpitfuturesdev.uksouth.cloudapp.azure.com/ && 
+  export PBURL=http://gpitfuturesdev.uksouth.cloudapp.azure.com && 
   dotnet test src/ -v n"
