@@ -11,11 +11,6 @@ pool:
 
 variables:
   buildConfiguration: 'Release'
-  SERVERURL: $(SERVERURL)
-  DATABASENAME: $(DATABASENAME)
-  DBUSER: $(DBUSER)
-  DBPASSWORD: $(DBPASSWORD)
-  PBURL: $(URL)
 
 steps:
 - script: docker-compose up --scale chrome=4 -d
