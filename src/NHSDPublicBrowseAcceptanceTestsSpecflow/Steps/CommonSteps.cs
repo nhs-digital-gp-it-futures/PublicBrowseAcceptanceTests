@@ -1,25 +1,30 @@
-﻿using FluentAssertions;
+﻿using System;
+using FluentAssertions;
+using NHSDPublicBrowseAcceptanceTests.TestData.Solutions;
+using NHSDPublicBrowseAcceptanceTests.TestData.Utils;
 using NHSDPublicBrowseAcceptanceTestsSpecflow.Utils;
 using TechTalk.SpecFlow;
 
 namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps
 {
     [Binding]
-    public sealed class CommonSteps
+    public class CommonSteps
     {
-        private readonly UITest _test;
-        private readonly ScenarioContext _context;
+        internal readonly UITest _test;
+        internal readonly ScenarioContext _context;
+
+        public void CreateBlankSolution()
+        {
+            _test.solution = CreateSolution.CreateNewSolution(published: true);
+            _test.solutionDetail = CreateSolutionDetails.CreateNewSolutionDetail(_test.solution.Id, Guid.NewGuid(), 0, false);
+            var contact = CreateContactDetails.NewContactDetail();
+            SqlHelper.CreateBlankSolution(_test.solution, _test.solutionDetail, _test.connectionString, contact);
+        }
 
         public CommonSteps(UITest test, ScenarioContext context)
         {
             _test = test;
             _context = context;
-        }
-
-        [StepDefinition(@"Solutions are presented")]
-        public void SolutionsArePresented()
-        {
-            _test.pages.SolutionsList.WaitForSolutionToBeDisplayed();
         }
 
         [Given(@"no Capability is selected")]

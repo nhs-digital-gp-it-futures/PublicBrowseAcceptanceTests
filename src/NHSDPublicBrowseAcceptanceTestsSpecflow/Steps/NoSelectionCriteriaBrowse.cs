@@ -16,8 +16,9 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps
             _context = context;
         }
 
-        [Given(@"that Solutions are presented")]
+        [Given(@"that Solutions are presented")]        
         [Given(@"no selection criteria are applied")]
+        [When(@"Solutions are presented")]
         [When(@"no selection criteria are applied")]
         public void GivenNoSelectionCriteriaAreApplied()
         {

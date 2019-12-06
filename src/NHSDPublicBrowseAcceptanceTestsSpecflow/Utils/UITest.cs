@@ -1,5 +1,6 @@
 ﻿using NHSDPublicBrowseAcceptanceTests.Actions;
 using NHSDPublicBrowseAcceptanceTests.Actions.Pages;
+using NHSDPublicBrowseAcceptanceTests.TestData.Solutions;
 using OpenQA.Selenium;
 
 namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Utils
@@ -11,6 +12,8 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Utils
         internal string connectionString;
         internal string url;
         internal int expectedSolutionsCount;
+        internal Solution solution;
+        internal SolutionDetail solutionDetail;
 
         public UITest()
         {

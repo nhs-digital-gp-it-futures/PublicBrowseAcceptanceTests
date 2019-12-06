@@ -6,7 +6,7 @@ namespace NHSDPublicBrowseAcceptanceTests.TestData.Solutions
     {
         const string prefix = "AutoSol";
 
-        public static Solution CreateNewSolution()
+        public static Solution CreateNewSolution(bool published = false)
         {
             var faker = new Faker();
 
@@ -15,7 +15,8 @@ namespace NHSDPublicBrowseAcceptanceTests.TestData.Solutions
             {
                 Id = Id,
                 Name = faker.Name.JobTitle(),
-                Version = faker.System.Semver()
+                Version = faker.System.Semver(),
+                PublishedStatusId = published ? 3 : 1
             };
 
             return solution;
@@ -26,6 +27,11 @@ namespace NHSDPublicBrowseAcceptanceTests.TestData.Solutions
             var suffix = faker.Random.Digits(14 - prefix.Length);
 
             return $"{prefix}{string.Join("", suffix)}";
+        }
+
+        public static SolutionDetail CreateCompleteSolutionDetail(Solution solution, SolutionDetail solutionDetail)
+        {
+            return CreateSolutionDetails.CreateNewSolutionDetail(solution.Id, solutionDetail.SolutionDetailId, 5);
         }
     }
 }

@@ -39,6 +39,17 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
             var solution = solutions[random.Next(solutions.Count)].FindElement(pages.SolutionsList.SolutionName).FindElement(By.TagName("a"));
             solution.Click();
         }
+        public void OpenNamedSolution(string solutionName)
+        {
+            var solution = driver.FindElements(pages.SolutionsList.SolutionName).Where(s => s.Text.Equals(solutionName)).First().FindElement(By.TagName("a"));
+            solution.Click();
+        }
+
+        public IList<string> GetListOfSolutionNames()
+        {
+            var solutions = driver.FindElements(pages.SolutionsList.Solutions).Select(s => s.FindElement(pages.SolutionsList.SolutionName).Text).ToList();
+            return solutions;
+        }
 
         public void OpenRandomFoundationSolution()
         {
@@ -215,7 +226,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
             return driver.FindElements(pages.SolutionsList.FoundationSolutionIndicators).Count;
         }
 
-        private bool FoundationIndicatorDisplayed(IWebElement element) 
+        private bool FoundationIndicatorDisplayed(IWebElement element)
         {
             try
             {

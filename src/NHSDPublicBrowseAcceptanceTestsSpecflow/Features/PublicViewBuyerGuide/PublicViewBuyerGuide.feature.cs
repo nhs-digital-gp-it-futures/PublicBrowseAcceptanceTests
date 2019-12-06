@@ -71,68 +71,24 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Features.PublicViewBuyerGuide
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Homepage Navigation")]
-        [NUnit.Framework.IgnoreAttribute("Ignored scenario")]
-        public virtual void HomepageNavigation()
-        {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Homepage Navigation", null, new string[] {
-                        "ignore"});
-#line 7
- this.ScenarioInitialize(scenarioInfo);
-            this.ScenarioStart();
-#line 8
-  testRunner.Given("the User chooses to view the Buying Catalogue Homepage", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 9
-  testRunner.When("the choose to access the Buyer Guide dedicated content page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 10
-  testRunner.Then("they can do so via a control on the Homepage", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-            this.ScenarioCleanup();
-        }
-        
-        [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Footer Navigation")]
-        [NUnit.Framework.IgnoreAttribute("Ignored scenario")]
-        public virtual void FooterNavigation()
-        {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Footer Navigation", null, new string[] {
-                        "ignore"});
-#line 12
- this.ScenarioInitialize(scenarioInfo);
-            this.ScenarioStart();
-#line 13
-  testRunner.Given("the User chooses to view the Buying Catalogue Homepage", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 14
-  testRunner.When("the choose to access the Buyer Guide dedicated content page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 15
-  testRunner.Then("they can do so via a control in the Footer", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-            this.ScenarioCleanup();
-        }
-        
-        [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Public View Buyer Guide")]
-        [NUnit.Framework.IgnoreAttribute("Ignored scenario")]
         public virtual void PublicViewBuyerGuide()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Public View Buyer Guide", null, new string[] {
-                        "ignore"});
-#line 17
- this.ScenarioInitialize(scenarioInfo);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Public View Buyer Guide", null, ((string[])(null)));
+#line 7
+this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
-#line 18
-  testRunner.Given("the User chooses to view the Buying Catalogue Homepage", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 19
-  testRunner.When("the choose to access the Buyer Guide dedicated content page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 20
-  testRunner.Then("they can do so via a control on the Homepage", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 21
-  testRunner.And("they are presented with a control to access the Buyer Guide as a digital document" +
-                    " download (e.g. a PDF)", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 22
-  testRunner.And("they are presented with guidance content about the Buying Catalogue", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 23
-  testRunner.And("they are presented with guidance content about the Service Desk", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 8
+ testRunner.Given("the User chooses to view the Buying Catalogue Homepage", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 9
+ testRunner.When("the choose to access the Buyer Guide dedicated content page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 10
+ testRunner.Then("they are presented with a control to access the Buyer Guide as a digital document" +
+                    " download (e.g. a PDF)", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 11
+ testRunner.And("they are presented with guidance content about the Buying Catalogue", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 12
+ testRunner.And("they are presented with guidance content about the Service Desk", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }

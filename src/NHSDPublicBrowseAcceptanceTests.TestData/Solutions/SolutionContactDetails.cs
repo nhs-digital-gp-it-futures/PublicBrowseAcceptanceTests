@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace NHSDPublicBrowseAcceptanceTests.TestData.Solutions
+﻿namespace NHSDPublicBrowseAcceptanceTests.TestData.Solutions
 {
     public sealed class SolutionContactDetails
     {

@@ -1,5 +1,7 @@
-﻿using System;
+﻿using FluentAssertions;
 using NHSDPublicBrowseAcceptanceTestsSpecflow.Utils;
+using System;
+using System.IO;
 using TechTalk.SpecFlow;
 
 namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.PublicViewBuyerGuide
@@ -19,37 +21,30 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.PublicViewBuyerGuide
         [When(@"the choose to access the Buyer Guide dedicated content page")]
         public void WhenTheChooseToAccessTheBuyerGuideDedicatedContentPage()
         {
-            _context.Pending();
+            _test.pages.Homepage.ClickBuyersGuideControl();
         }
-        
-        [Then(@"they can do so via a control on the Homepage")]
-        public void ThenTheyCanDoSoViaAControlOnTheHomepage()
-        {
-            _context.Pending();
-        }
-        
-        [Then(@"they can do so via a control in the Footer")]
-        public void ThenTheyCanDoSoViaAControlInTheFooter()
-        {
-            _context.Pending();
-        }
-        
+
         [Then(@"they are presented with a control to access the Buyer Guide as a digital document download \(e\.g\. a PDF\)")]
         public void ThenTheyArePresentedWithAControlToAccessTheBuyerGuideAsADigitalDocumentDownloadE_G_APDF()
         {
-            _context.Pending();
+            _test.pages.BuyersGuide.DownloadLinkPresented();
+            string downloadLink = _test.pages.BuyersGuide.GetDownloadLink();
+            string fileName = "BuyersGuide.pdf";
+            string downloadPath = Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory);
+
+            _test.pages.Common.DownloadFile(fileName, downloadPath, downloadLink);
         }
-        
+
         [Then(@"they are presented with guidance content about the Buying Catalogue")]
         public void ThenTheyArePresentedWithGuidanceContentAboutTheBuyingCatalogue()
         {
-            _context.Pending();
+            _test.pages.BuyersGuide.CatalogueGuidanceContentDisplayed().Should().BeTrue();
         }
-        
+
         [Then(@"they are presented with guidance content about the Service Desk")]
         public void ThenTheyArePresentedWithGuidanceContentAboutTheServiceDesk()
         {
-            _context.Pending();
+            _test.pages.BuyersGuide.ServiceDeskGuidanceContentDisplayed().Should().BeTrue();
         }
     }
 }

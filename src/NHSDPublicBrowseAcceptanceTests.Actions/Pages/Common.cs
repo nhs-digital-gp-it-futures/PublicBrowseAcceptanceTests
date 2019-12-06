@@ -1,5 +1,9 @@
 ﻿using FluentAssertions;
 using OpenQA.Selenium;
+using System;
+using System.IO;
+using System.Linq;
+using System.Net;
 
 namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
 {
@@ -26,6 +30,11 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
             driver.FindElement(pages.Common.NHSLogo).Click();
         }
 
+        public void PageDisplayed(string pageTitle)
+        {
+            driver.FindElement(pages.Common.PageTitle).Text.Should().Be(pageTitle);
+        }
+
         public void URLContains(string href)
         {
             driver.Url.Should().Contain(href);
@@ -34,6 +43,13 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
         public string GetUrl()
         {
             return driver.Url;
+        }
+        public void DownloadFile(string fileName, string downloadPath, string downloadLink)
+        {
+            using (WebClient client = new WebClient())
+            {
+                client.DownloadFile(downloadLink, Path.Combine(downloadPath, fileName));
+            }
         }
     }
 }

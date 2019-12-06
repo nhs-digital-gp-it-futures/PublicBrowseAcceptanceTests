@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using FluentAssertions;
@@ -17,7 +16,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
         public void PageDisplayed(string url)
         {
             // Should be a better way to do this that doesn't rely on RegEx matching
-            Regex.Match(driver.Url, $@"{url}/solutions/(foundation|all)/.*").Success.Should().BeTrue();            
+            Regex.Match(driver.Url, $@"{url}/solutions/(foundation|all)/.*").Success.Should().BeTrue();
         }
 
         public string GetSolutionId()
@@ -42,7 +41,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
 
         public string GetSolutionLastUpdated()
         {
-            return driver.FindElement(pages.ViewSingleSolution.SolutionLastUpdated).Text.Replace("Page last updated: ","");
+            return driver.FindElement(pages.ViewSingleSolution.SolutionLastUpdated).Text.Replace("Page last updated: ", "");
         }
 
         public string GetSolutionAboutUrl()
@@ -73,7 +72,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
 
         public string GetDownloadUrl()
         {
-            return driver.FindElement(pages.ViewSingleSolution.AttachmentDownloadLink).GetAttribute("href");            
+            return driver.FindElement(pages.ViewSingleSolution.AttachmentDownloadLink).GetAttribute("href");
         }
 
         public string GetSolutionFullDescription()

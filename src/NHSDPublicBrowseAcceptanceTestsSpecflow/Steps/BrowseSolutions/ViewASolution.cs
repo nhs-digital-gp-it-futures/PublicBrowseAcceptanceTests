@@ -1,26 +1,23 @@
-﻿using FluentAssertions;
-using NHSDPublicBrowseAcceptanceTests.TestData.Solutions;
-using NHSDPublicBrowseAcceptanceTests.TestData.Utils;
-using NHSDPublicBrowseAcceptanceTestsSpecflow.Utils;
-using System;
+﻿using System;
 using System.IO;
 using System.Linq;
 using System.Net;
+using FluentAssertions;
+using NHSDPublicBrowseAcceptanceTests.TestData.Solutions;
+using NHSDPublicBrowseAcceptanceTests.TestData.Utils;
+using NHSDPublicBrowseAcceptanceTestsSpecflow.Utils;
 using TechTalk.SpecFlow;
 
 namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
 {
     [Binding]
-    public class ViewASolution
+    public class ViewASolution : CommonSteps
     {
-        private readonly UITest _test;
-        private readonly ScenarioContext _context;
         private SolutionDto SolutionDetails;
+        private string expectedLastUpdatedDate;
 
-        public ViewASolution(UITest test, ScenarioContext context)        
+        public ViewASolution(UITest test, ScenarioContext context): base (test, context)
         {
-            _test = test;
-            _context = context;
         }
 
         [Given(@"that a User views a Solution")]
@@ -30,6 +27,19 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
             _test.pages.SolutionsList.OpenRandomSolution();
         }
 
+        [Given(@"that a User views a created Solution")]
+        public void GivenThatAUserViewsACreatedSolution()
+        {
+            CreateBlankSolution();
+            new ViewSolutionsList(_test, _context).GivenThatAUserHasChosenToViewAListOfAllSolutions();
+            var oldDate = new DateTime(2001, 02, 03);
+            SqlHelper.UpdateLastUpdated(oldDate, "Solution", "id", _test.solution.Id, _test.connectionString);
+            SqlHelper.UpdateLastUpdated(oldDate, "SolutionDetail", "SolutionId", _test.solution.Id, _test.connectionString);
+            SqlHelper.UpdateLastUpdated(oldDate, "MarketingContact", "SolutionId", _test.solution.Id, _test.connectionString);
+            _test.pages.SolutionsList.OpenNamedSolution(_test.solution.Name);
+        }
+
+
         [Given(@"that a User views a Foundation Solution")]
         public void GivenThatAUserViewsAFoundationSolution()
         {
@@ -37,28 +47,28 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
             _test.pages.SolutionsList.OpenRandomFoundationSolution();
         }
 
-        [When(@"the User is viewing the Solution Page")]
+        [StepDefinition(@"the User is viewing the Solution Page")]
         public void WhenTheUserIsViewingTheSolutionPage()
-        {   
+        {
             _test.pages.ViewASolution.PageDisplayed(_test.url);
             var id = _test.pages.ViewASolution.GetSolutionId();
             SolutionDetails = SqlHelper.GetSolutionDetailsObject(id, _test.connectionString);
         }
-        
+
         [Then(@"the page will contain Supplier Name")]
         public void ThenThePageWillContainSupplierName()
         {
             var supplierName = _test.pages.ViewASolution.GetSupplierName();
             supplierName.Should().Be(SolutionDetails.SupplierName);
         }
-        
+
         [Then(@"Solution Name")]
         public void ThenSolutionName()
         {
             var solutionName = _test.pages.ViewASolution.GetSolutionName();
             solutionName.Should().Be(SolutionDetails.Name);
         }
-        
+
         [Then(@"Solution Summary")]
         public void ThenSolutionSummary()
         {
@@ -83,7 +93,7 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
                 solutionAboutUrl.Should().Be(SolutionDetails.AboutUrl);
             }
         }
-        
+
         [Then(@"Contact Details")]
         public void ThenContactDetails()
         {
@@ -91,21 +101,22 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
 
             contactDetails.Should().BeEquivalentTo(SolutionDetails.SolutionContactDetails);
         }
-        
+
         [Then(@"Last Updated Date")]
         public void ThenLastUpdatedDate()
         {
-            var lastUpdated = SolutionDetails.LastUpdated.ToString("dd-MMM-yyyy");
+            var lastUpdated = SolutionDetails.LastUpdated.ToString("yyyy-MM-dd");
             var actualLastUpdated = _test.pages.ViewASolution.GetSolutionLastUpdated();
+            actualLastUpdated = Convert.ToDateTime(actualLastUpdated).ToString("yyyy-MM-dd");
             actualLastUpdated.Should().Be(lastUpdated);
         }
-        
+
         [Then(@"list of Capabilities")]
         public void ThenListOfCapabilities()
         {
             _test.pages.ViewASolution.CapabilitiesListDisplayed().Should().BeTrue();
         }
-        
+
         [Then(@"Solution ID")]
         public void ThenSolutionID()
         {
@@ -141,14 +152,34 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
             var solId = _test.pages.ViewASolution.GetSolutionId();
             var fileName = $"{solId}.{fileFormat.ToLower()}";
             var downloadLink = _test.pages.ViewASolution.GetDownloadUrl();
+
             var downloadPath = Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory);
 
             downloadLink.Should().Contain(fileName);
-            
-            // Does the download. Will fail test if download fails
-             using(WebClient client = new WebClient()){
-                client.DownloadFile(downloadLink, Path.Combine(downloadPath,fileName));
-            }
+
+            _test.pages.Common.DownloadFile(fileName, downloadPath, downloadLink);
         }
+
+        [When(@"the LastUpdated value in the (.*) table is updated")]
+        public void WhenTheLastUpdatedValueInTheSolutionTableIsUpdated(string tableName)
+        {
+            var updatedDate = DateTime.Now;
+            expectedLastUpdatedDate = updatedDate.ToString("yyyy-MM-dd");
+
+            var whereKey = tableName.Equals("Solution") ? "Id" : "SolutionId";
+
+            SqlHelper.UpdateLastUpdated(updatedDate, tableName, whereKey, _test.solution.Id, _test.connectionString);
+        }
+
+        [Then(@"the page last updated date shown is updated as expected")]
+        public void ThenThePageLastUpdatedDateShownIsUpdatedAsExpected()
+        {
+            _test.driver.Navigate().Refresh();
+            var actualLastUpdated = _test.pages.ViewASolution.GetSolutionLastUpdated();
+            actualLastUpdated = Convert.ToDateTime(actualLastUpdated).ToString("yyyy-MM-dd");
+            actualLastUpdated.Should().Be(expectedLastUpdatedDate);
+        }
+
+
     }
 }
