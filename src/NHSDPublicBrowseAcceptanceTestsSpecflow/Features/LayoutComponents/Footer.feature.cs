@@ -94,6 +94,7 @@ this.ScenarioInitialize(scenarioInfo);
         [NUnit.Framework.TestCaseAttribute("NHS Digital service desk", "/", null)]
         [NUnit.Framework.TestCaseAttribute("About GPIT Futures", "https://digital.nhs.uk/services/future-gp-it-systems-and-services", null)]
         [NUnit.Framework.TestCaseAttribute("Capabilities and Standards Model", "https://gpitbjss.atlassian.net/wiki/spaces/GPITF/overview", null)]
+        [NUnit.Framework.TestCaseAttribute("Buyer\'s Guide", "/guide", null)]
         public virtual void LinkInFooter(string text, string href, string[] exampleTags)
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Link in Footer", null, exampleTags);
