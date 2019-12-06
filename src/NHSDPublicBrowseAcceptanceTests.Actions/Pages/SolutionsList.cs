@@ -40,6 +40,12 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
             solution.Click();
         }
 
+        public IList<string> GetListOfSolutionNames()
+        {
+            var solutions = driver.FindElements(pages.SolutionsList.Solutions).Select(s => s.FindElement(pages.SolutionsList.SolutionName).Text).ToList();
+            return solutions;
+        }
+
         public void OpenRandomFoundationSolution()
         {
             var solutions = driver.FindElements(pages.SolutionsList.Solutions).Where(s => FoundationIndicatorDisplayed(s)).ToList();

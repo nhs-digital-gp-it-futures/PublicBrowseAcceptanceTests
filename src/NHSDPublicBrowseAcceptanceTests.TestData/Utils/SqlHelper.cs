@@ -45,7 +45,8 @@ namespace NHSDPublicBrowseAcceptanceTests.TestData.Utils
                 new SqlParameter("@solutionName", solution.Name),
                 new SqlParameter("@solutionVersion", solution.Version),
                 new SqlParameter("@lastUpdatedBy", Guid.Empty),
-                new SqlParameter("@lastUpdated", DateTime.Now)
+                new SqlParameter("@lastUpdated", DateTime.Now),
+                new SqlParameter("@publishStatus", solution.PublishedStatusId)
             };
 
             SqlReader.Read(connectionString, solutionQuery, parameters, DataReaders.NoReturn);
@@ -69,6 +70,14 @@ namespace NHSDPublicBrowseAcceptanceTests.TestData.Utils
             };
 
             SqlReader.Read(connectionString, updateSolutionDetail, updateSolId, DataReaders.NoReturn);
+
+            var randomCapabilityQuery = Queries.AddRandomSolutionCapability;
+
+            SqlParameter[] capabilityParams = new SqlParameter[] {                
+                new SqlParameter("@solutionId", solution.Id)
+            };
+
+            SqlReader.Read(connectionString, randomCapabilityQuery, capabilityParams, DataReaders.NoReturn);
 
             if (contactDetails != null)
             {
@@ -95,6 +104,12 @@ namespace NHSDPublicBrowseAcceptanceTests.TestData.Utils
             };
 
             SqlReader.Read(connectionString, solututionDetailQuery, newParameters, DataReaders.NoReturn);
+
+            var capsParams = new SqlParameter[] {
+                new SqlParameter("@solutionId", solutionId)
+            }; ;
+
+            SqlReader.Read(connectionString, Queries.DeleteSolutionCapability, capsParams, DataReaders.NoReturn);
 
             //remove any contact details
             DeleteContactDetailsForSolution(solutionId, connectionString);
