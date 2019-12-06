@@ -11,5 +11,6 @@
         public Header Header { get; set; }
         public BrowseSolutions BrowseSolutions { get; set; }
         public ViewASolution ViewASolution { get; set; }
+        public BuyersGuide BuyersGuide { get; set; }
     }
 }

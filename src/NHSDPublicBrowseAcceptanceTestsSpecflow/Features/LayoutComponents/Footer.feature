@@ -20,3 +20,4 @@ Scenario Outline: Link in Footer
 	| NHS Digital service desk         | /                                                                 |
 	| About GPIT Futures               | https://digital.nhs.uk/services/future-gp-it-systems-and-services |
 	| Capabilities and Standards Model | https://gpitbjss.atlassian.net/wiki/spaces/GPITF/overview         |
+	| Buyer's Guide                    | /guide                                                            |
