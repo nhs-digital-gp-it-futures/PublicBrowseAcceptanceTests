@@ -39,6 +39,11 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
             var solution = solutions[random.Next(solutions.Count)].FindElement(pages.SolutionsList.SolutionName).FindElement(By.TagName("a"));
             solution.Click();
         }
+        public void OpenNamedSolution(string solutionName)
+        {
+            var solution = driver.FindElements(pages.SolutionsList.SolutionName).Where(s => s.Text.Equals(solutionName)).First().FindElement(By.TagName("a"));
+            solution.Click();
+        }
 
         public IList<string> GetListOfSolutionNames()
         {

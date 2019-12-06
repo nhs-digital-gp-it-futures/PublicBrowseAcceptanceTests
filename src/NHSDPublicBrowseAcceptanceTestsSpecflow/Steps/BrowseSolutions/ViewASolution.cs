@@ -11,16 +11,13 @@ using TechTalk.SpecFlow;
 namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
 {
     [Binding]
-    public class ViewASolution
+    public class ViewASolution : CommonSteps
     {
-        private readonly UITest _test;
-        private readonly ScenarioContext _context;
         private SolutionDto SolutionDetails;
+        private string expectedLastUpdatedDate;
 
-        public ViewASolution(UITest test, ScenarioContext context)
+        public ViewASolution(UITest test, ScenarioContext context): base (test, context)
         {
-            _test = test;
-            _context = context;
         }
 
         [Given(@"that a User views a Solution")]
@@ -30,6 +27,19 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
             _test.pages.SolutionsList.OpenRandomSolution();
         }
 
+        [Given(@"that a User views a created Solution")]
+        public void GivenThatAUserViewsACreatedSolution()
+        {
+            CreateBlankSolution();
+            new ViewSolutionsList(_test, _context).GivenThatAUserHasChosenToViewAListOfAllSolutions();
+            var oldDate = new DateTime(2001, 02, 03);
+            SqlHelper.UpdateLastUpdated(oldDate, "Solution", "id", _test.solution.Id, _test.connectionString);
+            SqlHelper.UpdateLastUpdated(oldDate, "SolutionDetail", "SolutionId", _test.solution.Id, _test.connectionString);
+            SqlHelper.UpdateLastUpdated(oldDate, "MarketingContact", "SolutionId", _test.solution.Id, _test.connectionString);
+            _test.pages.SolutionsList.OpenNamedSolution(_test.solution.Name);
+        }
+
+
         [Given(@"that a User views a Foundation Solution")]
         public void GivenThatAUserViewsAFoundationSolution()
         {
@@ -37,7 +47,7 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
             _test.pages.SolutionsList.OpenRandomFoundationSolution();
         }
 
-        [When(@"the User is viewing the Solution Page")]
+        [StepDefinition(@"the User is viewing the Solution Page")]
         public void WhenTheUserIsViewingTheSolutionPage()
         {
             _test.pages.ViewASolution.PageDisplayed(_test.url);
@@ -149,5 +159,27 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
 
             _test.pages.Common.DownloadFile(fileName, downloadPath, downloadLink);
         }
+
+        [When(@"the LastUpdated value in the (.*) table is updated")]
+        public void WhenTheLastUpdatedValueInTheSolutionTableIsUpdated(string tableName)
+        {
+            var updatedDate = DateTime.Now;
+            expectedLastUpdatedDate = updatedDate.ToString("yyyy-MM-dd");
+
+            var whereKey = tableName.Equals("Solution") ? "Id" : "SolutionId";
+
+            SqlHelper.UpdateLastUpdated(updatedDate, tableName, whereKey, _test.solution.Id, _test.connectionString);
+        }
+
+        [Then(@"the page last updated date shown is updated as expected")]
+        public void ThenThePageLastUpdatedDateShownIsUpdatedAsExpected()
+        {
+            _test.driver.Navigate().Refresh();
+            var actualLastUpdated = _test.pages.ViewASolution.GetSolutionLastUpdated();
+            actualLastUpdated = Convert.ToDateTime(actualLastUpdated).ToString("yyyy-MM-dd");
+            actualLastUpdated.Should().Be(expectedLastUpdatedDate);
+        }
+
+
     }
 }

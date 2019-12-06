@@ -6,7 +6,7 @@ namespace NHSDPublicBrowseAcceptanceTests.TestData.Solutions
     {
         const string prefix = "AutoSol";
 
-        public static Solution CreateNewSolution()
+        public static Solution CreateNewSolution(bool published = false)
         {
             var faker = new Faker();
 
@@ -15,7 +15,8 @@ namespace NHSDPublicBrowseAcceptanceTests.TestData.Solutions
             {
                 Id = Id,
                 Name = faker.Name.JobTitle(),
-                Version = faker.System.Semver()
+                Version = faker.System.Semver(),
+                PublishedStatusId = published ? 3 : 1
             };
 
             return solution;

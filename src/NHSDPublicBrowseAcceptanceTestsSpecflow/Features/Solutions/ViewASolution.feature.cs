@@ -176,6 +176,29 @@ this.ScenarioInitialize(scenarioInfo);
 #line hidden
             this.ScenarioCleanup();
         }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Last updated date is updated when solution table is updated")]
+        [NUnit.Framework.TestCaseAttribute("Solution", null)]
+        [NUnit.Framework.TestCaseAttribute("SolutionDetail", null)]
+        [NUnit.Framework.TestCaseAttribute("MarketingContact", null)]
+        public virtual void LastUpdatedDateIsUpdatedWhenSolutionTableIsUpdated(string table_Name, string[] exampleTags)
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Last updated date is updated when solution table is updated", null, exampleTags);
+#line 39
+this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line 40
+ testRunner.Given("that a User views a created Solution", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 41
+ testRunner.And("the User is viewing the Solution Page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 42
+ testRunner.When(string.Format("the LastUpdated value in the {0} table is updated", table_Name), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 43
+ testRunner.Then("the page last updated date shown is updated as expected", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
     }
 }
 #pragma warning restore
