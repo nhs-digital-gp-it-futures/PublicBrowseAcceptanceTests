@@ -2,7 +2,7 @@
 {
     internal static class Queries
     {
-        internal const string CreateNewSolution = "INSERT INTO Solution (Id, SupplierId, OrganisationId, Name, Version, PublishedStatusId, AuthorityStatusId, SupplierStatusId, OnCatalogueVersion, LastUpdatedBy, LastUpdated) values (@solutionId, (SELECT TOP (1) [Id] FROM [dbo].[Supplier]), (SELECT TOP (1) [Id] FROM [dbo].[Organisation]), @solutionName, @solutionVersion, 1,1,1, 0, @lastUpdatedBy, @lastUpdated)";
+        internal const string CreateNewSolution = "INSERT INTO Solution (Id, SupplierId, OrganisationId, Name, Version, PublishedStatusId, AuthorityStatusId, SupplierStatusId, OnCatalogueVersion, LastUpdatedBy, LastUpdated) values (@solutionId, (SELECT TOP (1) [Id] FROM [dbo].[Supplier]), (SELECT TOP (1) [Id] FROM [dbo].[Organisation]), @solutionName, @solutionVersion, @publishStatus,1,1, 0, @lastUpdatedBy, @lastUpdated)";
         internal const string GetSolution = "SELECT Summary, FullDescription, SupplierStatusId from [dbo].[Solution] where Id=@solutionId";
         internal const string UpdateSolutionSolutionDetailId = "UPDATE Solution SET SolutionDetailId=@solutionDetailId WHERE Id=@solutionId";
         internal const string DeleteSolution = "DELETE from Solution where Id=@solutionId";
@@ -22,6 +22,10 @@
         internal const string DeleteMarketingContact = "DELETE FROM MarketingContact where SolutionId=@solutionId";
 
         internal const string UpdateLastUpdated = "UPDATE @table SET LastUpdated=@lastUpdated WHERE @whereKey=@whereValue";
+
+        internal const string AddRandomSolutionCapability = "INSERT INTO SolutionCapability (SolutionId, CapabilityId, StatusId, LastUpdated, LastUpdatedBy) VALUES (@solutionId, (SELECT TOP 1 CapabilityId FROM FrameworkCapabilities ORDER BY RAND()), 1, GETDATE(), '00000000-0000-0000-0000-000000000000')";
+
+        internal const string DeleteSolutionCapability = "DELETE FROM SolutionCapability WHERE SolutionId=@solutionId";
     }
 
 }

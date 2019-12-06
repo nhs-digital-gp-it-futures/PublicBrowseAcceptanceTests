@@ -76,19 +76,17 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Features.Solutions
         [NUnit.Framework.TestCaseAttribute("2", "false", null)]
         [NUnit.Framework.TestCaseAttribute("3", "true", null)]
         [NUnit.Framework.TestCaseAttribute("4", "false", null)]
-        [NUnit.Framework.TestCaseAttribute("100", "false", null)]
-        [NUnit.Framework.TestCaseAttribute("20", "false", null)]
         public virtual void SolutionStatusDeterminesPublished(string code, string published, string[] exampleTags)
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Solution Status Determines Published", null, exampleTags);
-#line 8
+#line 6
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
-#line 9
+#line 7
  testRunner.Given(string.Format("that a Solution has a PublishedStatus of {0}", code), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 10
- testRunner.When("the User chooses to view all Solutions", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 11
+#line 8
+ testRunner.And("that a User has chosen to view a list of all Solutions", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 9
  testRunner.Then(string.Format("the Solution\'s Marketing Page availability is {0}", published), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
