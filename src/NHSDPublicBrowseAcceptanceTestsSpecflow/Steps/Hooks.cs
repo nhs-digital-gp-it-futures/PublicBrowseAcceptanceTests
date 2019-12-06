@@ -1,4 +1,5 @@
-﻿using NHSDPublicBrowseAcceptanceTestsSpecflow.Utils;
+﻿using NHSDPublicBrowseAcceptanceTests.TestData.Utils;
+using NHSDPublicBrowseAcceptanceTestsSpecflow.Utils;
 using TechTalk.SpecFlow;
 
 namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps
@@ -18,6 +19,8 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps
         {
             _test.driver.Close();
             _test.driver.Quit();
+
+            SqlHelper.DeleteSolution(_test.solution.Id, _test.connectionString);
         }
     }
 }

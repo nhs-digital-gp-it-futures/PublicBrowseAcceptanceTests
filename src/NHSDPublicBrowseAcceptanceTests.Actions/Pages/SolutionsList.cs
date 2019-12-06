@@ -215,7 +215,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
             return driver.FindElements(pages.SolutionsList.FoundationSolutionIndicators).Count;
         }
 
-        private bool FoundationIndicatorDisplayed(IWebElement element) 
+        private bool FoundationIndicatorDisplayed(IWebElement element)
         {
             try
             {

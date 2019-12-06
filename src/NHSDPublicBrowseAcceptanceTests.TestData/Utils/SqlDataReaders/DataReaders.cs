@@ -1,9 +1,6 @@
-using NHSDPublicBrowseAcceptanceTests.TestData.Solutions;
 using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Reflection;
+using NHSDPublicBrowseAcceptanceTests.TestData.Solutions;
 
 namespace NHSDPublicBrowseAcceptanceTests.TestData.Utils.SqlDataReaders
 {
@@ -59,7 +56,7 @@ namespace NHSDPublicBrowseAcceptanceTests.TestData.Utils.SqlDataReaders
                 LastUpdated = DateTime.Parse(dr["LastUpdated"].ToString()),
                 SupplierName = dr["SupplierName"].ToString(),
                 AboutUrl = dr["AboutUrl"].ToString(),
-                FullDescription = dr["FullDescription"].ToString(),                
+                FullDescription = dr["FullDescription"].ToString(),
             };
 
             SolutionContactDetails contactDetails = new SolutionContactDetails
@@ -79,6 +76,13 @@ namespace NHSDPublicBrowseAcceptanceTests.TestData.Utils.SqlDataReaders
         {
             dr.Read();
             return dr["Capabilities"].ToString();
+        }
+
+        internal static DateTime GetLastUpdated(IDataReader dr)
+        {
+            dr.Read();
+            var val = dr["LastUpdated"].ToString();
+            return Convert.ToDateTime(val);
         }
     }
 }

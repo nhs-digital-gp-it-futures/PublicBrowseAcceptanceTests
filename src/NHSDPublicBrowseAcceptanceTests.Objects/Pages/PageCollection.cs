@@ -1,6 +1,4 @@
-﻿using OpenQA.Selenium;
-
-namespace NHSDPublicBrowseAcceptanceTests.Objects.Pages
+﻿namespace NHSDPublicBrowseAcceptanceTests.Objects.Pages
 {
     public sealed class PageCollection
     {

@@ -27,5 +27,10 @@ namespace NHSDPublicBrowseAcceptanceTests.TestData.Solutions
 
             return $"{prefix}{string.Join("", suffix)}";
         }
+
+        public static SolutionDetail CreateCompleteSolutionDetail(Solution solution, SolutionDetail solutionDetail)
+        {
+            return CreateSolutionDetails.CreateNewSolutionDetail(solution.Id, solutionDetail.SolutionDetailId, 5);
+        }
     }
 }
