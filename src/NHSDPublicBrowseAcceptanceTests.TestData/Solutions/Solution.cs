@@ -1,4 +1,6 @@
-﻿namespace NHSDPublicBrowseAcceptanceTests.TestData.Solutions
+﻿using System;
+
+namespace NHSDPublicBrowseAcceptanceTests.TestData.Solutions
 {
     public sealed class Solution
     {

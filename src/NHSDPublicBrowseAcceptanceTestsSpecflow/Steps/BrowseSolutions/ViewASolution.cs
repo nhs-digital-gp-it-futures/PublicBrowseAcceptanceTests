@@ -95,8 +95,9 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
         [Then(@"Last Updated Date")]
         public void ThenLastUpdatedDate()
         {
-            var lastUpdated = SolutionDetails.LastUpdated.ToString("dd-MMM-yyyy");
+            var lastUpdated = SolutionDetails.LastUpdated.ToString("yyyy-MM-dd");
             var actualLastUpdated = _test.pages.ViewASolution.GetSolutionLastUpdated();
+            actualLastUpdated = Convert.ToDateTime(actualLastUpdated).ToString("yyyy-MM-dd");
             actualLastUpdated.Should().Be(lastUpdated);
         }
 

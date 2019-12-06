@@ -20,7 +20,10 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps
             _test.driver.Close();
             _test.driver.Quit();
 
-            SqlHelper.DeleteSolution(_test.solution.Id, _test.connectionString);
+            if (_test.solution != null)
+            {
+                SqlHelper.DeleteSolution(_test.solution.Id, _test.connectionString);
+            }
         }
     }
 }
