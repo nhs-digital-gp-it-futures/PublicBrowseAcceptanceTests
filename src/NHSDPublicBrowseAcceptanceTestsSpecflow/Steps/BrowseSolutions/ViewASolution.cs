@@ -164,7 +164,9 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
         public void WhenTheLastUpdatedValueInTheSolutionTableIsUpdated(string tableName)
         {
             var updatedDate = DateTime.Now;
-            expectedLastUpdatedDate = updatedDate.ToString("yyyy-MM-dd");
+
+            // Use long variant of date (i.e. 12 December 2019)
+            expectedLastUpdatedDate = updatedDate.ToString("dd MMMM yyyy");
 
             var whereKey = tableName.Equals("Solution") ? "Id" : "SolutionId";
 
@@ -176,10 +178,11 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
         {
             _test.driver.Navigate().Refresh();
             var actualLastUpdated = _test.pages.ViewASolution.GetSolutionLastUpdated();
-            actualLastUpdated = Convert.ToDateTime(actualLastUpdated).ToString("yyyy-MM-dd");
-            actualLastUpdated.Should().Be(expectedLastUpdatedDate);
+
+            // Remove extraneous string from UI last updated
+            var convertedDate = actualLastUpdated.Replace("Solution information last updated: ", "");
+            
+            convertedDate.Should().Be(expectedLastUpdatedDate);
         }
-
-
     }
 }
