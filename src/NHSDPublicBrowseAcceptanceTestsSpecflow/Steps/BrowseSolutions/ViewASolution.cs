@@ -15,6 +15,7 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
     {
         private SolutionDto SolutionDetails;
         private string expectedLastUpdatedDate;
+        private const string dateFormat = "dd MMMM yyyy";
 
         public ViewASolution(UITest test, ScenarioContext context): base (test, context)
         {
@@ -105,10 +106,9 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
         [Then(@"Last Updated Date")]
         public void ThenLastUpdatedDate()
         {
-            var lastUpdated = SolutionDetails.LastUpdated.ToString("yyyy-MM-dd");
-            var actualLastUpdated = _test.pages.ViewASolution.GetSolutionLastUpdated();
-            actualLastUpdated = Convert.ToDateTime(actualLastUpdated).ToString("yyyy-MM-dd");
-            actualLastUpdated.Should().Be(lastUpdated);
+            var lastUpdated = ConvertDateToLongDateTime(SolutionDetails.LastUpdated);
+            var actualLastUpdated = _test.pages.ViewASolution.GetSolutionLastUpdated();            
+            ConvertDateToLongDateTime(actualLastUpdated).Should().Be(lastUpdated);
         }
 
         [Then(@"list of Capabilities")]
@@ -164,7 +164,9 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
         public void WhenTheLastUpdatedValueInTheSolutionTableIsUpdated(string tableName)
         {
             var updatedDate = DateTime.Now;
-            expectedLastUpdatedDate = updatedDate.ToString("yyyy-MM-dd");
+
+            // Use long variant of date (i.e. 12 December 2019)
+            expectedLastUpdatedDate = ConvertDateToLongDateTime(updatedDate);
 
             var whereKey = tableName.Equals("Solution") ? "Id" : "SolutionId";
 
@@ -176,10 +178,19 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
         {
             _test.driver.Navigate().Refresh();
             var actualLastUpdated = _test.pages.ViewASolution.GetSolutionLastUpdated();
-            actualLastUpdated = Convert.ToDateTime(actualLastUpdated).ToString("yyyy-MM-dd");
-            actualLastUpdated.Should().Be(expectedLastUpdatedDate);
+
+            var convertedDate = ConvertDateToLongDateTime(actualLastUpdated);
+            
+            convertedDate.Should().Be(expectedLastUpdatedDate);
         }
 
-
+        private string ConvertDateToLongDateTime(string date)
+        {
+            return ConvertDateToLongDateTime(Convert.ToDateTime(date));
+        }
+        private string ConvertDateToLongDateTime(DateTime date)
+        {
+            return date.ToString(dateFormat);
+        }
     }
 }

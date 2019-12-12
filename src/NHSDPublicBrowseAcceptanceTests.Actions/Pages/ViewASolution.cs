@@ -41,7 +41,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
 
         public string GetSolutionLastUpdated()
         {
-            return driver.FindElement(pages.ViewSingleSolution.SolutionLastUpdated).Text.Replace("Page last updated: ", "");
+            return driver.FindElement(pages.ViewSingleSolution.SolutionLastUpdated).Text.Replace("Solution information last updated: ", "");
         }
 
         public string GetSolutionAboutUrl()
