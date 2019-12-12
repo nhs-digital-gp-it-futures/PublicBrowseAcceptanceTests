@@ -186,9 +186,7 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
 
         private string ConvertDateToLongDateTime(string date)
         {
-            var reduced = date.Replace("Solution information last updated: ", "");
-
-            return Convert.ToDateTime(reduced).ToString("dd MMMM yyyy");
+            return Convert.ToDateTime(date).ToString("dd MMMM yyyy");
         }
     }
 }
