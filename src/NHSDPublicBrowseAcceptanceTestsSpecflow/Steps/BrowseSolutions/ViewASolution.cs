@@ -105,10 +105,9 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
         [Then(@"Last Updated Date")]
         public void ThenLastUpdatedDate()
         {
-            var lastUpdated = SolutionDetails.LastUpdated.ToString("yyyy-MM-dd");
-            var actualLastUpdated = _test.pages.ViewASolution.GetSolutionLastUpdated();
-            actualLastUpdated = Convert.ToDateTime(actualLastUpdated).ToString("yyyy-MM-dd");
-            actualLastUpdated.Should().Be(lastUpdated);
+            var lastUpdated = SolutionDetails.LastUpdated.ToString("dd MMMM yyyy");
+            var actualLastUpdated = _test.pages.ViewASolution.GetSolutionLastUpdated();            
+            ConvertDateToLongDateTime(actualLastUpdated).Should().Be(lastUpdated);
         }
 
         [Then(@"list of Capabilities")]
@@ -180,9 +179,16 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
             var actualLastUpdated = _test.pages.ViewASolution.GetSolutionLastUpdated();
 
             // Remove extraneous string from UI last updated
-            var convertedDate = actualLastUpdated.Replace("Solution information last updated: ", "");
+            var convertedDate = ConvertDateToLongDateTime(actualLastUpdated);
             
             convertedDate.Should().Be(expectedLastUpdatedDate);
+        }
+
+        private string ConvertDateToLongDateTime(string date)
+        {
+            var reduced = date.Replace("Solution information last updated: ", "");
+
+            return Convert.ToDateTime(reduced).ToString("dd MMMM yyyy");
         }
     }
 }
