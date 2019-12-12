@@ -15,6 +15,7 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
     {
         private SolutionDto SolutionDetails;
         private string expectedLastUpdatedDate;
+        private const string dateFormat = "dd MMMM yyyy";
 
         public ViewASolution(UITest test, ScenarioContext context): base (test, context)
         {
@@ -105,7 +106,7 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
         [Then(@"Last Updated Date")]
         public void ThenLastUpdatedDate()
         {
-            var lastUpdated = SolutionDetails.LastUpdated.ToString("dd MMMM yyyy");
+            var lastUpdated = ConvertDateToLongDateTime(SolutionDetails.LastUpdated);
             var actualLastUpdated = _test.pages.ViewASolution.GetSolutionLastUpdated();            
             ConvertDateToLongDateTime(actualLastUpdated).Should().Be(lastUpdated);
         }
@@ -165,7 +166,7 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
             var updatedDate = DateTime.Now;
 
             // Use long variant of date (i.e. 12 December 2019)
-            expectedLastUpdatedDate = updatedDate.ToString("dd MMMM yyyy");
+            expectedLastUpdatedDate = ConvertDateToLongDateTime(updatedDate);
 
             var whereKey = tableName.Equals("Solution") ? "Id" : "SolutionId";
 
@@ -185,7 +186,11 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
 
         private string ConvertDateToLongDateTime(string date)
         {
-            return Convert.ToDateTime(date).ToString("dd MMMM yyyy");
+            return ConvertDateToLongDateTime(Convert.ToDateTime(date));
+        }
+        private string ConvertDateToLongDateTime(DateTime date)
+        {
+            return date.ToString(dateFormat);
         }
     }
 }
