@@ -178,7 +178,6 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
             _test.driver.Navigate().Refresh();
             var actualLastUpdated = _test.pages.ViewASolution.GetSolutionLastUpdated();
 
-            // Remove extraneous string from UI last updated
             var convertedDate = ConvertDateToLongDateTime(actualLastUpdated);
             
             convertedDate.Should().Be(expectedLastUpdatedDate);
