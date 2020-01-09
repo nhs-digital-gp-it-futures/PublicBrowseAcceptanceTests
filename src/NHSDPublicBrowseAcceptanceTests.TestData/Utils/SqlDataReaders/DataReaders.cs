@@ -53,7 +53,7 @@ namespace NHSDPublicBrowseAcceptanceTests.TestData.Utils.SqlDataReaders
                 Id = dr["Id"].ToString(),
                 Name = dr["Name"].ToString(),
                 Summary = dr["Summary"].ToString(),
-                LastUpdated = DateTime.Parse(dr["LastUpdated"].ToString()),
+                LastUpdated = Convert.ToDateTime(dr["LastUpdated"]).ToString("dd/MM/yyyy hh:mm:ss:Z"),
                 SupplierName = dr["SupplierName"].ToString(),
                 AboutUrl = dr["AboutUrl"].ToString(),
                 FullDescription = dr["FullDescription"].ToString(),
