@@ -22,7 +22,12 @@
         internal const string DeleteMarketingContact = "DELETE FROM MarketingContact where SolutionId=@solutionId";
 
         internal const string UpdateLastUpdated = "UPDATE @table SET LastUpdated=@lastUpdated WHERE @whereKey=@whereValue";
-
+        internal const string GetLatestLastUpdated = @"Select TOP (1) Solution.LastUpdated AS SolutionLastUpdated, SolutionDetail.LastUpdated AS SolutionDetailLastUpdated, MarketingContact.LastUpdated AS MarketingContactLastUpdated, (select max(LU) FROM (VALUES (Solution.LastUpdated), (SolutionDetail.LastUpdated), (MarketingContact.LastUpdated)) as value(LU)) as [LastestLastUpdated]
+                from Solution
+                Left JOIN SolutionDetail on SolutionDetail.SolutionId = Solution.Id
+                Left Join MarketingContact on MarketingContact.SolutionId = Solution.Id
+                where Solution.Id = @solutionId;
+            ";
         internal const string AddRandomSolutionCapability = "INSERT INTO SolutionCapability (SolutionId, CapabilityId, StatusId, LastUpdated, LastUpdatedBy) VALUES (@solutionId, (SELECT TOP 1 CapabilityId FROM FrameworkCapabilities ORDER BY RAND()), 1, GETDATE(), '00000000-0000-0000-0000-000000000000')";
 
         internal const string DeleteSolutionCapability = "DELETE FROM SolutionCapability WHERE SolutionId=@solutionId";

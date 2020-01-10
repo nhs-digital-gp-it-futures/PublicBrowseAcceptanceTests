@@ -243,5 +243,18 @@ namespace NHSDPublicBrowseAcceptanceTests.TestData.Utils
 
             SqlReader.Read(connectionString, query, newParameters, DataReaders.NoReturn);
         }
+
+        public static DateTime GetLatestLastUpdatedDate(string solutionId, string connectionString)
+        {
+            var query = Queries.GetLatestLastUpdated;
+
+            SqlParameter[] parameters = new SqlParameter[] {
+                new SqlParameter("@solutionId", solutionId)
+            };
+
+            var result = SqlReader.Read(connectionString, query, parameters, DataReaders.GetLatestLastUpdated);
+
+            return result;
+        }
     }
 }
