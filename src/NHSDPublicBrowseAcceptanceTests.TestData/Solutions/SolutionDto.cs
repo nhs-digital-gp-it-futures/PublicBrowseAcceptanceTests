@@ -6,7 +6,7 @@ namespace NHSDPublicBrowseAcceptanceTests.TestData.Solutions
     {
         public string Id { get; set; }
         public string Name { get; set; }
-        public string LastUpdated { get; set; }
+        public DateTime LastUpdated { get; set; }
         public string AboutUrl { get; set; }
         public string Summary { get; set; }
         public string SupplierName { get; set; }
