@@ -26,7 +26,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
 
         public string GetSupplierName()
         {
-            return driver.FindElement(pages.ViewSingleSolution.SolutionOrganisationName).Text;
+            return driver.FindElement(pages.ViewSingleSolution.SolutionSupplierName).Text;
         }
 
         public string GetSolutionName()
