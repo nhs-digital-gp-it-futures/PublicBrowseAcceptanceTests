@@ -6,7 +6,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Objects.Pages
     public sealed class ViewSingleSolution
     {
         public By SolutionId => CustomBy.DataTestId("view-solution-page-solution-id");
-        public By SolutionOrganisationName => CustomBy.DataTestId("view-solution-page-organisation-name");
+        public By SolutionSupplierName => CustomBy.DataTestId("view-solution-page-supplier-name");
         public By SolutionName => CustomBy.DataTestId("view-solution-page-solution-name");
         public By SolutionSummary => CustomBy.DataTestId("view-question-data-text-summary");
         public By SolutionCapabilities => CustomBy.DataTestId("view-solution-capabilities", "li");
