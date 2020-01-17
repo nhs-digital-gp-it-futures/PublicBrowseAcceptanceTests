@@ -19,6 +19,11 @@ steps:
     version: 3.x
     includePreviewVersions: false
 
+- bash: 
+  displayName: 'Check URL is reachable'
+    "curl -i $(URL) --fail
+    $?"
+
 - script: docker-compose up --scale chrome=4 -d
   displayName: docker-compose
 - bash: "export BROWSER=chrome && 
