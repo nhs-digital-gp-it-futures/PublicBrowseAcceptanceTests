@@ -25,6 +25,7 @@ steps:
 
 - script: docker-compose up --scale chrome=4 -d
   displayName: docker-compose
+
 - bash: "export BROWSER=chrome && 
   export SERVERURL=$(SERVERURL) && 
   export DATABASENAME=$(DATABASENAME) && 
@@ -33,6 +34,7 @@ steps:
   export PBURL=$(URL) &&
   dotnet test src/ -v n -l:trx;LogFileName=/test/results.trx
   $?"
+  displayName: 'Run acceptance tests'
 
 - task: PublishTestResults@2
   inputs:
