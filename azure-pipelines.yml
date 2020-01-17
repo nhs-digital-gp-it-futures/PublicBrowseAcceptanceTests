@@ -20,8 +20,7 @@ steps:
     includePreviewVersions: false
 
 - bash: 
-    "curl -i $(URL) --fail
-    $?"
+    "curl -i $(URL) --fail"
   displayName: 'Check URL is reachable'
 
 - script: docker-compose up --scale chrome=4 -d
