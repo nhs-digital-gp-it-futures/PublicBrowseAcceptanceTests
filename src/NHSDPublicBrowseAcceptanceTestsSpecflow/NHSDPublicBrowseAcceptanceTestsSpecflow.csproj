@@ -47,6 +47,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Utils\tokens.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
     <SpecFlowFeatureFiles Update="Features\Homepage\Homepage.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>Homepage.feature.cs</LastGenOutput>

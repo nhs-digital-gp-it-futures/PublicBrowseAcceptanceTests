@@ -35,8 +35,8 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
             actualNumberOfSolutionCards.Should().Be(expectedNumberOfSolutions);
         }
 
-        [Then(@"the Card contains the Organisation Name")]
-        public void ThenTheCardContainsTheOrganisationName()
+        [Then(@"the Card contains the Supplier Name")]
+        public void ThenTheCardContainsTheSupplierName()
         {
             var actualNumberOfOrganisationNames = _test.pages.SolutionsList.GetSolutionOrganisationNameCount();
             actualNumberOfOrganisationNames.Should().Be(expectedNumberOfSolutions);
