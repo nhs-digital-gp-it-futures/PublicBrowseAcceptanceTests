@@ -78,10 +78,24 @@ namespace NHSDPublicBrowseAcceptanceTests.TestData.Utils.SqlDataReaders
             return dr["Capabilities"].ToString();
         }
 
-        internal static DateTime GetLastUpdated(IDataReader dr)
+        /// <summary>
+        /// The Last Updated Date as seen on the UI and API is the latest of a number of dates
+        /// Each table in the DB has it's own LastUpdated column
+        /// And in order to display accurate information, we need to find the latest of those dates
+        /// At the time of writing, the only dates included in this calculation are:
+        /// -Solution
+        /// -SolutionDetail
+        /// -MarketingContact
+        /// </summary>
+        /// <param name="dr"></param>
+        /// <returns>DateTime</returns>
+        internal static DateTime GetLatestLastUpdated(IDataReader dr)
         {
             dr.Read();
-            var val = dr["LastUpdated"].ToString();
+            //var SolutionLastUpdated = dr["SolutionLastUpdated"].ToString();
+            //var SolutionDetailLastUpdated = dr["SolutionDetailLastUpdated"].ToString();
+            //var MarketingContactLastUpdated = dr["MarketingContactLastUpdated"].ToString();
+            var val = dr["LastestLastUpdated"].ToString();
             return Convert.ToDateTime(val);
         }
     }

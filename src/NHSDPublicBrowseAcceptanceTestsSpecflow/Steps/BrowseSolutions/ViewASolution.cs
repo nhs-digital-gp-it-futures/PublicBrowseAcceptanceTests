@@ -54,6 +54,7 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
             _test.pages.ViewASolution.PageDisplayed(_test.url);
             var id = _test.pages.ViewASolution.GetSolutionId();
             SolutionDetails = SqlHelper.GetSolutionDetailsObject(id, _test.connectionString);
+            SolutionDetails.LastUpdated = SqlHelper.GetLatestLastUpdatedDate(id, _test.connectionString);
         }
 
         [Then(@"the page will contain Supplier Name")]

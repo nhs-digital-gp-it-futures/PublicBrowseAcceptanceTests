@@ -19,18 +19,26 @@ steps:
     version: 3.x
     includePreviewVersions: false
 
+- bash: 
+    "curl -i $(URL) --fail --connect-timeout 30"
+  displayName: 'Check URL is reachable'
+
 - script: docker-compose up --scale chrome=4 -d
   displayName: docker-compose
+
 - bash: "export BROWSER=chrome && 
   export SERVERURL=$(SERVERURL) && 
   export DATABASENAME=$(DATABASENAME) && 
   export DBUSER=$(DBUSER) && 
   export DBPASSWORD=$(DBPASSWORD) && 
   export PBURL=$(URL) &&
-  dotnet test src/ -v n -l:trx;LogFileName=/test/results.trx"
+  dotnet test src/ -v n -l:trx;LogFileName=/test/results.trx
+  $?"
+  displayName: 'Run acceptance tests'
 
 - task: PublishTestResults@2
   inputs:
     testResultsFiles: '**/*.trx'
     failTaskOnFailedTests: true
     testRunner: VSTest
+  condition: succeededOrFailed()
