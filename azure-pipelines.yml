@@ -18,6 +18,23 @@ steps:
   inputs:
     version: 3.x
     includePreviewVersions: false
+    
+- task: AzureKeyVault@1
+  inputs:
+    azureSubscription: 'NHSAPP-BuyingCatalogue (Non-Prod)'
+    KeyVaultName: 'gpitfutures-dev-kv'
+    SecretsFilter: '*'
+
+- task: replacetokens@3
+  inputs:
+    targetFiles: '**/*.json'
+    encoding: 'auto'
+    writeBOM: true
+    actionOnMissing: 'warn'
+    keepToken: false
+    tokenPrefix: '#{'
+    tokenSuffix: '}#'
+    emptyValue: 
 
 - bash: 
     "curl -i $(URL) --fail --connect-timeout 30"

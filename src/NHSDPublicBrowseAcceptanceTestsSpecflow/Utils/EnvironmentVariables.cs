@@ -1,4 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
 namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Utils
 {
@@ -22,7 +26,7 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Utils
 
         internal static string GetUrl()
         {
-            return Environment.GetEnvironmentVariable("PBURL") ?? "http://10.0.75.1:3000";
+            return Environment.GetEnvironmentVariable("PBURL") ?? "http://host.docker.internal:3000";
         }
 
         internal static string GetBrowser()
@@ -35,9 +39,30 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Utils
             var serverUrl = Environment.GetEnvironmentVariable("SERVERURL") ?? "127.0.0.1,1433";
             var databaseName = Environment.GetEnvironmentVariable("DATABASENAME") ?? "buyingcatalogue";
             var dbUser = Environment.GetEnvironmentVariable("DBUSER") ?? "NHSD";
-            var dbPassword = Environment.GetEnvironmentVariable("DBPASSWORD") ?? "DisruptTheMarket1!";
+
+            var dbPassword = GetJsonConfigValues("password", "DisruptTheMarket1!");
 
             return (serverUrl, databaseName, dbUser, dbPassword);
+        }
+
+        internal static string GetConnectionString()
+        {
+            var (serverUrl, databaseName, dbUser, dbPassword) = GetDbConnectionDetails();
+
+            return string.Format(ConnectionString.GPitFutures, serverUrl, databaseName, dbUser, dbPassword);
+        }
+
+        private static string GetJsonConfigValues(string section, string defaultValue)
+        {
+            var path = Path.Combine(Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), "Utils", "tokens.json");
+            var jsonSection = JObject.Parse(File.ReadAllText(path))[section];
+
+            Dictionary<string, string> dbValues = jsonSection.ToObject<Dictionary<string, string>>();
+
+            var result = dbValues.Values
+                .FirstOrDefault(s => !s.Contains("#{"));
+
+            return string.IsNullOrEmpty(result) ? defaultValue : result;
         }
     }
 
