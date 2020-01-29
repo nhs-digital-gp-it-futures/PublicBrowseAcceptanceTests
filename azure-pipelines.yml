@@ -38,7 +38,7 @@ steps:
     emptyValue: 
 
 - bash: 
-    "curl -i $(URL) --fail --connect-timeout 30"
+    "curl -i $(PBURL) --fail --connect-timeout 30"
   displayName: 'Check URL is reachable'
 
 - task: Bash@3
