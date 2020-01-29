@@ -19,12 +19,13 @@ steps:
   inputs:
     version: 3.x
     includePreviewVersions: false
+
 - task: AzureKeyVault@1
   inputs:
     azureSubscription: 'NHSAPP-BuyingCatalogue (Non-Prod)'
     KeyVaultName: 'gpitfutures-dev-kv'
     SecretsFilter: '*'
-
+    
 - task: replacetokens@3
   inputs:
     targetFiles: '**/*.json'
@@ -37,9 +38,9 @@ steps:
     emptyValue: 
 
 - bash: 
-    "curl -i $(MPURL) --fail --connect-timeout 30"
+    "curl -i $(URL) --fail --connect-timeout 30"
   displayName: 'Check URL is reachable'
-    
+
 - task: Bash@3
   displayName: Selenium Grid Setup
   inputs:

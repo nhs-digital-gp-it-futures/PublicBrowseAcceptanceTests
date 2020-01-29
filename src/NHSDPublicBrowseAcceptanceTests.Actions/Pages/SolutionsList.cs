@@ -73,14 +73,14 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
             return true;
         }
 
-        public int GetSolutionOrganisationNameCount()
+        public int GetSolutionSupplierNameCount()
         {
-            return driver.FindElements(pages.SolutionsList.SolutionOrganisationName).Count();
+            return driver.FindElements(pages.SolutionsList.SolutionSupplierName).Where(s => s.Text.Length > 0).Count();
         }
 
         public int GetSolutionNameCount()
         {
-            return driver.FindElements(pages.SolutionsList.SolutionName).Count();
+            return driver.FindElements(pages.SolutionsList.SolutionName).Where(s => s.Text.Length > 0).Count();
         }
 
         /// <summary>

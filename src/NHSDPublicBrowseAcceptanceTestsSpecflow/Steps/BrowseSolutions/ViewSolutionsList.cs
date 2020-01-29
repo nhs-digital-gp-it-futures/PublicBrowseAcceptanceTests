@@ -38,8 +38,8 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
         [Then(@"the Card contains the Supplier Name")]
         public void ThenTheCardContainsTheSupplierName()
         {
-            var actualNumberOfOrganisationNames = _test.pages.SolutionsList.GetSolutionOrganisationNameCount();
-            actualNumberOfOrganisationNames.Should().Be(expectedNumberOfSolutions);
+            var actualNumberOfSupplierNames = _test.pages.SolutionsList.GetSolutionSupplierNameCount();
+            actualNumberOfSupplierNames.Should().Be(expectedNumberOfSolutions);
         }
 
         [Then(@"the Solution Name")]
