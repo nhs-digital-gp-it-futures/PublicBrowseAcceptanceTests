@@ -11,6 +11,7 @@ pool:
 
 variables:
   buildConfiguration: 'Release'
+  BROWSER: chrome
 
 steps:
 - task: UseDotNet@2
@@ -20,17 +21,11 @@ steps:
     includePreviewVersions: false
 
 - script: docker-compose up --scale chrome=4 -d
-  displayName: docker-compose
-- bash: "export BROWSER=chrome && 
-  export SERVERURL=$(SERVERURL) && 
-  export DATABASENAME=$(DATABASENAME) && 
-  export DBUSER=$(DBUSER) && 
-  export DBPASSWORD=$(DBPASSWORD) && 
-  export PBURL=$(URL) &&
-  dotnet test src/ -v n -l:trx;LogFileName=/test/results.trx"
+  displayName: Selenium Grid Setup
 
-- task: PublishTestResults@2
+- task: DotNetCoreCLI@2
+  displayName: Run Acceptance Tests
   inputs:
-    testResultsFiles: '**/*.trx'
-    failTaskOnFailedTests: true
-    testRunner: VSTest
+    command: 'test'
+    projects: 'src/**/*.csproj'
+    arguments: '-v n'
