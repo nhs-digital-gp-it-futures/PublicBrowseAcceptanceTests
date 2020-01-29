@@ -19,13 +19,39 @@ steps:
   inputs:
     version: 3.x
     includePreviewVersions: false
+- task: AzureKeyVault@1
+  inputs:
+    azureSubscription: 'NHSAPP-BuyingCatalogue (Non-Prod)'
+    KeyVaultName: 'gpitfutures-dev-kv'
+    SecretsFilter: '*'
 
-- script: docker-compose up --scale chrome=4 -d
+- task: replacetokens@3
+  inputs:
+    targetFiles: '**/*.json'
+    encoding: 'auto'
+    writeBOM: true
+    actionOnMissing: 'warn'
+    keepToken: false
+    tokenPrefix: '#{'
+    tokenSuffix: '}#'
+    emptyValue: 
+
+- bash: 
+    "curl -i $(MPURL) --fail --connect-timeout 30"
+  displayName: 'Check URL is reachable'
+    
+- task: Bash@3
   displayName: Selenium Grid Setup
-
+  inputs:
+    targetType: 'inline'
+    script: |
+      docker-compose stop &&
+      docker-compose rm -f &&
+      docker-compose up --scale chrome=4 --scale firefox=4  -d
+    
 - task: DotNetCoreCLI@2
   displayName: Run Acceptance Tests
   inputs:
     command: 'test'
-    projects: 'src/**/*.csproj'
+    projects: 'src/NHSDPublicBrowseAcceptanceTestsSpecflow/*.csproj'
     arguments: '-v n'
