@@ -41,5 +41,8 @@
         public const string DeleteSolutionCapability = "DELETE FROM SolutionCapability WHERE SolutionId=@solutionId";
         public const string GetSolutionContactDetails = "SELECT * FROM MarketingContact WHERE SolutionId=@solutionId";
         public const string AddMarketingContact = "INSERT INTO MarketingContact (SolutionId, FirstName, LastName,Email,PhoneNumber,Department,LastUpdated,LastUpdatedBy) VALUES(@solutionId, @FirstName, @LastName, @Email, @PhoneNumber, @Department,@LastUpdated,@LastUpdatedBy)";
+
+        public const string GetSelectedCapabilities = "SELECT DISTINCT(c.Name) FROM SolutionCapability sc INNER JOIN Solution s on sc.SolutionId=s.Id inner join Capability c on c.Id=sc.CapabilityId WHERE s.PublishedStatusId=3";
+        public const string GetSolutionCountForCapability = "SELECT COUNT(*) FROM Solution s INNER JOIN SolutionCapability sc on sc.SolutionId=s.Id INNER JOIN Capability c on sc.CapabilityId = c.Id WHERE c.Name=@CapabilityName";
     }
 }

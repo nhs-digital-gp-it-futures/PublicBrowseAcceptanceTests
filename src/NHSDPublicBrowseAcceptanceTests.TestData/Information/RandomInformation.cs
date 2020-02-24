@@ -19,7 +19,7 @@ namespace NHSDPublicBrowseAcceptanceTests.TestData.Information
             return string.Join("", faker.Random.Chars(min: '0', max: 'z', count: count));
         }
 
-        internal static T GetRandomItem<T>(IEnumerable<T> items)
+        public static T GetRandomItem<T>(IEnumerable<T> items)
         {
             var faker = new Faker();
 

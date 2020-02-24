@@ -28,13 +28,21 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
         }
 
         [Given(@"has not chosen to filter the solutions")]
+        [When("the User chooses to continue")]
         public void GivenHasNotChosenToFilterTheSolutions()
         {
             _test.pages.CapabilityFilter.ClickCapabilityContinueButton();
         }
 
+        [When("Solutions are presented")]
+        public void SolutionsPresented()
+        {
+
+        }
+
 
         [Then(@"there is a Card for each Solution")]
+        [Then("no Solutions are excluded on the basis of the Capabilities they deliver")]
         public void ThenThereIsACardForEachSolution()
         {
             expectedNumberOfSolutions = SqlExecutor.ExecuteScalar(_test.connectionString, Queries.GetSolutionsCount, null);
