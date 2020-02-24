@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using NHSDPublicBrowseAcceptanceTests.TestData.Capabilities;
 using NHSDPublicBrowseAcceptanceTests.TestData.Solutions;
 using NHSDPublicBrowseAcceptanceTests.TestData.Utils;
 using NHSDPublicBrowseAcceptanceTestsSpecflow.Utils;
@@ -23,12 +24,16 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
         [Given(@"that a Solution has a PublishedStatus of (.*)")]
         public void GivenThatASolutionHasAPublishedStatusOf(int status)
         {
-            _test.solution = CreateSolution.CreateNewSolution();
-            _test.solution.PublishedStatusId = status;
-            var guid = Guid.NewGuid();
-            _test.solutionDetail = CreateSolutionDetails.CreateNewSolutionDetail(_test.solution.Id, guid, 5);
+            _test.solution = GenerateSolution.GenerateNewSolution(checkForUnique: true, connectionString: _test.connectionString, publishedStatus: status);
+            _test.solution.Create(_test.connectionString);
+            _test.solutionDetail = GenerateSolutionDetails.GenerateNewSolutionDetail(_test.solution.Id, Guid.NewGuid(), 0, false);
+            _test.solutionDetail.Create(_test.connectionString);
+            _test.solution.SolutionDetailId = _test.solutionDetail.SolutionDetailId;
+            _test.solution.Update(_test.connectionString);
+            _context.Add("DeleteSolution", true);
+            new Capability().AddRandomCapabilityToSolution(_test.connectionString, _test.solution.Id);
 
-            SqlHelper.CreateBlankSolution(_test.solution, _test.solutionDetail, _test.connectionString);
+
             _test.driver.Navigate().Refresh();
         }
         

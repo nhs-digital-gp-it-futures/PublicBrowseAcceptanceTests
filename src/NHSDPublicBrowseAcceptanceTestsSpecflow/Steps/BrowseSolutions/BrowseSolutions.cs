@@ -34,6 +34,7 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
         public void WhenTheUserChoosesToViewAllSolutions()
         {
             _test.pages.BrowseSolutions.OpenAllSolutions();
+            _test.pages.CapabilityFilter.ClickCapabilityContinueButton();
         }
 
         [Then(@"only Foundation Solutions are presented in the results")]
@@ -47,7 +48,7 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
         [Then(@"all the Foundation Solutions are included in the results")]
         public void ThenAllTheFoundationSolutionsAreIncludedInTheResults()
         {
-            var numberOfFoundationSolutionsFromDb = SqlHelper.GetNumberOfFoundationSolutions(_test.connectionString);
+            var numberOfFoundationSolutionsFromDb = SqlExecutor.ExecuteScalar(_test.connectionString, Queries.GetFoundationSolutionsCount, null);
             var numberOfFoundationSolutionIndicatorsOnUi = _test.pages.SolutionsList.GetFoundationSolutionIndicatorCount();
             numberOfFoundationSolutionsFromDb.Should().Be(numberOfFoundationSolutionIndicatorsOnUi);
 
@@ -56,8 +57,8 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
         [Then(@"all Non-Foundation Solutions are included in the results")]
         public void ThenAllNon_FoundationSolutionsAreIncludedInTheResults()
         {
-            var numberOfNonFoundationSolutionsFromDb = SqlHelper.GetNumberOfNonFoundationSolutions(_test.connectionString);
-            var numberOfFoundationSolutionsFromDb = SqlHelper.GetNumberOfFoundationSolutions(_test.connectionString);
+            var numberOfNonFoundationSolutionsFromDb = SqlExecutor.ExecuteScalar(_test.connectionString, Queries.GetNonFoundationSolutionsCount, null);
+            var numberOfFoundationSolutionsFromDb = SqlExecutor.ExecuteScalar(_test.connectionString, Queries.GetFoundationSolutionsCount, null);
             var totalNumberOfSolutionsOnUi = _test.pages.SolutionsList.GetSolutionsCount();
             var numberOfNonFoundationsOnUI = totalNumberOfSolutionsOnUi - numberOfFoundationSolutionsFromDb;
             numberOfNonFoundationsOnUI.Should().Be(numberOfNonFoundationSolutionsFromDb);

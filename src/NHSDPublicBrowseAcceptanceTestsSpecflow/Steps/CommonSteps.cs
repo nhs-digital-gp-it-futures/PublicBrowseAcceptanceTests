@@ -15,10 +15,16 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps
 
         public void CreateBlankSolution()
         {
-            _test.solution = CreateSolution.CreateNewSolution(published: true);
-            _test.solutionDetail = CreateSolutionDetails.CreateNewSolutionDetail(_test.solution.Id, Guid.NewGuid(), 0, false);
+            _test.solution = GenerateSolution.GenerateNewSolution(checkForUnique: true, connectionString: _test.connectionString);
+            _test.solution.Create(_test.connectionString);
+            _test.solutionDetail = GenerateSolutionDetails.GenerateNewSolutionDetail(_test.solution.Id, Guid.NewGuid(), 0, false);
+            _test.solutionDetail.Create(_test.connectionString);
+            _test.solution.SolutionDetailId = _test.solutionDetail.SolutionDetailId;
+            _test.solution.Update(_test.connectionString);
+
+            _context.Add("DeleteSolution", true);
+
             var contact = CreateContactDetails.NewContactDetail();
-            SqlHelper.CreateBlankSolution(_test.solution, _test.solutionDetail, _test.connectionString, contact);
         }
 
         public CommonSteps(UITest test, ScenarioContext context)

@@ -1,36 +1,45 @@
 ﻿namespace NHSDPublicBrowseAcceptanceTests.TestData.Utils
 {
-    internal static class Queries
+    public static class Queries
     {
-        internal const string CreateNewSolution = "INSERT INTO Solution (Id, SupplierId, Name, Version, PublishedStatusId, AuthorityStatusId, SupplierStatusId, OnCatalogueVersion, LastUpdatedBy, LastUpdated) values (@solutionId, (SELECT TOP (1) [Id] FROM [dbo].[Supplier]), @solutionName, @solutionVersion, @publishStatus,1,1, 0, @lastUpdatedBy, @lastUpdated)";
-        internal const string GetSolution = "SELECT Summary, FullDescription, SupplierStatusId from [dbo].[Solution] where Id=@solutionId";
-        internal const string UpdateSolutionSolutionDetailId = "UPDATE Solution SET SolutionDetailId=@solutionDetailId WHERE Id=@solutionId";
-        internal const string DeleteSolution = "DELETE from Solution where Id=@solutionId";
+        public const string CreateNewSolution = "INSERT INTO Solution (Id, SupplierId, Name, Version, PublishedStatusId, AuthorityStatusId, SupplierStatusId, OnCatalogueVersion, LastUpdatedBy, LastUpdated) values (@SolutionId, @SupplierId, @SolutionName, @SolutionVersion, @PublishedStatusId,@AuthorityStatusId,@SupplierStatusId, 0, @LastUpdatedBy, @LastUpdated)";
+        public const string GetSolution = "SELECT * from [dbo].[Solution] WHERE Solution.Id=@solutionId";
+        public const string UpdateSolution = "UPDATE Solution SET SolutionDetailId=@solutionDetailId, SupplierId=@supplierId, Name=@solutionName, Version=@solutionVersion, PublishedStatusId=@publishedStatusId, AuthorityStatusId=@authorityStatusId, SupplierStatusId=@supplierStatusId WHERE Id=@solutionId";
+        public const string DeleteSolution = "DELETE FROM Solution WHERE Id=@solutionId";
+        public const string GetAllSolutions = "SELECT * FROM [dbo].[Solution]";
 
-        internal const string GetSolutionsCount = "SELECT COUNT (*) as count FROM [dbo].Solution WHERE Solution.PublishedStatusId = 3";
-        internal const string GetFoundationSolutionsCount = "SELECT COUNT (*) as count FROM [dbo].Solution LEFT JOIN FrameworkSolutions ON Solution.Id = FrameworkSolutions.SolutionId WHERE COALESCE(FrameworkSolutions.IsFoundation, 0) = 1 AND Solution.PublishedStatusId = 3";
-        internal const string GetNonFoundationSolutionsCount = "SELECT COUNT (*) as count FROM [dbo].Solution WHERE Solution.Id NOT IN ( SELECT SolutionId FROM [dbo].FrameworkSolutions WHERE IsFoundation = 1 ) AND Solution.PublishedStatusId = 3";
-        internal const string GetSolutionsWithCapabilityCount = "SELECT COUNT(*) as count FROM [dbo].[SolutionCapability] AS sc LEFT JOIN .[dbo].[Capability] AS c ON c.Id = sc.CapabilityId WHERE Name = @capabilityName";
+        public const string GetSolutionsCount = "SELECT COUNT(DISTINCT(SolutionId)) FROM SolutionCapability INNER JOIN Solution on SolutionId=Solution.Id WHERE Solution.PublishedStatusId=3";
+        public const string GetFoundationSolutionsCount = "SELECT COUNT(DISTINCT(sc.SolutionId)) FROM SolutionCapability sc INNER JOIN Solution s on sc.SolutionId=s.Id LEFT JOIN FrameworkSolutions fs ON s.Id = fs.SolutionId WHERE COALESCE(fs.IsFoundation, 0) = 1 AND s.PublishedStatusId = 3";
+        public const string GetNonFoundationSolutionsCount = "SELECT COUNT(DISTINCT(sc.SolutionId)) FROM SolutionCapability sc INNER JOIN Solution s on SolutionId=s.Id WHERE s.Id NOT IN ( SELECT SolutionId FROM [dbo].FrameworkSolutions WHERE IsFoundation = 1 ) AND s.PublishedStatusId = 3";
+        public const string GetSolutionsWithCapabilityCount = "SELECT COUNT(*) AS count FROM [dbo].[SolutionCapability] AS sc LEFT JOIN .[dbo].[Capability] AS c ON c.Id = sc.CapabilityId WHERE Name = @capabilityName";
 
-        internal const string GetSingleSolution = "SELECT Sol.[Id],Sol.[Name],Sol.[LastUpdated],Det.[AboutUrl],Det.[Summary],Det.[FullDescription],Sup.[Name] as SupplierName,RTrim(Coalesce(MC.FirstName + ' ','') + Coalesce(MC.LastName + ' ', '')) as ContactName,MC.[PhoneNumber],MC.[Email],MC.[Department] FROM [dbo].[Solution] as Sol LEFT JOIN [dbo].[SolutionDetail] as Det ON Det.[Id] = Sol.[SolutionDetailId] LEFT JOIN [dbo].[MarketingContact] as MC ON Sol.Id = MC.SolutionId LEFT JOIN [dbo].[Supplier] as Sup ON Sol.SupplierId = Sup.Id WHERE Sol.Id = @solutionId";
-        internal const string GetSingleSolutionCapabilities = "SELECT STRING_AGG(CAPS.Name, ',') as Capabilities FROM Capability as CAPS Where CAPS.Id in (SELECT CapabilityId FROM SolutionCapability as SC where SC.SolutionId = @solutionId )";
-        internal const string GetSingleSolutionMarketingContact = "";
+        public const string GetCapabilityById = "SELECT * FROM Capability WHERE Id=@Id";
+        public const string GetAllCapabilities = "SELECT * FROM Capability";
 
-        internal const string CreateSolutionDetail = "INSERT INTO SolutionDetail (Id, LastUpdatedBy, LastUpdated, SolutionId) values (@solutionDetailId, @lastUpdatedBy, @lastUpdated, @solutionId)";
-        internal const string DeleteSolutionDetail = "DELETE from SolutionDetail where SolutionId=@solutionId";
-        internal const string CreateMarketingContact = "INSERT INTO [MarketingContact] (SolutionId, FirstName, LastName, Email, PhoneNumber, Department, LastUpdated, LastUpdatedBy) VALUES(@solutionId, @firstName, @lastName, @email, @phoneNumber, @department, GETDATE(), '00000000-0000-0000-0000-000000000000')";
-        internal const string DeleteMarketingContact = "DELETE FROM MarketingContact where SolutionId=@solutionId";
+        public const string GetAllEpicsByCapabilityId = "SELECT e.Id,e.Name,e.CapabilityId,c.Name AS Level FROM Epic AS e INNER JOIN CompliancyLevel AS c ON e.CompliancyLevelId = c.Id WHERE e.CapabilityId=@Id";
 
-        internal const string UpdateLastUpdated = "UPDATE @table SET LastUpdated=@lastUpdated WHERE @whereKey=@whereValue";
-        internal const string GetLatestLastUpdated = @"Select TOP (1) Solution.LastUpdated AS SolutionLastUpdated, SolutionDetail.LastUpdated AS SolutionDetailLastUpdated, MarketingContact.LastUpdated AS MarketingContactLastUpdated, (select max(LU) FROM (VALUES (Solution.LastUpdated), (SolutionDetail.LastUpdated), (MarketingContact.LastUpdated)) as value(LU)) as [LastestLastUpdated]
+        public const string CreateSolutionDetail = "INSERT INTO SolutionDetail (Id, LastUpdatedBy, LastUpdated, SolutionId,AboutUrl,Features,Summary,FullDescription) values (@solutionDetailId, @lastUpdatedBy, @lastUpdated, @solutionId,@AboutUrl,@Features,@Summary,@FullDescription)";
+        public const string GetSolutionDetail = "SELECT * from [dbo].[SolutionDetail] where SolutionId=@solutionId";
+        public const string UpdateSolutionDetail = "UPDATE SolutionDetail SET Features=@features, ClientApplication=@clientApplication, AboutUrl=@aboutUrl, Summary=@summary, FullDescription=@fullDescription, RoadMap=@roadMap, Hosting=@hostingTypes, IntegrationsUrl=@integrationsUrl, ImplementationDetail=@implementationTimescales WHERE SolutionId=@solutionId";
+        public const string DeleteSolutionDetail = "DELETE from SolutionDetail where SolutionId=@solutionId";
+
+        public const string CreateMarketingContact = "INSERT INTO [MarketingContact] (SolutionId, FirstName, LastName, Email, PhoneNumber, Department, LastUpdated, LastUpdatedBy) VALUES(@solutionId, @firstName, @lastName, @email, @phoneNumber, @department, GETDATE(), '00000000-0000-0000-0000-000000000000')";
+        public const string DeleteMarketingContact = "DELETE FROM MarketingContact where SolutionId=@solutionId";
+
+        public const string UpdateLastUpdated = "UPDATE @table SET LastUpdated=@lastUpdated WHERE @whereKey=@whereValue";
+        public const string GetLatestLastUpdated = @"Select TOP (1) Solution.LastUpdated AS SolutionLastUpdated, SolutionDetail.LastUpdated AS SolutionDetailLastUpdated, MarketingContact.LastUpdated AS MarketingContactLastUpdated, (select max(LU) FROM (VALUES (Solution.LastUpdated), (SolutionDetail.LastUpdated), (MarketingContact.LastUpdated)) as value(LU)) as [LastestLastUpdated]
                 from Solution
                 Left JOIN SolutionDetail on SolutionDetail.SolutionId = Solution.Id
                 Left Join MarketingContact on MarketingContact.SolutionId = Solution.Id
                 where Solution.Id = @solutionId;
             ";
-        internal const string AddRandomSolutionCapability = "INSERT INTO SolutionCapability (SolutionId, CapabilityId, StatusId, LastUpdated, LastUpdatedBy) VALUES (@solutionId, (SELECT TOP 1 CapabilityId FROM FrameworkCapabilities ORDER BY RAND()), 1, GETDATE(), '00000000-0000-0000-0000-000000000000')";
 
-        internal const string DeleteSolutionCapability = "DELETE FROM SolutionCapability WHERE SolutionId=@solutionId";
+        internal const string GetLastUpdated = "SELECT LastUpdated FROM @table WHERE @whereKey=@whereValue";
+
+        public const string AddRandomSolutionCapability = "INSERT INTO SolutionCapability (SolutionId, CapabilityId, StatusId, LastUpdated, LastUpdatedBy) VALUES (@solutionId, (SELECT TOP 1 CapabilityId FROM FrameworkCapabilities ORDER BY RAND()), 1, GETDATE(), '00000000-0000-0000-0000-000000000000')";
+        public const string GetSolutionCapabilities = "Select c.Id, c.CapabilityRef, c.Name from SolutionCapability s inner join Capability c on s.CapabilityId = c.Id where s.SolutionId =@solutionId";
+        public const string DeleteSolutionCapability = "DELETE FROM SolutionCapability WHERE SolutionId=@solutionId";
+        public const string GetSolutionContactDetails = "SELECT * FROM MarketingContact WHERE SolutionId=@solutionId";
+        public const string AddMarketingContact = "INSERT INTO MarketingContact (SolutionId, FirstName, LastName,Email,PhoneNumber,Department,LastUpdated,LastUpdatedBy) VALUES(@solutionId, @FirstName, @LastName, @Email, @PhoneNumber, @Department,@LastUpdated,@LastUpdatedBy)";
     }
-
 }

@@ -5,7 +5,7 @@
 
 Scenario Outline: Solution Status Determines Published
 	Given that a Solution has a PublishedStatus of <Code>	
-	And that a User has chosen to view a list of all Solutions
+	And that a User has chosen to view a list of all Solutions	
 	Then the Solution's Marketing Page availability is <Published>	
 
 	Examples: 

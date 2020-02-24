@@ -16,7 +16,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
         public void PageDisplayed(string url)
         {
             // Should be a better way to do this that doesn't rely on RegEx matching
-            Regex.Match(driver.Url, $@"{url}/solutions/(foundation|all)/.*").Success.Should().BeTrue();
+            Regex.Match(driver.Url, $@"{url}/solutions/(capabilities-selector.*|foundation)/.*").Success.Should().BeTrue();
         }
 
         public string GetSolutionId()
@@ -24,9 +24,9 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
             return driver.FindElement(pages.ViewSingleSolution.SolutionId).Text.Replace("Solution ID: ", "");
         }
 
-        public string GetSupplierName()
+        public void SupplierNameDisplayed()
         {
-            return driver.FindElement(pages.ViewSingleSolution.SolutionSupplierName).Text;
+            driver.FindElement(pages.ViewSingleSolution.SolutionSupplierName).Displayed.Should().BeTrue();
         }
 
         public string GetSolutionName()
@@ -66,7 +66,10 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
 
         public IList<string> GetSolutionCapabilities()
         {
-            var capabilities = driver.FindElements(pages.ViewSingleSolution.SolutionCapabilities).Select(s => s.Text).ToList();
+            var capabilities = driver.FindElements(pages.ViewSingleSolution.SolutionCapabilities)
+                .Select(s => s.FindElement(pages.ViewSingleSolution.CapabilityTitle).Text)
+                .Select(s => s.Split(',')[0])
+                .ToList();
             return capabilities;
         }
 
@@ -84,7 +87,8 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
         {
             SolutionContactDetails contactDetails = new SolutionContactDetails
             {
-                ContactName = driver.FindElement(pages.ViewSingleSolution.SolutionContactName).Text,
+                FirstName = driver.FindElement(pages.ViewSingleSolution.SolutionContactName).Text.Split(' ')[0],
+                LastName = driver.FindElement(pages.ViewSingleSolution.SolutionContactName).Text.Split(' ')[1],
                 Department = driver.FindElement(pages.ViewSingleSolution.SolutionContactDepartment).Text,
                 PhoneNumber = driver.FindElement(pages.ViewSingleSolution.SolutionContactPhoneNumber).Text,
                 Email = driver.FindElement(pages.ViewSingleSolution.SolutionContactEmail).Text

@@ -1,4 +1,6 @@
 ﻿using Bogus;
+using System;
+using System.Collections.Generic;
 
 namespace NHSDPublicBrowseAcceptanceTests.TestData.Information
 {
@@ -15,6 +17,13 @@ namespace NHSDPublicBrowseAcceptanceTests.TestData.Information
         {
             var faker = new Faker("en_GB");
             return string.Join("", faker.Random.Chars(min: '0', max: 'z', count: count));
+        }
+
+        internal static T GetRandomItem<T>(IEnumerable<T> items)
+        {
+            var faker = new Faker();
+
+            return faker.PickRandom(items);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using NHSDPublicBrowseAcceptanceTests.TestData.Utils;
 using NHSDPublicBrowseAcceptanceTestsSpecflow.Utils;
+using System;
 using TechTalk.SpecFlow;
 
 namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps
@@ -8,10 +9,12 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps
     public sealed class Hooks
     {
         private readonly UITest _test;
+        private readonly ScenarioContext _context;
 
-        public Hooks(UITest test)
+        public Hooks(UITest test, ScenarioContext context)
         {
             _test = test;
+            _context = context;
         }
 
         [AfterScenario]
@@ -20,9 +23,9 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps
             _test.driver.Close();
             _test.driver.Quit();
 
-            if (_test.solution != null)
-            {
-                SqlHelper.DeleteSolution(_test.solution.Id, _test.connectionString);
+            if (_context.ContainsKey("DeleteSolution") && (bool)_context["DeleteSolution"])
+            {                
+                _test.solution.Delete(_test.connectionString);
             }
         }
     }
