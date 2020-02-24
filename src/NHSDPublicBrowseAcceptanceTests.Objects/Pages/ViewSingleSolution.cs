@@ -9,17 +9,18 @@ namespace NHSDPublicBrowseAcceptanceTests.Objects.Pages
         public By SolutionSupplierName => CustomBy.DataTestId("view-solution-page-supplier-name");
         public By SolutionName => CustomBy.DataTestId("view-solution-page-solution-name");
         public By SolutionSummary => CustomBy.DataTestId("view-question-data-text-summary");
-        public By SolutionCapabilities => CustomBy.DataTestId("view-solution-capabilities", "li");
+        public By SolutionCapabilities => CustomBy.DataTestId("view-section-table-row-capabilities");
+        public By CapabilityTitle => CustomBy.DataTestId("view-section-table-row-title");
         public By SolutionContactsSection => CustomBy.DataTestId("view-solution-contact-details");
         public By SolutionFoundationTag => CustomBy.DataTestId("solution-foundation-tag");
 
         public By SolutionLastUpdated => CustomBy.DataTestId("view-solution-page-last-updated");
 
-        public By SolutionAboutUrl => CustomBy.DataTestId("view-section-question-link");
+        public By SolutionAboutUrl => CustomBy.DataTestId("view-question-data-link");
 
         public By AttachmentDownloadLink => CustomBy.DataTestId("view-solution-page-download-info-button", "a");
 
-        public By FoundationSolutionIndicator => CustomBy.DataTestId("view-solution-foundation-tag");
+        public By FoundationSolutionIndicator => CustomBy.DataTestId("view-solution-foundation");
 
         public By SolutionFullDescription => CustomBy.DataTestId("view-question-data-text-description");
 

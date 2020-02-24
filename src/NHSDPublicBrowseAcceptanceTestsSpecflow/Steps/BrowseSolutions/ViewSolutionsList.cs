@@ -27,10 +27,17 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
             bs.WhenTheUserChoosesToViewAllSolutions();
         }
 
+        [Given(@"has not chosen to filter the solutions")]
+        public void GivenHasNotChosenToFilterTheSolutions()
+        {
+            _test.pages.CapabilityFilter.ClickCapabilityContinueButton();
+        }
+
+
         [Then(@"there is a Card for each Solution")]
         public void ThenThereIsACardForEachSolution()
         {
-            expectedNumberOfSolutions = SqlHelper.GetNumberOfSolutions(_test.connectionString);
+            expectedNumberOfSolutions = SqlExecutor.ExecuteScalar(_test.connectionString, Queries.GetSolutionsCount, null);
             var actualNumberOfSolutionCards = _test.pages.SolutionsList.GetSolutionsCount();
             actualNumberOfSolutionCards.Should().Be(expectedNumberOfSolutions);
         }
@@ -66,7 +73,7 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
         [Then(@"capability '(.*)' is listed in the solution capabilities")]
         public void ThenCapabilityIsListedInTheSolutionCapabilities(string expectedCapabilityName)
         {
-            var dbCount = SqlHelper.GetSolutionsWithCapabilityCount(expectedCapabilityName, _test.connectionString);
+            var dbCount = SqlExecutor.ExecuteScalar(_test.connectionString, Queries.GetSolutionsWithCapabilityCount, new { capabilityName = expectedCapabilityName});
             var uiCount = _test.pages.SolutionsList.GetSolutionsWithCapabilityCount(expectedCapabilityName);
             uiCount.Should().Be(dbCount);
         }

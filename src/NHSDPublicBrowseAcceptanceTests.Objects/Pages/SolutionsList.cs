@@ -11,6 +11,6 @@ namespace NHSDPublicBrowseAcceptanceTests.Objects.Pages
         public By SolutionSummary => CustomBy.DataTestId("solution-card-summary");
         public By SolutionCapabilityList => CustomBy.DataTestId("capability-list");
         public By SolutionCapabilityName => CustomBy.DataTestId("capability-list-item");
-        public By FoundationSolutionIndicators => CustomBy.DataTestId("solution-card-foundation-tag");
+        public By FoundationSolutionIndicators => CustomBy.DataTestId("solution-card-foundation");
     }
 }

@@ -7,43 +7,28 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="FluentAssertions" Version="5.9.0" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.4.0" />
-    <PackageReference Include="coverlet.collector" Version="1.1.0">
+    <PackageReference Include="FluentAssertions" Version="5.10.2" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
+    <PackageReference Include="coverlet.collector" Version="1.2.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="NUnit" Version="3.12.0" />
-    <PackageReference Include="NUnit3TestAdapter" Version="3.15.1" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.16.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Selenium.WebDriver" Version="3.141.0" />
-    <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="79.0.3945.3600" />
-    <PackageReference Include="SpecFlow" Version="3.1.67" />
-    <PackageReference Include="SpecFlow.NUnit" Version="3.1.67" />
-    <PackageReference Include="SpecFlow.NUnit.Runners" Version="3.1.67" />
-    <PackageReference Include="SpecFlow.Tools.MsBuild.Generation" Version="3.1.67" />
+    <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="80.0.3987.10600" />
+    <PackageReference Include="SpecFlow" Version="3.1.82" />
+    <PackageReference Include="SpecFlow.NUnit" Version="3.1.82" />
+    <PackageReference Include="SpecFlow.NUnit.Runners" Version="3.1.82" />
+    <PackageReference Include="SpecFlow.Tools.MsBuild.Generation" Version="3.1.82" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\NHSDPublicBrowseAcceptanceTests.Actions\NHSDPublicBrowseAcceptanceTests.Actions.csproj" />
     <ProjectReference Include="..\NHSDPublicBrowseAcceptanceTests.TestData\NHSDPublicBrowseAcceptanceTests.TestData.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Update="Features\Homepage\Homepage.feature.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Homepage.feature</DependentUpon>
-    </Compile>
-    <Compile Update="Features\LayoutComponents\Footer.feature.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Footer.feature</DependentUpon>
-    </Compile>
-    <Compile Update="Features\LayoutComponents\Header.feature.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Header.feature</DependentUpon>
-    </Compile>
   </ItemGroup>
 
   <ItemGroup>

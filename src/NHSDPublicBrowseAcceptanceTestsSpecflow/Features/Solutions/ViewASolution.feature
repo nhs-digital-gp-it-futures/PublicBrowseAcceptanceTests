@@ -12,14 +12,8 @@ Scenario: Solution Details
 	And Solution Full Description
 	And About Solution URL
 	And Contact Details
-	And Last Updated Date
 	And list of Capabilities
 	And Solution ID
-
-Scenario: Attachment Download Link Displayed
-	Given that a User views a Solution
-	When the User is viewing the Solution Page
-	Then there is a link for the User to download an attachment
 
 Scenario: Foundation Solution Indicator
 	Given that a User views a Foundation Solution
@@ -27,14 +21,9 @@ Scenario: Foundation Solution Indicator
 	Then the page will contain an indication that the Solution meets the criteria for a Foundation Solution Set
 
 Scenario: Capabilities displayed correctly
-	Given that a User views a Solution
+	Given that a User views a Solution	
 	When the User is viewing the Solution Page
 	Then the capabilities listed match the expected capabilities in the database
-
-Scenario: Download more information
-	Given that a User views a Solution
-	When the User is viewing the Solution Page
-	Then the Download more information button downloads a 'PDF' file
 
 Scenario Outline: Last updated date is updated when solution table is updated
 	Given that a User views a created Solution

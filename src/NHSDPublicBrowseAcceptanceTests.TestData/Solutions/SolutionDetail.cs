@@ -1,4 +1,6 @@
-﻿using System;
+﻿using NHSDPublicBrowseAcceptanceTests.TestData.Utils;
+using System;
+using System.Linq;
 
 namespace NHSDPublicBrowseAcceptanceTests.TestData.Solutions
 {
@@ -11,10 +13,35 @@ namespace NHSDPublicBrowseAcceptanceTests.TestData.Solutions
         public string ClientApplication { get; set; }
         public string Summary { get; set; }
         public string FullDescription { get; set; }
+        public string RoadMap { get; set; }
+        public string HostingTypes { get; set; }
+        public string IntegrationsUrl { get; set; }
+        public string ImplementationTimescales { get; set; }
+        public Guid LastUpdatedBy { get; set; } = Guid.Empty;
+        public DateTime LastUpdated { get; set; } = DateTime.Now;
 
-        public override string ToString()
+        public SolutionDetail Retrieve(string connectionString)
         {
-            return $"SolutionDetailId: {SolutionDetailId},\nSolutionId: {SolutionId},\nAboutUrl: {AboutUrl},\nFeatures: {Features},\nClientApplication: {ClientApplication}";
+            var query = Queries.GetSolutionDetail;
+            return SqlExecutor.Execute<SolutionDetail>(connectionString, query, this).Single();
+        }
+
+        public void Create(string connectionString)
+        {
+            var query = Queries.CreateSolutionDetail;
+            SqlExecutor.Execute<SolutionDetail>(connectionString, query, this);
+        }
+
+        public void Update(string connectionString)
+        {
+            var query = Queries.UpdateSolutionDetail;
+            SqlExecutor.Execute<SolutionDetail>(connectionString, query, this);
+        }
+
+        public void Delete(string connectionString)
+        {
+            var query = Queries.DeleteSolutionDetail;
+            SqlExecutor.Execute<SolutionDetail>(connectionString, query, this);
         }
     }
 }
