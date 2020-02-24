@@ -30,6 +30,7 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
             _test.solutionDetail.Create(_test.connectionString);
             _test.solution.SolutionDetailId = _test.solutionDetail.SolutionDetailId;
             _test.solution.Update(_test.connectionString);
+            _context.Add("DeleteSolution", true);
             new Capability().AddRandomCapabilityToSolution(_test.connectionString, _test.solution.Id);
 
 
