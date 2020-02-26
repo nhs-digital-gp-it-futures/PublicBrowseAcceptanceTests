@@ -5,6 +5,7 @@ using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 
 namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Utils
 {
@@ -18,11 +19,17 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Utils
         internal Solution solution;
         internal SolutionDetail solutionDetail;
         internal List<SolutionContactDetails> contactDetails = new List<SolutionContactDetails>();
+        internal NHSDPublicBrowseAcceptanceTests.TestData.Azure.AzureBlobStorage AzureBlobStorage;
+        internal string DefaultAzureBlobStorageContainerName;
+        internal string DownloadPath;
 
         public UITest()
         {
             var (serverUrl, databaseName, dbUser, dbPassword) = EnvironmentVariables.GetDbConnectionDetails();
             connectionString = string.Format(ConnectionString.GPitFutures, serverUrl, databaseName, dbUser, dbPassword);
+            AzureBlobStorage = new NHSDPublicBrowseAcceptanceTests.TestData.Azure.AzureBlobStorage(EnvironmentVariables.GetAzureBlobStorageConnectionString());
+            DefaultAzureBlobStorageContainerName = EnvironmentVariables.GetAzureContainerName();
+            DownloadPath = Path.Combine(Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), "downloads");
 
             url = EnvironmentVariables.GetUrl();
 

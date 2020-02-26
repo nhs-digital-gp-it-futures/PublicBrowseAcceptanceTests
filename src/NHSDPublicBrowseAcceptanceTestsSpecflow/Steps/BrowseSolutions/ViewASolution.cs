@@ -149,7 +149,7 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
             // Filename is to match the solution ID at all times
             var solId = _test.pages.ViewASolution.GetSolutionId();
             var fileName = $"{solId}.{fileFormat.ToLower()}";
-            var downloadLink = _test.pages.ViewASolution.GetDownloadUrl();
+            var downloadLink = _test.pages.ViewASolution.GetAttachmentDownloadLinkUrl();
 
             var downloadPath = Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory);
 
@@ -180,6 +180,12 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
             var convertedDate = ConvertDateToLongDateTime(actualLastUpdated);
             
             convertedDate.Should().Be(expectedLastUpdatedDate);
+        }
+
+        [Then(@"Features")]
+        public void ThenFeatures()
+        {
+            _test.pages.ViewASolution.GetFeatures().Should().HaveCountGreaterThan(0);
         }
 
         private string ConvertDateToLongDateTime(string date)

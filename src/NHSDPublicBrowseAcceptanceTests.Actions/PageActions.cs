@@ -10,7 +10,6 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions
             PageActionCollection = new PageActionCollection
             {
                 SolutionsList = new SolutionsList(driver),
-                ViewSolution = new ViewSolution(driver),
                 CapabilityFilter = new CapabilityFilter(driver),
                 Homepage = new Homepage(driver),
                 Common = new Common(driver),
