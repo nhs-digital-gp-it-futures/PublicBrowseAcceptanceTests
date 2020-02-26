@@ -1,8 +1,8 @@
 ﻿using FluentAssertions;
-using NHSDPublicBrowseAcceptanceTestsSpecflow.Utils;
+using NHSDPublicBrowseAcceptanceTests.Tests.Utils;
 using TechTalk.SpecFlow;
 
-namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.LayoutComponents
+namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.LayoutComponents
 {
     [Binding]
     public sealed class Header

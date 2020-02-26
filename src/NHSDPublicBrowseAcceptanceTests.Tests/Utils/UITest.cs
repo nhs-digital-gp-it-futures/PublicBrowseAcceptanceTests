@@ -4,7 +4,7 @@ using NHSDPublicBrowseAcceptanceTests.TestData.Solutions;
 using OpenQA.Selenium;
 using System.Collections.Generic;
 
-namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Utils
+namespace NHSDPublicBrowseAcceptanceTests.Tests.Utils
 {
     public sealed class UITest
     {

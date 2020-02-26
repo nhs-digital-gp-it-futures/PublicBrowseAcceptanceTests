@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29102.190
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NHSDPublicBrowseAcceptanceTestsSpecflow", "NHSDPublicBrowseAcceptanceTestsSpecflow\NHSDPublicBrowseAcceptanceTestsSpecflow.csproj", "{6DEEB825-165C-4EF0-8AAA-50361F75952E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NHSDPublicBrowseAcceptanceTests.Tests", "NHSDPublicBrowseAcceptanceTestsSpecflow\NHSDPublicBrowseAcceptanceTests.Tests.csproj", "{6DEEB825-165C-4EF0-8AAA-50361F75952E}"
 	ProjectSection(ProjectDependencies) = postProject
 		{44AFC64B-8B93-4B5E-A282-77DA50931117} = {44AFC64B-8B93-4B5E-A282-77DA50931117}
 	EndProjectSection
