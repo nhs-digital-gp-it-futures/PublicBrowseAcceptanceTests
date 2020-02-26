@@ -1,10 +1,9 @@
 ﻿using FluentAssertions;
 using NHSDPublicBrowseAcceptanceTests.TestData.Capabilities;
 using NHSDPublicBrowseAcceptanceTests.TestData.Solutions;
-using NHSDPublicBrowseAcceptanceTests.TestData.Utils;
+using NHSDPublicBrowseAcceptanceTests.Tests.Utils;
 using System;
 using System.Linq;
-using NHSDPublicBrowseAcceptanceTests.Tests.Utils;
 using TechTalk.SpecFlow;
 
 namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
@@ -36,7 +35,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
 
             _test.driver.Navigate().Refresh();
         }
-        
+
         [Then(@"the Solution's Marketing Page availability is (.*)")]
         public void ThenTheSolutionSMarketingPageAvailabilityIsFalse(bool published)
         {

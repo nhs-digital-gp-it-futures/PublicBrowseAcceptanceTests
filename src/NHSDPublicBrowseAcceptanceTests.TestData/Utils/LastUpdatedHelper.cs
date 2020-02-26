@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace NHSDPublicBrowseAcceptanceTests.TestData.Utils
 {
@@ -24,7 +23,8 @@ namespace NHSDPublicBrowseAcceptanceTests.TestData.Utils
         public static DateTime GetLatestUpdated(string[] tables, string whereValue, string connectionString)
         {
             List<DateTime> lastUpdatedValues = new List<DateTime>();
-            foreach(var table in tables){
+            foreach (var table in tables)
+            {
                 var whereKeyParsed = table.Equals("Solution") ? "Id" : "SolutionId";
                 var result = GetLastUpdated(table, whereKeyParsed, whereValue, connectionString);
                 lastUpdatedValues.Add(result);

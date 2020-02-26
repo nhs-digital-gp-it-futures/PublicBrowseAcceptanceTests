@@ -1,7 +1,4 @@
-﻿using System;
-using FluentAssertions;
-using NHSDPublicBrowseAcceptanceTests.TestData.Solutions;
-using NHSDPublicBrowseAcceptanceTests.TestData.Utils;
+﻿using FluentAssertions;
 using NHSDPublicBrowseAcceptanceTests.Tests.Utils;
 using TechTalk.SpecFlow;
 
@@ -12,7 +9,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps
     {
         internal readonly UITest _test;
         internal readonly ScenarioContext _context;
-        
+
         public CommonSteps(UITest test, ScenarioContext context)
         {
             _test = test;

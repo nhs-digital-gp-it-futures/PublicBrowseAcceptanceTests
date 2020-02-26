@@ -3,7 +3,6 @@ using NHSDPublicBrowseAcceptanceTests.TestData.Capabilities;
 using NHSDPublicBrowseAcceptanceTests.TestData.Information;
 using NHSDPublicBrowseAcceptanceTests.TestData.Utils;
 using OpenQA.Selenium;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 

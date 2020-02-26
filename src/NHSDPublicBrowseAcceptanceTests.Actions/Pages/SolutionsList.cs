@@ -1,8 +1,8 @@
-﻿using System;
+﻿using NHSDPublicBrowseAcceptanceTests.Objects.Utils;
+using OpenQA.Selenium;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using NHSDPublicBrowseAcceptanceTests.Objects.Utils;
-using OpenQA.Selenium;
 
 namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
 {

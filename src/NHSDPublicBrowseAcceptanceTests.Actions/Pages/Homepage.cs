@@ -1,6 +1,5 @@
 ﻿using FluentAssertions;
 using OpenQA.Selenium;
-using System;
 
 namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
 {
@@ -27,7 +26,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
 
         public void ClickBuyersGuideControl()
         {
-            driver.FindElement(pages.Homepage.GuidanceContent).Click();            
+            driver.FindElement(pages.Homepage.GuidanceContent).Click();
         }
 
         public void ClickBrowseSolutions()

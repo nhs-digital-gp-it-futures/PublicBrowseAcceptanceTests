@@ -45,7 +45,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
         public void ThenThereIsACardForEachSolution()
         {
             var solutions = SqlExecutor.Execute<Solution>(query: Queries.GetAllSolutions,
-                connectionString: _test.ConnectionString, 
+                connectionString: _test.ConnectionString,
                 param: null);
             expectedNumberOfSolutions = SqlExecutor.ExecuteScalar(_test.ConnectionString, Queries.GetSolutionsCount, null);
             var actualNumberOfSolutionCards = _test.Pages.SolutionsList.GetSolutionsCount();
@@ -83,7 +83,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
         [Then(@"capability '(.*)' is listed in the solution capabilities")]
         public void ThenCapabilityIsListedInTheSolutionCapabilities(string expectedCapabilityName)
         {
-            var dbCount = SqlExecutor.ExecuteScalar(_test.ConnectionString, Queries.GetSolutionsWithCapabilityCount, new { capabilityName = expectedCapabilityName});
+            var dbCount = SqlExecutor.ExecuteScalar(_test.ConnectionString, Queries.GetSolutionsWithCapabilityCount, new { capabilityName = expectedCapabilityName });
             var uiCount = _test.Pages.SolutionsList.GetSolutionsWithCapabilityCount(expectedCapabilityName);
             uiCount.Should().Be(dbCount);
         }

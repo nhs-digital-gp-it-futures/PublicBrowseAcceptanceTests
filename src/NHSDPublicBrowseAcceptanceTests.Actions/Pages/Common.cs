@@ -1,8 +1,6 @@
 ﻿using FluentAssertions;
 using OpenQA.Selenium;
-using System;
 using System.IO;
-using System.Linq;
 using System.Net;
 
 namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages

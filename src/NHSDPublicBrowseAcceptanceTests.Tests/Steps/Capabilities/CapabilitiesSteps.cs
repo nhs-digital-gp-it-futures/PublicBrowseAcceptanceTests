@@ -1,10 +1,8 @@
 ﻿using FluentAssertions;
 using NHSDPublicBrowseAcceptanceTests.TestData.Capabilities;
 using NHSDPublicBrowseAcceptanceTests.TestData.Utils;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using NHSDPublicBrowseAcceptanceTests.Tests.Utils;
+using System.Collections.Generic;
 using TechTalk.SpecFlow;
 
 namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.Capabilities
