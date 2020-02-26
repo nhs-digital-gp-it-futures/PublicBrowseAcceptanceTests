@@ -9,7 +9,6 @@ namespace NHSDPublicBrowseAcceptanceTests.Objects
             Pages = new PageCollection
             {
                 SolutionsList = new SolutionsList(),
-                ViewSolution = new ViewSolution(),
                 CapabilityFilter = new CapabilityFilter(),
                 Common = new Common(),
                 Homepage = new Homepage(),
