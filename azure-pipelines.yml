@@ -54,5 +54,5 @@ steps:
   displayName: Run Acceptance Tests
   inputs:
     command: 'test'
-    projects: 'src/NHSDPublicBrowseAcceptanceTestsSpecflow/*.csproj'
+    projects: 'src/NHSDPublicBrowseAcceptanceTests.Tests/*.csproj'
     arguments: '-v n'
