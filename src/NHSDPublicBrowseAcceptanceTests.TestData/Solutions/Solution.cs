@@ -1,9 +1,7 @@
-﻿using Dapper;
-using NHSDPublicBrowseAcceptanceTests.TestData.Utils;
+﻿using NHSDPublicBrowseAcceptanceTests.TestData.Utils;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
 
 namespace NHSDPublicBrowseAcceptanceTests.TestData.Solutions

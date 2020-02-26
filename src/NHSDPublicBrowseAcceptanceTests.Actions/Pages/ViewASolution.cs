@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
-using FluentAssertions;
+﻿using FluentAssertions;
 using NHSDPublicBrowseAcceptanceTests.TestData.Solutions;
 using OpenQA.Selenium;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
 {

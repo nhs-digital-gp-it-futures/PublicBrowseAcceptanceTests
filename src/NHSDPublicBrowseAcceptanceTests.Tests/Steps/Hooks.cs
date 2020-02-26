@@ -1,5 +1,3 @@
-﻿using NHSDPublicBrowseAcceptanceTests.TestData.Utils;
-using System;
 using NHSDPublicBrowseAcceptanceTests.Tests.Utils;
 using System.Threading.Tasks;
 using TechTalk.SpecFlow;
@@ -25,7 +23,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps
             _test.driver.Quit();
 
             if (_context.ContainsKey("DeleteSolution") && (bool)_context["DeleteSolution"])
-            {                
+            {
                 _test.solution.Delete(_test.ConnectionString);
             }
 

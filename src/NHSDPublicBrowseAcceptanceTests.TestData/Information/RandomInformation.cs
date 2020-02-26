@@ -1,5 +1,4 @@
 ﻿using Bogus;
-using System;
 using System.Collections.Generic;
 
 namespace NHSDPublicBrowseAcceptanceTests.TestData.Information

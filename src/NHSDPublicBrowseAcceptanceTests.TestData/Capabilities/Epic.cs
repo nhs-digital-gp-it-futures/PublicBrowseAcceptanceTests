@@ -3,7 +3,7 @@
 namespace NHSDPublicBrowseAcceptanceTests.TestData.Capabilities
 {
     public class Epic
-    { 
+    {
         public string EpicRef { get; set; }
         public string Name { get; set; }
         public string Level { get; set; }

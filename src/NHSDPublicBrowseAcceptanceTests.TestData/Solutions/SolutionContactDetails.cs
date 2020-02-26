@@ -17,7 +17,7 @@ namespace NHSDPublicBrowseAcceptanceTests.TestData.Solutions
         public void AddMarketingContactForSolution(string connectionString, string solutionId)
         {
             var query = Queries.AddMarketingContact;
-            SqlExecutor.Execute<SolutionContactDetails>(query: query, connectionString: connectionString, param: new { solutionId, FirstName, LastName, Email, PhoneNumber, Department, LastUpdated, LastUpdatedBy});
+            SqlExecutor.Execute<SolutionContactDetails>(query: query, connectionString: connectionString, param: new { solutionId, FirstName, LastName, Email, PhoneNumber, Department, LastUpdated, LastUpdatedBy });
         }
     }
 }

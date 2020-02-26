@@ -2,10 +2,10 @@
 using NHSDPublicBrowseAcceptanceTests.TestData.Capabilities;
 using NHSDPublicBrowseAcceptanceTests.TestData.Solutions;
 using NHSDPublicBrowseAcceptanceTests.TestData.Utils;
+using NHSDPublicBrowseAcceptanceTests.Tests.Utils;
 using System;
 using System.IO;
 using System.Linq;
-using NHSDPublicBrowseAcceptanceTests.Tests.Utils;
 using TechTalk.SpecFlow;
 
 namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
@@ -60,7 +60,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
             _test.Pages.ViewASolution.PageDisplayed(_test.Url);
             var id = _test.Pages.ViewASolution.GetSolutionId();
             _test.solution = new Solution() { Id = id }.Retrieve(_test.ConnectionString);
-            _test.solutionDetail = new SolutionDetail() { SolutionId = _test.solution.Id }.Retrieve(_test.ConnectionString);            
+            _test.solutionDetail = new SolutionDetail() { SolutionId = _test.solution.Id }.Retrieve(_test.ConnectionString);
         }
 
         [Then(@"the page will contain Supplier Name")]
@@ -182,7 +182,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
             var actualLastUpdated = _test.Pages.ViewASolution.GetSolutionLastUpdated();
 
             var convertedDate = ConvertDateToLongDateTime(actualLastUpdated);
-            
+
             convertedDate.Should().Be(expectedLastUpdatedDate);
         }
 
