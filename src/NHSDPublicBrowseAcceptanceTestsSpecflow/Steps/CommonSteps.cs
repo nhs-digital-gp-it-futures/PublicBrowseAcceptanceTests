@@ -24,7 +24,7 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps
         [Then(@"Additional Services are not included in the results")]
         public void NumberOfSolutionsShownMatchExpected()
         {
-            var actualCount = _test.pages.SolutionsList.GetSolutionsCount();
+            var actualCount = _test.Pages.SolutionsList.GetSolutionsCount();
             actualCount.Should().Be(_test.expectedSolutionsCount);
         }
     }

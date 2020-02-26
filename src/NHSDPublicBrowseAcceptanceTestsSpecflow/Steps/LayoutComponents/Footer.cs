@@ -19,7 +19,7 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.LayoutComponents
         [Then(@"the Footer is presented")]
         public void ThenTheFooterIsPresented()
         {
-            _test.pages.Footer.ComponentDisplayed();
+            _test.Pages.Footer.ComponentDisplayed();
         }
 
         [Given(@"the User chooses to select a URL in the Footer")]
@@ -31,13 +31,13 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.LayoutComponents
         [When(@"they select (.*)")]
         public void WhenTheySelectAURL(string linkText)
         {
-            _test.pages.Footer.SelectURL(linkText);
+            _test.Pages.Footer.SelectURL(linkText);
         }
 
         [Then(@"they are directed according to the URL (.*)")]
         public void ThenTheyAreDirectedAccordingToTheURL(string href)
         {
-            _test.pages.Common.URLContains(href);
+            _test.Pages.Common.URLContains(href);
         }
 
     }

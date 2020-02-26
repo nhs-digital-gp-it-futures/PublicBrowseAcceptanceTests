@@ -18,13 +18,13 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.LayoutComponents
         [Given(@"the User chooses any Page in the application")]
         public void GivenTheUserChoosesAnyPageInTheApplication()
         {
-            _test.pages.Homepage.PageDisplayed();
+            _test.Pages.Homepage.PageDisplayed();
         }
 
         [When(@"they are on a Page")]
         public void WhenTheyAreOnAPage()
         {
-            _test.pages.Homepage.PageDisplayed();
+            _test.Pages.Homepage.PageDisplayed();
         }
     }
 }
