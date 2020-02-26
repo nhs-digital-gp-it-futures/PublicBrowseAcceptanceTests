@@ -11,13 +11,17 @@ using TechTalk.SpecFlow;
 namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
 {
     [Binding]
-    public class ViewASolution : CommonSteps
+    public class ViewASolution
     {
         private string expectedLastUpdatedDate;
         private const string dateFormat = "dd MMMM yyyy";
+        private readonly UITest _test;
+        private readonly ScenarioContext _context;
 
-        public ViewASolution(UITest test, ScenarioContext context): base (test, context)
+        public ViewASolution(UITest test, ScenarioContext context)
         {
+            _test = test;
+            _context = context;
         }
 
         [Given(@"that a User views a Solution")]
@@ -31,8 +35,8 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
         public void GivenThatAUserViewsACreatedSolution()
         {
             new ViewSolutionOnlyWhenPublished(_test, _context).GivenThatASolutionHasAPublishedStatusOf(3);
-            _test.contactDetails.Add(CreateContactDetails.NewContactDetail());
-            _test.contactDetails[0].AddMarketingContactForSolution(_test.ConnectionString, _test.solution.Id);
+            _test.ContactDetails.Add(CreateContactDetails.NewContactDetail());
+            _test.ContactDetails[0].AddMarketingContactForSolution(_test.ConnectionString, _test.solution.Id);
             new ViewSolutionsList(_test, _context).GivenThatAUserHasChosenToViewAListOfAllSolutions();
             var oldDate = new DateTime(2001, 02, 03);
             LastUpdatedHelper.UpdateLastUpdated(oldDate, "Solution", "id", _test.solution.Id, _test.ConnectionString);
@@ -101,12 +105,12 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
         public void ThenContactDetails()
         {
             var contactDetails = _test.Pages.ViewASolution.GetSolutionContactDetails();
-            _test.contactDetails = SqlExecutor.Execute<SolutionContactDetails>(_test.ConnectionString, Queries.GetSolutionContactDetails, new { solutionId = _test.solution.Id }).ToList();
+            _test.ContactDetails = SqlExecutor.Execute<SolutionContactDetails>(_test.ConnectionString, Queries.GetSolutionContactDetails, new { solutionId = _test.solution.Id }).ToList();
 
-            contactDetails.ContactName.Should().Be(_test.contactDetails[0].ContactName);
-            contactDetails.Department.Should().Be(_test.contactDetails[0].Department);
-            contactDetails.Email.Should().Be(_test.contactDetails[0].Email);
-            contactDetails.PhoneNumber.Should().Be(_test.contactDetails[0].PhoneNumber);
+            contactDetails.ContactName.Should().Be(_test.ContactDetails[0].ContactName);
+            contactDetails.Department.Should().Be(_test.ContactDetails[0].Department);
+            contactDetails.Email.Should().Be(_test.ContactDetails[0].Email);
+            contactDetails.PhoneNumber.Should().Be(_test.ContactDetails[0].PhoneNumber);
         }
 
         [Then(@"list of Capabilities")]
