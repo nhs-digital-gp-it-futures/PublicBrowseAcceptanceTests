@@ -1,6 +1,7 @@
 ﻿using NHSDPublicBrowseAcceptanceTests.TestData.Utils;
 using System;
 using NHSDPublicBrowseAcceptanceTests.Tests.Utils;
+using System.Threading.Tasks;
 using TechTalk.SpecFlow;
 
 namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps
@@ -18,7 +19,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps
         }
 
         [AfterScenario]
-        public void AfterScenario()
+        public async Task AfterScenario()
         {
             _test.driver.Close();
             _test.driver.Quit();
@@ -27,6 +28,8 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps
             {                
                 _test.solution.Delete(_test.ConnectionString);
             }
+
+            await _test.AzureBlobStorage.ClearStorage();
         }
     }
 }

@@ -14,6 +14,7 @@ Scenario: Solution Details
 	And Contact Details
 	And list of Capabilities
 	And Solution ID
+	And Features
 
 Scenario: Foundation Solution Indicator
 	Given that a User views a Foundation Solution

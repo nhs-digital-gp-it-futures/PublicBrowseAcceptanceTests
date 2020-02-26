@@ -49,6 +49,11 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
             return driver.FindElement(pages.ViewSingleSolution.SolutionAboutUrl).Text;
         }
 
+        public IList<string> GetFeatures()
+        {
+            return driver.FindElements(pages.ViewSingleSolution.Features).Select(s => s.Text).ToList();
+        }
+
         public bool CapabilitiesListDisplayed()
         {
             return driver.FindElement(pages.ViewSingleSolution.SolutionCapabilities).Displayed;
@@ -56,7 +61,17 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
 
         public bool AttachmentDownloadLinkDisplayed()
         {
-            return driver.FindElement(pages.ViewSingleSolution.AttachmentDownloadLink).Displayed;
+            return driver.FindElements(pages.ViewSingleSolution.AttachmentDownloadLink).Count > 0;
+        }
+
+        public bool NhsAssuredIntegrationsDownloadLinkDisplayed()
+        {
+            return driver.FindElements(pages.ViewSingleSolution.DownloadNHSAssuredIntegrationsDocumentLink).Count > 0;
+        }
+
+        public bool RoadmapDownloadLinkDisplayed()
+        {
+            return driver.FindElements(pages.ViewSingleSolution.DownloadRoadmapDocumentLink).Count > 0;
         }
 
         public bool FoundationSolutionIndicatorDisplayed()
@@ -73,9 +88,20 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
             return capabilities;
         }
 
-        public string GetDownloadUrl()
+        public string GetAttachmentDownloadLinkUrl()
         {
             return driver.FindElement(pages.ViewSingleSolution.AttachmentDownloadLink).GetAttribute("href");
+        }
+
+        public string GetNhsAssuredIntegrationsDownloadLinkUrl()
+        {
+            return driver.FindElement(pages.ViewSingleSolution.DownloadNHSAssuredIntegrationsDocumentLink)
+                .GetAttribute("href");
+        }
+        public string GetRoadmapDownloadLinkUrl()
+        {
+            return driver.FindElement(pages.ViewSingleSolution.DownloadRoadmapDocumentLink)
+                .GetAttribute("href");
         }
 
         public string GetSolutionFullDescription()
@@ -95,6 +121,21 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
             };
 
             return contactDetails;
+        }
+
+        public bool IsRoadmapSectionDisplayed()
+        {
+            return driver.FindElements(pages.ViewSingleSolution.RoadmapSection).Count > 0;
+        }
+
+        public bool IsIntegrationsSectionDisplayed()
+        {
+            return driver.FindElements(pages.ViewSingleSolution.IntegrationsSection).Count > 0;
+        }
+
+        public bool IsLearnMoreSectionDisplayed()
+        {
+            return driver.FindElements(pages.ViewSingleSolution.LearnMoreSection).Count > 0;
         }
     }
 }
