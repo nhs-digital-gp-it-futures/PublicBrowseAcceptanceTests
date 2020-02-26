@@ -71,7 +71,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Utils
             var result = dbValues.Values
                 .FirstOrDefault(s => !s.Contains("#{"));
 
-            return string.IsNullOrEmpty(result) ? defaultValue : result;
+            return string.IsNullOrEmpty(result) ? defaultValue : @result;
         }
     }
 
