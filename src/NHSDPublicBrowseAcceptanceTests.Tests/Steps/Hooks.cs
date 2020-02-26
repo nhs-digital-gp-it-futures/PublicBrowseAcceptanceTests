@@ -1,10 +1,10 @@
 ﻿using NHSDPublicBrowseAcceptanceTests.TestData.Utils;
-using NHSDPublicBrowseAcceptanceTestsSpecflow.Utils;
 using System;
+using NHSDPublicBrowseAcceptanceTests.Tests.Utils;
 using System.Threading.Tasks;
 using TechTalk.SpecFlow;
 
-namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps
+namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps
 {
     [Binding]
     public sealed class Hooks
@@ -26,7 +26,7 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps
 
             if (_context.ContainsKey("DeleteSolution") && (bool)_context["DeleteSolution"])
             {                
-                _test.solution.Delete(_test.connectionString);
+                _test.solution.Delete(_test.ConnectionString);
             }
 
             await _test.AzureBlobStorage.ClearStorage();

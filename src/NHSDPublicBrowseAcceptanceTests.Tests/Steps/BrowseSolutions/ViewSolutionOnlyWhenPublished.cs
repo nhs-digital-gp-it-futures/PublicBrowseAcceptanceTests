@@ -2,12 +2,12 @@
 using NHSDPublicBrowseAcceptanceTests.TestData.Capabilities;
 using NHSDPublicBrowseAcceptanceTests.TestData.Solutions;
 using NHSDPublicBrowseAcceptanceTests.TestData.Utils;
-using NHSDPublicBrowseAcceptanceTestsSpecflow.Utils;
 using System;
 using System.Linq;
+using NHSDPublicBrowseAcceptanceTests.Tests.Utils;
 using TechTalk.SpecFlow;
 
-namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
+namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
 {
     [Binding]
     public class ViewSolutionOnlyWhenPublished
@@ -24,14 +24,14 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
         [Given(@"that a Solution has a PublishedStatus of (.*)")]
         public void GivenThatASolutionHasAPublishedStatusOf(int status)
         {
-            _test.solution = GenerateSolution.GenerateNewSolution(checkForUnique: true, connectionString: _test.connectionString, publishedStatus: status);
-            _test.solution.Create(_test.connectionString);
+            _test.solution = GenerateSolution.GenerateNewSolution(checkForUnique: true, connectionString: _test.ConnectionString, publishedStatus: status);
+            _test.solution.Create(_test.ConnectionString);
             _test.solutionDetail = GenerateSolutionDetails.GenerateNewSolutionDetail(_test.solution.Id, Guid.NewGuid(), 0, false);
-            _test.solutionDetail.Create(_test.connectionString);
+            _test.solutionDetail.Create(_test.ConnectionString);
             _test.solution.SolutionDetailId = _test.solutionDetail.SolutionDetailId;
-            _test.solution.Update(_test.connectionString);
+            _test.solution.Update(_test.ConnectionString);
             _context.Add("DeleteSolution", true);
-            new Capability().AddRandomCapabilityToSolution(_test.connectionString, _test.solution.Id);
+            new Capability().AddRandomCapabilityToSolution(_test.ConnectionString, _test.solution.Id);
 
 
             _test.driver.Navigate().Refresh();
@@ -40,7 +40,7 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
         [Then(@"the Solution's Marketing Page availability is (.*)")]
         public void ThenTheSolutionSMarketingPageAvailabilityIsFalse(bool published)
         {
-            var solutions = _test.pages.SolutionsList.GetListOfSolutionNames();
+            var solutions = _test.Pages.SolutionsList.GetListOfSolutionNames();
             solutions.Any(s => s.Contains(_test.solution.Name)).Should().Be(published);
         }
     }

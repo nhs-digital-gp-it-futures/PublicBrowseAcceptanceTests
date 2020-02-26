@@ -3,16 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29102.190
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NHSDPublicBrowseAcceptanceTestsSpecflow", "NHSDPublicBrowseAcceptanceTestsSpecflow\NHSDPublicBrowseAcceptanceTestsSpecflow.csproj", "{6DEEB825-165C-4EF0-8AAA-50361F75952E}"
-	ProjectSection(ProjectDependencies) = postProject
-		{44AFC64B-8B93-4B5E-A282-77DA50931117} = {44AFC64B-8B93-4B5E-A282-77DA50931117}
-	EndProjectSection
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NHSDPublicBrowseAcceptanceTests.Objects", "NHSDPublicBrowseAcceptanceTests.Objects\NHSDPublicBrowseAcceptanceTests.Objects.csproj", "{44AFC64B-8B93-4B5E-A282-77DA50931117}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NHSDPublicBrowseAcceptanceTests.Actions", "NHSDPublicBrowseAcceptanceTests.Actions\NHSDPublicBrowseAcceptanceTests.Actions.csproj", "{948E27D0-02D3-49B3-9173-6FE7B36BC5E3}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NHSDPublicBrowseAcceptanceTests.TestData", "NHSDPublicBrowseAcceptanceTests.TestData\NHSDPublicBrowseAcceptanceTests.TestData.csproj", "{548BD375-6D78-44EB-91C3-79C6C99126F2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NHSDPublicBrowseAcceptanceTests.Tests", "NHSDPublicBrowseAcceptanceTests.Tests\NHSDPublicBrowseAcceptanceTests.Tests.csproj", "{BE9706A8-C87E-4517-917C-D22F8EAD2E98}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,10 +17,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{6DEEB825-165C-4EF0-8AAA-50361F75952E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6DEEB825-165C-4EF0-8AAA-50361F75952E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6DEEB825-165C-4EF0-8AAA-50361F75952E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6DEEB825-165C-4EF0-8AAA-50361F75952E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{44AFC64B-8B93-4B5E-A282-77DA50931117}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{44AFC64B-8B93-4B5E-A282-77DA50931117}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{44AFC64B-8B93-4B5E-A282-77DA50931117}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -36,6 +29,10 @@ Global
 		{548BD375-6D78-44EB-91C3-79C6C99126F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{548BD375-6D78-44EB-91C3-79C6C99126F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{548BD375-6D78-44EB-91C3-79C6C99126F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE9706A8-C87E-4517-917C-D22F8EAD2E98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE9706A8-C87E-4517-917C-D22F8EAD2E98}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE9706A8-C87E-4517-917C-D22F8EAD2E98}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE9706A8-C87E-4517-917C-D22F8EAD2E98}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

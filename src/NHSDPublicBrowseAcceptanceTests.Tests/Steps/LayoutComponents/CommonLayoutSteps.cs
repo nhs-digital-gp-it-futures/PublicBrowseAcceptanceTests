@@ -1,7 +1,7 @@
-﻿using NHSDPublicBrowseAcceptanceTestsSpecflow.Utils;
+﻿using NHSDPublicBrowseAcceptanceTests.Tests.Utils;
 using TechTalk.SpecFlow;
 
-namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.LayoutComponents
+namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.LayoutComponents
 {
     [Binding]
     public sealed class CommonLayoutSteps
@@ -18,13 +18,13 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.LayoutComponents
         [Given(@"the User chooses any Page in the application")]
         public void GivenTheUserChoosesAnyPageInTheApplication()
         {
-            _test.pages.Homepage.PageDisplayed();
+            _test.Pages.Homepage.PageDisplayed();
         }
 
         [When(@"they are on a Page")]
         public void WhenTheyAreOnAPage()
         {
-            _test.pages.Homepage.PageDisplayed();
+            _test.Pages.Homepage.PageDisplayed();
         }
     }
 }

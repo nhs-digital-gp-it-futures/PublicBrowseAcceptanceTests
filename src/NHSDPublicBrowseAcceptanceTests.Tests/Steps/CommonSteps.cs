@@ -2,10 +2,10 @@
 using FluentAssertions;
 using NHSDPublicBrowseAcceptanceTests.TestData.Solutions;
 using NHSDPublicBrowseAcceptanceTests.TestData.Utils;
-using NHSDPublicBrowseAcceptanceTestsSpecflow.Utils;
+using NHSDPublicBrowseAcceptanceTests.Tests.Utils;
 using TechTalk.SpecFlow;
 
-namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps
+namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps
 {
     [Binding]
     public class CommonSteps
@@ -24,7 +24,7 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps
         [Then(@"Additional Services are not included in the results")]
         public void NumberOfSolutionsShownMatchExpected()
         {
-            var actualCount = _test.pages.SolutionsList.GetSolutionsCount();
+            var actualCount = _test.Pages.SolutionsList.GetSolutionsCount();
             actualCount.Should().Be(_test.expectedSolutionsCount);
         }
     }

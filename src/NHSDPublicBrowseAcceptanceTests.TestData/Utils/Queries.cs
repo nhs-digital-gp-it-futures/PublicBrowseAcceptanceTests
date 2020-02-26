@@ -8,7 +8,7 @@
         public const string DeleteSolution = "DELETE FROM Solution WHERE Id=@solutionId";
         public const string GetAllSolutions = "SELECT * FROM [dbo].[Solution]";
 
-        public const string GetSolutionsCount = "SELECT COUNT(DISTINCT(SolutionId)) FROM SolutionCapability INNER JOIN Solution on SolutionId=Solution.Id WHERE Solution.PublishedStatusId=3";
+        public const string GetSolutionsCount = "SELECT COUNT(DISTINCT(SolutionId)) FROM SolutionCapability c INNER JOIN Solution s on c.SolutionId=s.Id WHERE s.PublishedStatusId=3";
         public const string GetFoundationSolutionsCount = "SELECT COUNT(DISTINCT(sc.SolutionId)) FROM SolutionCapability sc INNER JOIN Solution s on sc.SolutionId=s.Id LEFT JOIN FrameworkSolutions fs ON s.Id = fs.SolutionId WHERE COALESCE(fs.IsFoundation, 0) = 1 AND s.PublishedStatusId = 3";
         public const string GetNonFoundationSolutionsCount = "SELECT COUNT(DISTINCT(sc.SolutionId)) FROM SolutionCapability sc INNER JOIN Solution s on SolutionId=s.Id WHERE s.Id NOT IN ( SELECT SolutionId FROM [dbo].FrameworkSolutions WHERE IsFoundation = 1 ) AND s.PublishedStatusId = 3";
         public const string GetSolutionsWithCapabilityCount = "SELECT COUNT(*) AS count FROM [dbo].[SolutionCapability] AS sc LEFT JOIN .[dbo].[Capability] AS c ON c.Id = sc.CapabilityId WHERE Name = @capabilityName";

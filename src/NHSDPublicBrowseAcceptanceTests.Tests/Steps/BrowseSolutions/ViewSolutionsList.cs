@@ -1,9 +1,10 @@
 ﻿using FluentAssertions;
+using NHSDPublicBrowseAcceptanceTests.TestData.Solutions;
 using NHSDPublicBrowseAcceptanceTests.TestData.Utils;
-using NHSDPublicBrowseAcceptanceTestsSpecflow.Utils;
+using NHSDPublicBrowseAcceptanceTests.Tests.Utils;
 using TechTalk.SpecFlow;
 
-namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
+namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
 {
     [Binding]
     public class ViewSolutionsList
@@ -31,58 +32,59 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
         [When("the User chooses to continue")]
         public void GivenHasNotChosenToFilterTheSolutions()
         {
-            _test.pages.CapabilityFilter.ClickCapabilityContinueButton();
+            _test.Pages.CapabilityFilter.ClickCapabilityContinueButton();
         }
 
         [When("Solutions are presented")]
         public void SolutionsPresented()
         {
-
         }
-
 
         [Then(@"there is a Card for each Solution")]
         [Then("no Solutions are excluded on the basis of the Capabilities they deliver")]
         public void ThenThereIsACardForEachSolution()
         {
-            expectedNumberOfSolutions = SqlExecutor.ExecuteScalar(_test.connectionString, Queries.GetSolutionsCount, null);
-            var actualNumberOfSolutionCards = _test.pages.SolutionsList.GetSolutionsCount();
+            var solutions = SqlExecutor.Execute<Solution>(query: Queries.GetAllSolutions,
+                connectionString: _test.ConnectionString, 
+                param: null);
+            expectedNumberOfSolutions = SqlExecutor.ExecuteScalar(_test.ConnectionString, Queries.GetSolutionsCount, null);
+            var actualNumberOfSolutionCards = _test.Pages.SolutionsList.GetSolutionsCount();
             actualNumberOfSolutionCards.Should().Be(expectedNumberOfSolutions);
         }
 
         [Then(@"the Card contains the Supplier Name")]
         public void ThenTheCardContainsTheSupplierName()
         {
-            var actualNumberOfSupplierNames = _test.pages.SolutionsList.GetSolutionSupplierNameCount();
+            var actualNumberOfSupplierNames = _test.Pages.SolutionsList.GetSolutionSupplierNameCount();
             actualNumberOfSupplierNames.Should().Be(expectedNumberOfSolutions);
         }
 
         [Then(@"the Solution Name")]
         public void ThenTheSolutionName()
         {
-            var actualNumberOfSolutionNames = _test.pages.SolutionsList.GetSolutionNameCount();
+            var actualNumberOfSolutionNames = _test.Pages.SolutionsList.GetSolutionNameCount();
             actualNumberOfSolutionNames.Should().Be(expectedNumberOfSolutions);
         }
 
         [Then(@"the Solution Summary Description")]
         public void ThenTheSolutionSummaryDescription()
         {
-            var actualNumberOfSolutionSummaries = _test.pages.SolutionsList.GetSolutionSummaryCount();
+            var actualNumberOfSolutionSummaries = _test.Pages.SolutionsList.GetSolutionSummaryCount();
             actualNumberOfSolutionSummaries.Should().Be(expectedNumberOfSolutions);
         }
 
         [Then(@"the names of the Capabilities provided by the Solution")]
         public void ThenTheNamesOfTheCapabilitiesProvidedByTheSolution()
         {
-            var actualNumberOfSolutionCapabilitiesList = _test.pages.SolutionsList.GetSolutionCapabilityListCount();
+            var actualNumberOfSolutionCapabilitiesList = _test.Pages.SolutionsList.GetSolutionCapabilityListCount();
             actualNumberOfSolutionCapabilitiesList.Should().Be(expectedNumberOfSolutions);
         }
 
         [Then(@"capability '(.*)' is listed in the solution capabilities")]
         public void ThenCapabilityIsListedInTheSolutionCapabilities(string expectedCapabilityName)
         {
-            var dbCount = SqlExecutor.ExecuteScalar(_test.connectionString, Queries.GetSolutionsWithCapabilityCount, new { capabilityName = expectedCapabilityName});
-            var uiCount = _test.pages.SolutionsList.GetSolutionsWithCapabilityCount(expectedCapabilityName);
+            var dbCount = SqlExecutor.ExecuteScalar(_test.ConnectionString, Queries.GetSolutionsWithCapabilityCount, new { capabilityName = expectedCapabilityName});
+            var uiCount = _test.Pages.SolutionsList.GetSolutionsWithCapabilityCount(expectedCapabilityName);
             uiCount.Should().Be(dbCount);
         }
     }

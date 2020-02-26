@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Utils
+namespace NHSDPublicBrowseAcceptanceTests.Tests.Utils
 {
     internal static class EnvironmentVariables
     {
