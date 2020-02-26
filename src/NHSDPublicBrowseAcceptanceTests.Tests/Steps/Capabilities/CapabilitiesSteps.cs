@@ -1,13 +1,13 @@
 ﻿using FluentAssertions;
 using NHSDPublicBrowseAcceptanceTests.TestData.Capabilities;
 using NHSDPublicBrowseAcceptanceTests.TestData.Utils;
-using NHSDPublicBrowseAcceptanceTestsSpecflow.Utils;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using NHSDPublicBrowseAcceptanceTests.Tests.Utils;
 using TechTalk.SpecFlow;
 
-namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.Capabilities
+namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.Capabilities
 {
     [Binding]
     public sealed class CapabilitiesSteps

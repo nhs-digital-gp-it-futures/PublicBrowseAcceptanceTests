@@ -5,7 +5,7 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Remote;
 
-namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Utils
+namespace NHSDPublicBrowseAcceptanceTests.Tests.Utils
 {
     public sealed class BrowserFactory
     {

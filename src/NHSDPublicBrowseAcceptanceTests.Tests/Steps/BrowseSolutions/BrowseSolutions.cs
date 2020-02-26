@@ -1,9 +1,9 @@
 ﻿using FluentAssertions;
 using NHSDPublicBrowseAcceptanceTests.TestData.Utils;
-using NHSDPublicBrowseAcceptanceTestsSpecflow.Utils;
+using NHSDPublicBrowseAcceptanceTests.Tests.Utils;
 using TechTalk.SpecFlow;
 
-namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
+namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
 {
     [Binding]
     public class BrowseSolutions

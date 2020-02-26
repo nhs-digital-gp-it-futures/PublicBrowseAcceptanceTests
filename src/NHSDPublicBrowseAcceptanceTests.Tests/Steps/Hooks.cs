@@ -1,9 +1,9 @@
 ﻿using NHSDPublicBrowseAcceptanceTests.TestData.Utils;
-using NHSDPublicBrowseAcceptanceTestsSpecflow.Utils;
 using System;
+using NHSDPublicBrowseAcceptanceTests.Tests.Utils;
 using TechTalk.SpecFlow;
 
-namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps
+namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps
 {
     [Binding]
     public sealed class Hooks

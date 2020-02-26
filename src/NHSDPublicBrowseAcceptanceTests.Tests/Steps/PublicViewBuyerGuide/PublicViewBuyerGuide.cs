@@ -1,10 +1,10 @@
 ﻿using FluentAssertions;
-using NHSDPublicBrowseAcceptanceTestsSpecflow.Utils;
 using System;
 using System.IO;
+using NHSDPublicBrowseAcceptanceTests.Tests.Utils;
 using TechTalk.SpecFlow;
 
-namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.PublicViewBuyerGuide
+namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.PublicViewBuyerGuide
 {
     [Binding]
     public class PublicViewBuyerGuide

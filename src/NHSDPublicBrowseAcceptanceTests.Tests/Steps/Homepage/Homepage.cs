@@ -1,7 +1,7 @@
-﻿using NHSDPublicBrowseAcceptanceTestsSpecflow.Utils;
+﻿using NHSDPublicBrowseAcceptanceTests.Tests.Utils;
 using TechTalk.SpecFlow;
 
-namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.Homepage
+namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.Homepage
 {
     [Binding]
     public class Homepage

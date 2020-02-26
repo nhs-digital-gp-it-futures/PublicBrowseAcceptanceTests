@@ -2,12 +2,12 @@
 using NHSDPublicBrowseAcceptanceTests.TestData.Capabilities;
 using NHSDPublicBrowseAcceptanceTests.TestData.Solutions;
 using NHSDPublicBrowseAcceptanceTests.TestData.Utils;
-using NHSDPublicBrowseAcceptanceTestsSpecflow.Utils;
 using System;
 using System.Linq;
+using NHSDPublicBrowseAcceptanceTests.Tests.Utils;
 using TechTalk.SpecFlow;
 
-namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
+namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
 {
     [Binding]
     public class ViewSolutionOnlyWhenPublished
