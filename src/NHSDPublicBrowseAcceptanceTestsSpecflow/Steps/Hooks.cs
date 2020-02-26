@@ -25,7 +25,7 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps
 
             if (_context.ContainsKey("DeleteSolution") && (bool)_context["DeleteSolution"])
             {                
-                _test.solution.Delete(_test.connectionString);
+                _test.solution.Delete(_test.ConnectionString);
             }
         }
     }
