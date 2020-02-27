@@ -62,8 +62,6 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
             fileName = documentType.ToLower() + ".pdf";
             var path = Path.Combine(Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), "Azure", "SampleData", fileName);
             await _test.AzureBlobStorage.InsertFileToStorage(_test.DefaultAzureBlobStorageContainerName, _test.solution.Id, fileName, path);
-            //a cheap hack to give the deployed instance time to recognise that a new file has been added
-            Thread.Sleep(500);
         }
 
         [Given(@"(a|an) (Roadmap|NHS Assured Integrations|Authority Provided Solution Document) attachment has not been provided for the Solution")]
@@ -152,25 +150,25 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
         [Given(@"the Learn more section is presented")]
         public void GivenTheLearnMoreSectionIsPresented()
         {
-            _test.Pages.ViewASolution.IsLearnMoreSectionDisplayed().Should().BeTrue();
+            _test.Pages.ViewASolution.WaitForLearnMoreSectionDisplayed().Should().BeTrue();
         }
 
         [Then(@"the Learn more section is not presented")]
         public void ThenTheLearnMoreSectionIsNotPresented()
         {
-            _test.Pages.ViewASolution.IsLearnMoreSectionDisplayed().Should().BeFalse();
+            _test.Pages.ViewASolution.WaitForLearnMoreSectionDisplayed().Should().BeFalse();
         }
 
         [Given(@"the Integrations section is presented")]
         public void GivenTheIntegrationsSectionIsPresented()
         {
-            _test.Pages.ViewASolution.IsIntegrationsSectionDisplayed().Should().BeTrue();
+            _test.Pages.ViewASolution.WaitForIntegrationsSectionDisplayed();
         }
 
         [Given(@"the Roadmap section is presented")]
         public void GivenTheRoadmapSectionIsPresented()
         {
-            _test.Pages.ViewASolution.IsRoadmapSectionDisplayed().Should().BeTrue();
+            _test.Pages.ViewASolution.WaitForRoadmapSectionDisplayed();
         }
     }
 }

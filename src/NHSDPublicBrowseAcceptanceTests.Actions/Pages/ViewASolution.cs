@@ -123,19 +123,37 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
             return contactDetails;
         }
 
-        public bool IsRoadmapSectionDisplayed()
+        public void WaitForRoadmapSectionDisplayed()
         {
-            return driver.FindElements(pages.ViewSingleSolution.RoadmapSection).Count > 0;
+            wait.Until(s => {
+                s.Navigate().Refresh();
+                return s.FindElement(pages.ViewSingleSolution.RoadmapSection).Displayed;
+                });
         }
 
-        public bool IsIntegrationsSectionDisplayed()
+        public void WaitForIntegrationsSectionDisplayed()
         {
-            return driver.FindElements(pages.ViewSingleSolution.IntegrationsSection).Count > 0;
+            wait.Until(s => {
+                s.Navigate().Refresh();
+                return s.FindElement(pages.ViewSingleSolution.IntegrationsSection).Displayed;
+                });
         }
 
-        public bool IsLearnMoreSectionDisplayed()
+        public bool WaitForLearnMoreSectionDisplayed()
         {
-            return driver.FindElements(pages.ViewSingleSolution.LearnMoreSection).Count > 0;
+            try
+            {
+                wait.Until(s => {
+                    s.Navigate().Refresh();
+                    return s.FindElement(pages.ViewSingleSolution.LearnMoreSection).Displayed;
+                    });
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+
         }
     }
 }
