@@ -6,6 +6,7 @@ using NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions;
 using NHSDPublicBrowseAcceptanceTests.Tests.Utils;
 using System;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using TechTalk.SpecFlow;
 
@@ -61,7 +62,8 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
             fileName = documentType.ToLower() + ".pdf";
             var path = Path.Combine(Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), "Azure", "SampleData", fileName);
             await _test.AzureBlobStorage.InsertFileToStorage(_test.DefaultAzureBlobStorageContainerName, _test.solution.Id, fileName, path);
-
+            //a cheap hack to give the deployed instance time to recognise that a new file has been added
+            Thread.Sleep(500);
         }
 
         [Given(@"(a|an) (Roadmap|NHS Assured Integrations|Authority Provided Solution Document) attachment has not been provided for the Solution")]
