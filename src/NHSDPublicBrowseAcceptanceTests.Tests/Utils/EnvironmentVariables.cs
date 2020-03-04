@@ -26,7 +26,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Utils
 
         internal static string GetUrl()
         {
-            return Environment.GetEnvironmentVariable("PBURL") ?? "http://host.docker.internal:3000";
+            return Environment.GetEnvironmentVariable("PBURL") ?? "http://gpitfutures-bc-pb.buyingcatalogue:3000";
         }
 
         internal static string GetBrowser()

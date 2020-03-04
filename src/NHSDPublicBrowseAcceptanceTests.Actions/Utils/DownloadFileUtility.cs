@@ -19,12 +19,9 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Utils
 
         public static string TransformLocalHost(string urlIn)
         {
-            var urlOut = urlIn;
-            if (urlIn.Contains("host.docker.internal"))
-            {
-                urlOut = urlOut.Replace("host.docker.internal", "localhost");
-            }
-            return urlOut;
+            return urlIn
+               .Replace("host.docker.internal", "localhost")
+               .Replace("gpitfutures-bc-pb.buyingcatalogue", "localhost");
         }
 
         public static bool CompareTwoFiles(string filePath1, string filePath2)
