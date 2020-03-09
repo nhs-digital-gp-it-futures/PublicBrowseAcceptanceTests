@@ -1,8 +1,8 @@
-﻿using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Newtonsoft.Json.Linq;
 
 namespace NHSDPublicBrowseAcceptanceTests.Tests.Utils
 {
@@ -34,7 +34,8 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Utils
             return Environment.GetEnvironmentVariable("BROWSER") ?? "chrome-local";
         }
 
-        internal static (string serverUrl, string databaseName, string dbUser, string dbPassword) GetDbConnectionDetails()
+        internal static (string serverUrl, string databaseName, string dbUser, string dbPassword)
+            GetDbConnectionDetails()
         {
             var serverUrl = Environment.GetEnvironmentVariable("SERVERURL") ?? "127.0.0.1,1450";
             var databaseName = Environment.GetEnvironmentVariable("DATABASENAME") ?? "buyingcatalogue";
@@ -63,21 +64,23 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Utils
 
         private static string GetJsonConfigValues(string section, string defaultValue)
         {
-            var path = Path.Combine(Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), "Utils", "tokens.json");
+            var path = Path.Combine(Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), "Utils",
+                "tokens.json");
             var jsonSection = JObject.Parse(File.ReadAllText(path))[section];
 
-            Dictionary<string, string> dbValues = jsonSection.ToObject<Dictionary<string, string>>();
+            var dbValues = jsonSection.ToObject<Dictionary<string, string>>();
 
             var result = dbValues.Values
                 .FirstOrDefault(s => !s.Contains("#{"));
 
-            return string.IsNullOrEmpty(result) ? defaultValue : @result;
+            return string.IsNullOrEmpty(result) ? defaultValue : result;
         }
     }
 
 
     public static class ConnectionString
     {
-        internal const string GPitFutures = @"Server={0};Initial Catalog={1};Persist Security Info=false;User Id={2};Password={3}";
+        internal const string GPitFutures =
+            @"Server={0};Initial Catalog={1};Persist Security Info=false;User Id={2};Password={3}";
     }
 }
