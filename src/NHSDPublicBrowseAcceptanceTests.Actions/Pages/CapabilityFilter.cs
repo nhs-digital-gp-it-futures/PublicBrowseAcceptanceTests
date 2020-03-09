@@ -1,10 +1,10 @@
-﻿using FluentAssertions;
+﻿using System.Collections.Generic;
+using System.Linq;
+using FluentAssertions;
 using NHSDPublicBrowseAcceptanceTests.TestData.Capabilities;
 using NHSDPublicBrowseAcceptanceTests.TestData.Information;
 using NHSDPublicBrowseAcceptanceTests.TestData.Utils;
 using OpenQA.Selenium;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
 {
@@ -23,14 +23,16 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
 
         public void CapabilityNamesShown(IEnumerable<Capability> capabilities)
         {
-            var capabilityLabels = driver.FindElements(pages.CapabilityFilter.Capabilities).Select(s => s.FindElement(By.TagName("label")).Text);
+            var capabilityLabels = driver.FindElements(pages.CapabilityFilter.Capabilities)
+                .Select(s => s.FindElement(By.TagName("label")).Text);
 
             capabilityLabels.Should().BeEquivalentTo(capabilities.Select(s => s.Name));
         }
 
         public string SelectCapability(string connectionString)
         {
-            var selectedCapabilities = SqlExecutor.Execute<string>(connectionString, Queries.GetSelectedCapabilities, null);
+            var selectedCapabilities =
+                SqlExecutor.Execute<string>(connectionString, Queries.GetSelectedCapabilities, null);
 
             var randomCapabilityName = RandomInformation.GetRandomItem(selectedCapabilities);
 

@@ -1,17 +1,17 @@
-﻿using Dapper;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using Dapper;
 
 namespace NHSDPublicBrowseAcceptanceTests.TestData.Utils
 {
     public static class SqlExecutor
     {
-        internal static T Read<T>(string connectionString, string query, SqlParameter[] sqlParameters, Func<IDataReader, T> mapDataReader)
+        internal static T Read<T>(string connectionString, string query, SqlParameter[] sqlParameters,
+            Func<IDataReader, T> mapDataReader)
         {
-
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (var connection = new SqlConnection(connectionString))
             {
                 connection.Open();
 
@@ -20,7 +20,7 @@ namespace NHSDPublicBrowseAcceptanceTests.TestData.Utils
                     //add the params
                     command.Parameters.AddRange(sqlParameters);
 
-                    SqlDataReader reader = command.ExecuteReader();
+                    var reader = command.ExecuteReader();
                     try
                     {
                         return mapDataReader(reader);
@@ -39,10 +39,7 @@ namespace NHSDPublicBrowseAcceptanceTests.TestData.Utils
             using (var connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                Policies.RetryPolicy().Execute(() =>
-                {
-                    returnValue = connection.Query<T>(query, param);
-                });
+                Policies.RetryPolicy().Execute(() => { returnValue = connection.Query<T>(query, param); });
             }
 
             return returnValue;
@@ -50,14 +47,11 @@ namespace NHSDPublicBrowseAcceptanceTests.TestData.Utils
 
         public static int ExecuteScalar(string connectionString, string query, object param)
         {
-            int result = 0;
+            var result = 0;
             using (var connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                Policies.RetryPolicy().Execute(() =>
-                {
-                    result = connection.ExecuteScalar<int>(query, param);
-                });
+                Policies.RetryPolicy().Execute(() => { result = connection.ExecuteScalar<int>(query, param); });
             }
 
             return result;

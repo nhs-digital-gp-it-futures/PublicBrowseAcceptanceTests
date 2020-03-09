@@ -6,8 +6,8 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.LayoutComponents
     [Binding]
     public sealed class CommonLayoutSteps
     {
-        private readonly UITest _test;
         private readonly ScenarioContext _context;
+        private readonly UITest _test;
 
         public CommonLayoutSteps(UITest test, ScenarioContext context)
         {

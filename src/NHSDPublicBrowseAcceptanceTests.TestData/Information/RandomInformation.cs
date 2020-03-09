@@ -1,5 +1,5 @@
-﻿using Bogus;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Bogus;
 
 namespace NHSDPublicBrowseAcceptanceTests.TestData.Information
 {
@@ -15,7 +15,7 @@ namespace NHSDPublicBrowseAcceptanceTests.TestData.Information
         public static string RandomString(int count)
         {
             var faker = new Faker("en_GB");
-            return string.Join("", faker.Random.Chars(min: '0', max: 'z', count: count));
+            return string.Join("", faker.Random.Chars('0', 'z', count));
         }
 
         public static T GetRandomItem<T>(IEnumerable<T> items)

@@ -1,9 +1,9 @@
-﻿using FluentAssertions;
+﻿using System;
+using System.Linq;
+using FluentAssertions;
 using NHSDPublicBrowseAcceptanceTests.TestData.Capabilities;
 using NHSDPublicBrowseAcceptanceTests.TestData.Solutions;
 using NHSDPublicBrowseAcceptanceTests.Tests.Utils;
-using System;
-using System.Linq;
 using TechTalk.SpecFlow;
 
 namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
@@ -11,8 +11,8 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
     [Binding]
     public class ViewSolutionOnlyWhenPublished
     {
-        private readonly UITest _test;
         private readonly ScenarioContext _context;
+        private readonly UITest _test;
 
         public ViewSolutionOnlyWhenPublished(UITest test, ScenarioContext context)
         {
@@ -23,9 +23,11 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
         [Given(@"that a Solution has a PublishedStatus of (.*)")]
         public void GivenThatASolutionHasAPublishedStatusOf(int status)
         {
-            _test.solution = GenerateSolution.GenerateNewSolution(checkForUnique: true, connectionString: _test.ConnectionString, publishedStatus: status);
+            _test.solution = GenerateSolution.GenerateNewSolution(checkForUnique: true,
+                connectionString: _test.ConnectionString, publishedStatus: status);
             _test.solution.Create(_test.ConnectionString);
-            _test.solutionDetail = GenerateSolutionDetails.GenerateNewSolutionDetail(_test.solution.Id, Guid.NewGuid(), 0, false);
+            _test.solutionDetail =
+                GenerateSolutionDetails.GenerateNewSolutionDetail(_test.solution.Id, Guid.NewGuid(), 0, false);
             _test.solutionDetail.Create(_test.ConnectionString);
             _test.solution.SolutionDetailId = _test.solutionDetail.SolutionDetailId;
             _test.solution.Update(_test.ConnectionString);

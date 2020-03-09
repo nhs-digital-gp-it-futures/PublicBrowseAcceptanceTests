@@ -1,16 +1,15 @@
-﻿using OpenQA.Selenium;
+﻿using System;
+using System.Diagnostics;
+using System.IO;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Remote;
-using System;
-using System.IO;
 
 namespace NHSDPublicBrowseAcceptanceTests.Tests.Utils
 {
     public sealed class BrowserFactory
     {
-        public IWebDriver Driver { get; }
-
         public BrowserFactory()
         {
             var browser = EnvironmentVariables.GetBrowser();
@@ -18,16 +17,15 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Utils
             Driver = GetBrowser(browser, hubUrl);
         }
 
+        public IWebDriver Driver { get; }
+
         private IWebDriver GetBrowser(string browser, string huburl)
         {
             IWebDriver driver;
 
-            if (System.Diagnostics.Debugger.IsAttached)
-            {
+            if (Debugger.IsAttached)
                 driver = GetLocalChromeDriver();
-            }
             else
-            {
                 switch (browser.ToLower())
                 {
                     case "chrome":
@@ -45,7 +43,6 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Utils
                     default:
                         throw new WebDriverException($"Browser {browser} not supported");
                 }
-            }
 
             return driver;
         }

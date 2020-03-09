@@ -7,7 +7,7 @@ namespace NHSDPublicBrowseAcceptanceTests.TestData.Solutions
         public static SolutionContactDetails NewContactDetail()
         {
             // en_GB esures UK format Phone Number
-            SolutionContactDetails contact = new Faker<SolutionContactDetails>("en_GB")
+            var contact = new Faker<SolutionContactDetails>("en_GB")
                 .RuleFor(c => c.FirstName, f => f.Name.FirstName())
                 .RuleFor(c => c.LastName, f => f.Name.LastName())
                 .RuleFor(c => c.PhoneNumber, f => f.Phone.PhoneNumber())

@@ -8,8 +8,8 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
     [Binding]
     public class BrowseSolutions
     {
-        private readonly UITest _test;
         private readonly ScenarioContext _context;
+        private readonly UITest _test;
 
         public BrowseSolutions(UITest test, ScenarioContext context)
         {
@@ -48,17 +48,20 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
         [Then(@"all the Foundation Solutions are included in the results")]
         public void ThenAllTheFoundationSolutionsAreIncludedInTheResults()
         {
-            var numberOfFoundationSolutionsFromDb = SqlExecutor.ExecuteScalar(_test.ConnectionString, Queries.GetFoundationSolutionsCount, null);
-            var numberOfFoundationSolutionIndicatorsOnUi = _test.Pages.SolutionsList.GetFoundationSolutionIndicatorCount();
+            var numberOfFoundationSolutionsFromDb =
+                SqlExecutor.ExecuteScalar(_test.ConnectionString, Queries.GetFoundationSolutionsCount, null);
+            var numberOfFoundationSolutionIndicatorsOnUi =
+                _test.Pages.SolutionsList.GetFoundationSolutionIndicatorCount();
             numberOfFoundationSolutionsFromDb.Should().Be(numberOfFoundationSolutionIndicatorsOnUi);
-
         }
 
         [Then(@"all Non-Foundation Solutions are included in the results")]
         public void ThenAllNon_FoundationSolutionsAreIncludedInTheResults()
         {
-            var numberOfNonFoundationSolutionsFromDb = SqlExecutor.ExecuteScalar(_test.ConnectionString, Queries.GetNonFoundationSolutionsCount, null);
-            var numberOfFoundationSolutionsFromDb = SqlExecutor.ExecuteScalar(_test.ConnectionString, Queries.GetFoundationSolutionsCount, null);
+            var numberOfNonFoundationSolutionsFromDb = SqlExecutor.ExecuteScalar(_test.ConnectionString,
+                Queries.GetNonFoundationSolutionsCount, null);
+            var numberOfFoundationSolutionsFromDb =
+                SqlExecutor.ExecuteScalar(_test.ConnectionString, Queries.GetFoundationSolutionsCount, null);
             var totalNumberOfSolutionsOnUi = _test.Pages.SolutionsList.GetSolutionsCount();
             var numberOfNonFoundationsOnUI = totalNumberOfSolutionsOnUi - numberOfFoundationSolutionsFromDb;
             numberOfNonFoundationsOnUI.Should().Be(numberOfNonFoundationSolutionsFromDb);

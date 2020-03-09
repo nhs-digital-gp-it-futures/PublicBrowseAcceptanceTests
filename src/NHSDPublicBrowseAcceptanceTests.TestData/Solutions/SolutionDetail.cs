@@ -1,6 +1,6 @@
-﻿using NHSDPublicBrowseAcceptanceTests.TestData.Utils;
-using System;
+﻿using System;
 using System.Linq;
+using NHSDPublicBrowseAcceptanceTests.TestData.Utils;
 
 namespace NHSDPublicBrowseAcceptanceTests.TestData.Solutions
 {

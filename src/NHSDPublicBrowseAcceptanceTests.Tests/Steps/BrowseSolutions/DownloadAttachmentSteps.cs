@@ -1,13 +1,12 @@
-﻿using FluentAssertions;
+﻿using System;
+using System.IO;
+using System.Threading.Tasks;
+using FluentAssertions;
 using NHSDPublicBrowseAcceptanceTests.Actions.Utils;
 using NHSDPublicBrowseAcceptanceTests.TestData.Capabilities;
 using NHSDPublicBrowseAcceptanceTests.TestData.Solutions;
 using NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions;
 using NHSDPublicBrowseAcceptanceTests.Tests.Utils;
-using System;
-using System.IO;
-using System.Threading;
-using System.Threading.Tasks;
 using TechTalk.SpecFlow;
 
 namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
@@ -15,11 +14,11 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
     [Binding]
     public class DownloadAttachmentSteps
     {
-        private readonly UITest _test;
-        private readonly ScenarioContext _context;
         private const string providedDataDocumentDownloadFile = "downloaded authority provided solution document.pdf";
         private const string integrationsDownloadFile = "downloadedIntegrations.pdf";
         private const string roadmapDownloadFile = "downloadedRoadmap.pdf";
+        private readonly ScenarioContext _context;
+        private readonly UITest _test;
 
         public DownloadAttachmentSteps(UITest test, ScenarioContext context)
         {
@@ -30,9 +29,11 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
         [Given(@"that a new Solution has been created to view attachments")]
         public void GivenThatANewSolutionHasBeenCreatedToViewAttachments()
         {
-            _test.solution = GenerateSolution.GenerateNewSolution(checkForUnique: true, connectionString: _test.ConnectionString, publishedStatus: 3);
+            _test.solution = GenerateSolution.GenerateNewSolution(checkForUnique: true,
+                connectionString: _test.ConnectionString, publishedStatus: 3);
             _test.solution.Create(_test.ConnectionString);
-            _test.solutionDetail = GenerateSolutionDetails.GenerateNewSolutionDetail(_test.solution.Id, Guid.NewGuid(), 0, false, roadMap: true, integrationsUrl: true );
+            _test.solutionDetail = GenerateSolutionDetails.GenerateNewSolutionDetail(_test.solution.Id, Guid.NewGuid(),
+                0, false, true, integrationsUrl: true);
             _test.solutionDetail.Create(_test.ConnectionString);
             _test.solution.SolutionDetailId = _test.solutionDetail.SolutionDetailId;
             _test.solution.Update(_test.ConnectionString);
@@ -51,20 +52,22 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
         }
 
 
-        [Given(@"(a|an) (Roadmap|NHS Assured Integrations|Authority Provided Solution Document) attachment has been provided for the Solution")]
+        [Given(
+            @"(a|an) (Roadmap|NHS Assured Integrations|Authority Provided Solution Document) attachment has been provided for the Solution")]
         public async Task GivenAnAttachmentHasBeenProvidedForTheSolution(string s1, string documentType)
         {
             string fileName;
             if (documentType.Equals("NHS Assured Integrations", StringComparison.OrdinalIgnoreCase))
-            {
                 documentType = "Integrations";
-            }
             fileName = documentType.ToLower() + ".pdf";
-            var path = Path.Combine(Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), "Azure", "SampleData", fileName);
-            await _test.AzureBlobStorage.InsertFileToStorage(_test.DefaultAzureBlobStorageContainerName, _test.solution.Id, fileName, path);
+            var path = Path.Combine(Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), "Azure", "SampleData",
+                fileName);
+            await _test.AzureBlobStorage.InsertFileToStorage(_test.DefaultAzureBlobStorageContainerName,
+                _test.solution.Id, fileName, path);
         }
 
-        [Given(@"(a|an) (Roadmap|NHS Assured Integrations|Authority Provided Solution Document) attachment has not been provided for the Solution")]
+        [Given(
+            @"(a|an) (Roadmap|NHS Assured Integrations|Authority Provided Solution Document) attachment has not been provided for the Solution")]
         public void GivenAnIntegrationsAttachmentHasNotBeenProvidedForTheSolution(string s1, string s2)
         {
         }
@@ -102,19 +105,20 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
         {
             var downloadedFile = Path.Combine(_test.DownloadPath, integrationsDownloadFile);
             File.Exists(downloadedFile).Should().BeTrue();
-        }      
+        }
 
         [Then(@"the Roadmap attachment is downloaded")]
         public void ThenTheRoadmapAttachmentIsDownloaded()
         {
             var downloadedFile = Path.Combine(_test.DownloadPath, roadmapDownloadFile);
             File.Exists(downloadedFile).Should().BeTrue();
-        }              
+        }
 
         [Then(@"the attachment contains the Supplier's Authority Provided Data Document")]
         public void ThenTheAttachmentContainsTheSupplierSAuthorityProvidedDataDocument()
         {
-            var sourceFile = Path.Combine(Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), "Azure", "SampleData", "authority provided solution document.pdf");
+            var sourceFile = Path.Combine(Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), "Azure",
+                "SampleData", "authority provided solution document.pdf");
             var downloadedFile = Path.Combine(_test.DownloadPath, providedDataDocumentDownloadFile);
             DownloadFileUtility.CompareTwoFiles(downloadedFile, sourceFile).Should().BeTrue();
         }
@@ -122,7 +126,8 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
         [Then(@"the attachment contains the Supplier's NHS Assured Integrations")]
         public void ThenTheAttachmentContainsTheSupplierSNHSAssuredIntegrations()
         {
-            var sourceFile = Path.Combine(Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), "Azure", "SampleData", "integrations.pdf");
+            var sourceFile = Path.Combine(Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), "Azure",
+                "SampleData", "integrations.pdf");
             var downloadedFile = Path.Combine(_test.DownloadPath, integrationsDownloadFile);
             DownloadFileUtility.CompareTwoFiles(downloadedFile, sourceFile).Should().BeTrue();
         }
@@ -130,7 +135,8 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
         [Then(@"the attachment contains the Supplier's Roadmap")]
         public void ThenTheAttachmentContainsTheSupplierSRoadmap()
         {
-            var sourceFile = Path.Combine(Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), "Azure", "SampleData", "roadmap.pdf");
+            var sourceFile = Path.Combine(Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), "Azure",
+                "SampleData", "roadmap.pdf");
             var downloadedFile = Path.Combine(_test.DownloadPath, roadmapDownloadFile);
             DownloadFileUtility.CompareTwoFiles(downloadedFile, sourceFile).Should().BeTrue();
         }

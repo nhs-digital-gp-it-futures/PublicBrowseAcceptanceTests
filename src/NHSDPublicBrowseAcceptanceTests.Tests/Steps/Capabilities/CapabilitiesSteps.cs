@@ -1,8 +1,8 @@
-﻿using FluentAssertions;
+﻿using System.Collections.Generic;
+using FluentAssertions;
 using NHSDPublicBrowseAcceptanceTests.TestData.Capabilities;
 using NHSDPublicBrowseAcceptanceTests.TestData.Utils;
 using NHSDPublicBrowseAcceptanceTests.Tests.Utils;
-using System.Collections.Generic;
 using TechTalk.SpecFlow;
 
 namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.Capabilities
@@ -10,8 +10,8 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.Capabilities
     [Binding]
     public sealed class CapabilitiesSteps
     {
-        private readonly UITest _test;
         private readonly ScenarioContext _context;
+        private readonly UITest _test;
 
         private readonly IEnumerable<Capability> capabilities;
         private string selectedCapability;
@@ -38,13 +38,15 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.Capabilities
             _test.Pages.BrowseSolutions.OpenAllSolutions();
 
             selectedCapability = _test.Pages.CapabilityFilter.SelectCapability(_test.ConnectionString);
-            solutionsForCapability = SqlExecutor.ExecuteScalar(_test.ConnectionString, Queries.GetSolutionsWithCapabilityCount, new { CapabilityName = selectedCapability });
+            solutionsForCapability = SqlExecutor.ExecuteScalar(_test.ConnectionString,
+                Queries.GetSolutionsWithCapabilityCount, new {CapabilityName = selectedCapability});
         }
 
         [Then(@"Solution results are presented")]
         public void ThenSolutionResultsArePresented()
         {
-            _test.Pages.SolutionsList.GetSolutionsWithCapabilityCount(selectedCapability).Should().Be(solutionsForCapability);
+            _test.Pages.SolutionsList.GetSolutionsWithCapabilityCount(selectedCapability).Should()
+                .Be(solutionsForCapability);
         }
 
         [Given(@"there is a set of Capabilities defined in the Capabilities and Standards model")]
@@ -65,6 +67,5 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.Capabilities
         {
             _test.Pages.CapabilityFilter.CapabilityNamesShown(capabilities);
         }
-
     }
 }

@@ -1,9 +1,9 @@
-﻿using FluentAssertions;
-using NHSDPublicBrowseAcceptanceTests.TestData.Solutions;
-using OpenQA.Selenium;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using FluentAssertions;
+using NHSDPublicBrowseAcceptanceTests.TestData.Solutions;
+using OpenQA.Selenium;
 
 namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
 {
@@ -16,7 +16,8 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
         public void PageDisplayed(string url)
         {
             // Should be a better way to do this that doesn't rely on RegEx matching
-            Regex.Match(driver.Url, $@"{url}/solutions/(capabilities-selector.*|foundation)/.*").Success.Should().BeTrue();
+            Regex.Match(driver.Url, $@"{url}/solutions/(capabilities-selector.*|foundation)/.*").Success.Should()
+                .BeTrue();
         }
 
         public string GetSolutionId()
@@ -41,7 +42,8 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
 
         public string GetSolutionLastUpdated()
         {
-            return driver.FindElement(pages.ViewSingleSolution.SolutionLastUpdated).Text.Replace("Solution information last updated: ", "");
+            return driver.FindElement(pages.ViewSingleSolution.SolutionLastUpdated).Text
+                .Replace("Solution information last updated: ", "");
         }
 
         public string GetSolutionAboutUrl()
@@ -98,6 +100,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
             return driver.FindElement(pages.ViewSingleSolution.DownloadNHSAssuredIntegrationsDocumentLink)
                 .GetAttribute("href");
         }
+
         public string GetRoadmapDownloadLinkUrl()
         {
             return driver.FindElement(pages.ViewSingleSolution.DownloadRoadmapDocumentLink)
@@ -111,7 +114,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
 
         public SolutionContactDetails GetSolutionContactDetails()
         {
-            SolutionContactDetails contactDetails = new SolutionContactDetails
+            var contactDetails = new SolutionContactDetails
             {
                 FirstName = driver.FindElement(pages.ViewSingleSolution.SolutionContactName).Text.Split(' ')[0],
                 LastName = driver.FindElement(pages.ViewSingleSolution.SolutionContactName).Text.Split(' ')[1],
@@ -125,35 +128,37 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
 
         public void WaitForRoadmapSectionDisplayed()
         {
-            wait.Until(s => {
+            wait.Until(s =>
+            {
                 s.Navigate().Refresh();
                 return s.FindElement(pages.ViewSingleSolution.RoadmapSection).Displayed;
-                });
+            });
         }
 
         public void WaitForIntegrationsSectionDisplayed()
         {
-            wait.Until(s => {
+            wait.Until(s =>
+            {
                 s.Navigate().Refresh();
                 return s.FindElement(pages.ViewSingleSolution.IntegrationsSection).Displayed;
-                });
+            });
         }
 
         public bool WaitForLearnMoreSectionDisplayed()
         {
             try
             {
-                wait.Until(s => {
+                wait.Until(s =>
+                {
                     s.Navigate().Refresh();
                     return s.FindElement(pages.ViewSingleSolution.LearnMoreSection).Displayed;
-                    });
+                });
                 return true;
             }
             catch
             {
                 return false;
             }
-
         }
     }
 }

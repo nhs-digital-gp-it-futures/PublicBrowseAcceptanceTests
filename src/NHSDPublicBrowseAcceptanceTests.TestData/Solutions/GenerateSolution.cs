@@ -1,19 +1,22 @@
-﻿using Bogus;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using Bogus;
+using NHSDPublicBrowseAcceptanceTests.TestData.Information;
 
 namespace NHSDPublicBrowseAcceptanceTests.TestData.Solutions
 {
     public static class GenerateSolution
     {
-        public static Solution GenerateNewSolution(string prefix = "Auto", bool checkForUnique = false, string connectionString = null, int publishedStatus = 1)
+        public static Solution GenerateNewSolution(string prefix = "Auto", bool checkForUnique = false,
+            string connectionString = null, int publishedStatus = 1)
         {
             var faker = new Faker();
 
             var Id = checkForUnique ? UniqueSolIdCheck(prefix, connectionString) : RandomSolId(prefix);
 
-            Solution solution = new Solution
+            var solution = new Solution
             {
                 Id = Id,
                 Name = faker.Name.JobTitle(),
@@ -23,10 +26,7 @@ namespace NHSDPublicBrowseAcceptanceTests.TestData.Solutions
                 PublishedStatusId = publishedStatus
             };
 
-            if (System.Diagnostics.Debugger.IsAttached)
-            {
-                Console.WriteLine(solution.ToString());
-            }
+            if (Debugger.IsAttached) Console.WriteLine(solution.ToString());
 
             return solution;
         }
@@ -34,35 +34,29 @@ namespace NHSDPublicBrowseAcceptanceTests.TestData.Solutions
         private static string GetSuffix(int solIdLength)
         {
             var suffix = string.Empty;
-            for (int i = 0; i < 14 - solIdLength; i++)
-            {
-                suffix += GetRandomCharacter();
-            }
+            for (var i = 0; i < 14 - solIdLength; i++) suffix += GetRandomCharacter();
             return suffix;
         }
 
         private static string GetRandomCharacter()
         {
             var faker = new Faker();
-            List<string> randomChars = new List<string>();
-            for (int i = 0; i < 10; i++)
-            {
-                randomChars.Add(faker.Random.AlphaNumeric(1));
-            }
+            var randomChars = new List<string>();
+            for (var i = 0; i < 10; i++) randomChars.Add(faker.Random.AlphaNumeric(1));
 
-            return Information.RandomInformation.GetRandomItem(randomChars).ToString();
+            return RandomInformation.GetRandomItem(randomChars);
         }
 
         private static string GetTruncatedTimestamp(string prefix)
         {
-            string timestamp = DateTimeOffset.Now.ToUnixTimeMilliseconds().ToString();
+            var timestamp = DateTimeOffset.Now.ToUnixTimeMilliseconds().ToString();
             timestamp = timestamp.Substring(timestamp.Length - prefix.Length);
 
             return prefix + timestamp;
         }
 
         /// <summary>
-        /// Get list of existing solution ids, then generate new solution ids until a unique solution id is found
+        ///     Get list of existing solution ids, then generate new solution ids until a unique solution id is found
         /// </summary>
         /// <param name="prefix"></param>
         /// <param name="connectionString"></param>
@@ -80,10 +74,7 @@ namespace NHSDPublicBrowseAcceptanceTests.TestData.Solutions
             for (var i = 0; i < 10; i++)
             {
                 solId = RandomSolId(prefix);
-                if (!existingSolIds.Contains(solId))
-                {
-                    break;
-                }
+                if (!existingSolIds.Contains(solId)) break;
             }
 
             return solId;

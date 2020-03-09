@@ -6,8 +6,8 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.Homepage
     [Binding]
     public class Homepage
     {
-        private readonly UITest _test;
         private readonly ScenarioContext _context;
+        private readonly UITest _test;
 
         public Homepage(UITest test, ScenarioContext context)
         {

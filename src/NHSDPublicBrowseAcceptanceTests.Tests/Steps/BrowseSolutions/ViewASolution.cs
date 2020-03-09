@@ -1,11 +1,11 @@
-﻿using FluentAssertions;
+﻿using System;
+using System.IO;
+using System.Linq;
+using FluentAssertions;
 using NHSDPublicBrowseAcceptanceTests.TestData.Capabilities;
 using NHSDPublicBrowseAcceptanceTests.TestData.Solutions;
 using NHSDPublicBrowseAcceptanceTests.TestData.Utils;
 using NHSDPublicBrowseAcceptanceTests.Tests.Utils;
-using System;
-using System.IO;
-using System.Linq;
 using TechTalk.SpecFlow;
 
 namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
@@ -13,10 +13,10 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
     [Binding]
     public class ViewASolution
     {
-        private string expectedLastUpdatedDate;
         private const string dateFormat = "dd MMMM yyyy";
-        private readonly UITest _test;
         private readonly ScenarioContext _context;
+        private readonly UITest _test;
+        private string expectedLastUpdatedDate;
 
         public ViewASolution(UITest test, ScenarioContext context)
         {
@@ -40,8 +40,10 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
             new ViewSolutionsList(_test, _context).GivenThatAUserHasChosenToViewAListOfAllSolutions();
             var oldDate = new DateTime(2001, 02, 03);
             LastUpdatedHelper.UpdateLastUpdated(oldDate, "Solution", "id", _test.solution.Id, _test.ConnectionString);
-            LastUpdatedHelper.UpdateLastUpdated(oldDate, "SolutionDetail", "SolutionId", _test.solution.Id, _test.ConnectionString);
-            LastUpdatedHelper.UpdateLastUpdated(oldDate, "MarketingContact", "SolutionId", _test.solution.Id, _test.ConnectionString);
+            LastUpdatedHelper.UpdateLastUpdated(oldDate, "SolutionDetail", "SolutionId", _test.solution.Id,
+                _test.ConnectionString);
+            LastUpdatedHelper.UpdateLastUpdated(oldDate, "MarketingContact", "SolutionId", _test.solution.Id,
+                _test.ConnectionString);
             _test.Pages.SolutionsList.OpenNamedSolution(_test.solution.Name);
         }
 
@@ -59,8 +61,8 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
         {
             _test.Pages.ViewASolution.PageDisplayed(_test.Url);
             var id = _test.Pages.ViewASolution.GetSolutionId();
-            _test.solution = new Solution() { Id = id }.Retrieve(_test.ConnectionString);
-            _test.solutionDetail = new SolutionDetail() { SolutionId = _test.solution.Id }.Retrieve(_test.ConnectionString);
+            _test.solution = new Solution {Id = id}.Retrieve(_test.ConnectionString);
+            _test.solutionDetail = new SolutionDetail {SolutionId = _test.solution.Id}.Retrieve(_test.ConnectionString);
         }
 
         [Then(@"the page will contain Supplier Name")]
@@ -105,7 +107,8 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
         public void ThenContactDetails()
         {
             var contactDetails = _test.Pages.ViewASolution.GetSolutionContactDetails();
-            _test.ContactDetails = SqlExecutor.Execute<SolutionContactDetails>(_test.ConnectionString, Queries.GetSolutionContactDetails, new { solutionId = _test.solution.Id }).ToList();
+            _test.ContactDetails = SqlExecutor.Execute<SolutionContactDetails>(_test.ConnectionString,
+                Queries.GetSolutionContactDetails, new {solutionId = _test.solution.Id}).ToList();
 
             contactDetails.ContactName.Should().Be(_test.ContactDetails[0].ContactName);
             contactDetails.Department.Should().Be(_test.ContactDetails[0].Department);
@@ -132,7 +135,8 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
             _test.Pages.ViewASolution.AttachmentDownloadLinkDisplayed().Should().BeTrue();
         }
 
-        [Then(@"the page will contain an indication that the Solution meets the criteria for a Foundation Solution Set")]
+        [Then(
+            @"the page will contain an indication that the Solution meets the criteria for a Foundation Solution Set")]
         public void ThenThePageWillContainAnIndicationThatTheSolutionMeetsTheCriteriaForAFoundationSolutionSet()
         {
             _test.Pages.ViewASolution.FoundationSolutionIndicatorDisplayed().Should().BeTrue();
@@ -142,7 +146,8 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
         public void ThenTheCapabilitiesListedMatchTheExpectedCapabilitiesInTheDatabase()
         {
             var solutionId = _test.Pages.ViewASolution.GetSolutionId();
-            var capabilities = new Capability().GetSolutionCapabilities(_test.ConnectionString, _test.solution.Id).Select(s => s.Name);
+            var capabilities = new Capability().GetSolutionCapabilities(_test.ConnectionString, _test.solution.Id)
+                .Select(s => s.Name);
             var actualCapabilities = _test.Pages.ViewASolution.GetSolutionCapabilities();
             actualCapabilities.Should().BeEquivalentTo(capabilities);
         }
@@ -172,7 +177,8 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
 
             var whereKey = tableName.Equals("Solution") ? "Id" : "SolutionId";
 
-            LastUpdatedHelper.UpdateLastUpdated(updatedDate, tableName, whereKey, _test.solution.Id, _test.ConnectionString);
+            LastUpdatedHelper.UpdateLastUpdated(updatedDate, tableName, whereKey, _test.solution.Id,
+                _test.ConnectionString);
         }
 
         [Then(@"the page last updated date shown is updated as expected")]
@@ -196,6 +202,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
         {
             return ConvertDateToLongDateTime(Convert.ToDateTime(date));
         }
+
         private string ConvertDateToLongDateTime(DateTime date)
         {
             return date.ToString(dateFormat);

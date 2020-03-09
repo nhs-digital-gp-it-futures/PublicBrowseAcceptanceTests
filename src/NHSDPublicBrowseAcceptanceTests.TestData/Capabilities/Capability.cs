@@ -1,7 +1,7 @@
-﻿using NHSDPublicBrowseAcceptanceTests.TestData.Utils;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using NHSDPublicBrowseAcceptanceTests.TestData.Utils;
 
 namespace NHSDPublicBrowseAcceptanceTests.TestData.Capabilities
 {
@@ -15,14 +15,14 @@ namespace NHSDPublicBrowseAcceptanceTests.TestData.Capabilities
         public IList<Capability> GetSolutionCapabilities(string connectionString, string solutionId)
         {
             var query = Queries.GetSolutionCapabilities;
-            return SqlExecutor.Execute<Capability>(connectionString, query, new { solutionId }).ToList();
+            return SqlExecutor.Execute<Capability>(connectionString, query, new {solutionId}).ToList();
         }
 
         public void AddRandomCapabilityToSolution(string connectionString, string solutionId)
         {
             var query = Queries.AddRandomSolutionCapability;
 
-            SqlExecutor.Execute<Capability>(connectionString, query, new { solutionId });
+            SqlExecutor.Execute<Capability>(connectionString, query, new {solutionId});
         }
     }
 }

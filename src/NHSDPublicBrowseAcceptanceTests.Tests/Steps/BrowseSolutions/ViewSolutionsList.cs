@@ -9,9 +9,9 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
     [Binding]
     public class ViewSolutionsList
     {
-        private readonly UITest _test;
         private readonly ScenarioContext _context;
-        int expectedNumberOfSolutions = 0;
+        private readonly UITest _test;
+        private int expectedNumberOfSolutions;
 
         public ViewSolutionsList(UITest test, ScenarioContext context)
         {
@@ -47,7 +47,8 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
             var solutions = SqlExecutor.Execute<Solution>(query: Queries.GetAllSolutions,
                 connectionString: _test.ConnectionString,
                 param: null);
-            expectedNumberOfSolutions = SqlExecutor.ExecuteScalar(_test.ConnectionString, Queries.GetSolutionsCount, null);
+            expectedNumberOfSolutions =
+                SqlExecutor.ExecuteScalar(_test.ConnectionString, Queries.GetSolutionsCount, null);
             var actualNumberOfSolutionCards = _test.Pages.SolutionsList.GetSolutionsCount();
             actualNumberOfSolutionCards.Should().Be(expectedNumberOfSolutions);
         }
@@ -83,7 +84,8 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
         [Then(@"capability '(.*)' is listed in the solution capabilities")]
         public void ThenCapabilityIsListedInTheSolutionCapabilities(string expectedCapabilityName)
         {
-            var dbCount = SqlExecutor.ExecuteScalar(_test.ConnectionString, Queries.GetSolutionsWithCapabilityCount, new { capabilityName = expectedCapabilityName });
+            var dbCount = SqlExecutor.ExecuteScalar(_test.ConnectionString, Queries.GetSolutionsWithCapabilityCount,
+                new {capabilityName = expectedCapabilityName});
             var uiCount = _test.Pages.SolutionsList.GetSolutionsWithCapabilityCount(expectedCapabilityName);
             uiCount.Should().Be(dbCount);
         }

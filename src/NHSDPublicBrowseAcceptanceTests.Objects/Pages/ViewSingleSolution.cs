@@ -20,7 +20,10 @@ namespace NHSDPublicBrowseAcceptanceTests.Objects.Pages
         public By SolutionAboutUrl => CustomBy.DataTestId("view-question-data-link");
 
         public By AttachmentDownloadLink => CustomBy.DataTestId("view-section-question-document-link", "a");
-        public By DownloadNHSAssuredIntegrationsDocumentLink => CustomBy.DataTestId("view-question-data-text-link-authority-integrations", "a");
+
+        public By DownloadNHSAssuredIntegrationsDocumentLink =>
+            CustomBy.DataTestId("view-question-data-text-link-authority-integrations", "a");
+
         public By DownloadRoadmapDocumentLink => CustomBy.DataTestId("view-question-data-link-document-link", "a");
 
         public By FoundationSolutionIndicator => CustomBy.DataTestId("view-solution-foundation");

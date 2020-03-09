@@ -6,8 +6,8 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.LayoutComponents
     [Binding]
     public sealed class Footer
     {
-        private readonly UITest _test;
         private readonly ScenarioContext _context;
+        private readonly UITest _test;
 
         public Footer(UITest test, ScenarioContext context)
         {
@@ -39,6 +39,5 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.LayoutComponents
         {
             _test.Pages.Common.URLContains(href);
         }
-
     }
 }

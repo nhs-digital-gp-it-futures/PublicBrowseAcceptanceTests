@@ -4,6 +4,8 @@ namespace NHSDPublicBrowseAcceptanceTests.Objects
 {
     public sealed class PageObjects
     {
+        public PageCollection Pages;
+
         public PageObjects()
         {
             Pages = new PageCollection
@@ -19,7 +21,5 @@ namespace NHSDPublicBrowseAcceptanceTests.Objects
                 BuyersGuide = new BuyersGuide()
             };
         }
-
-        public PageCollection Pages;
     }
 }

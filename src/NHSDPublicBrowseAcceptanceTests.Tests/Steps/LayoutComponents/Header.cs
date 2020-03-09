@@ -7,8 +7,8 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.LayoutComponents
     [Binding]
     public sealed class Header
     {
-        private readonly UITest _test;
         private readonly ScenarioContext _context;
+        private readonly UITest _test;
 
         public Header(UITest test, ScenarioContext context)
         {

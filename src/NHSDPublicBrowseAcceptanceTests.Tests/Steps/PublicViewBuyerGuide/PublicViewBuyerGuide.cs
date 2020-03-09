@@ -1,7 +1,7 @@
-﻿using FluentAssertions;
-using NHSDPublicBrowseAcceptanceTests.Tests.Utils;
-using System;
+﻿using System;
 using System.IO;
+using FluentAssertions;
+using NHSDPublicBrowseAcceptanceTests.Tests.Utils;
 using TechTalk.SpecFlow;
 
 namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.PublicViewBuyerGuide
@@ -9,8 +9,8 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.PublicViewBuyerGuide
     [Binding]
     public class PublicViewBuyerGuide
     {
-        private readonly UITest _test;
         private readonly ScenarioContext _context;
+        private readonly UITest _test;
 
         public PublicViewBuyerGuide(UITest test, ScenarioContext context)
         {
@@ -24,13 +24,14 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.PublicViewBuyerGuide
             _test.Pages.Homepage.ClickBuyersGuideControl();
         }
 
-        [Then(@"they are presented with a control to access the Buyer Guide as a digital document download \(e\.g\. a PDF\)")]
+        [Then(
+            @"they are presented with a control to access the Buyer Guide as a digital document download \(e\.g\. a PDF\)")]
         public void ThenTheyArePresentedWithAControlToAccessTheBuyerGuideAsADigitalDocumentDownloadE_G_APDF()
         {
             _test.Pages.BuyersGuide.DownloadLinkPresented();
-            string downloadLink = _test.Pages.BuyersGuide.GetDownloadLink();
-            string fileName = "BuyersGuide.pdf";
-            string downloadPath = Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory);
+            var downloadLink = _test.Pages.BuyersGuide.GetDownloadLink();
+            var fileName = "BuyersGuide.pdf";
+            var downloadPath = Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory);
 
             _test.Pages.Common.DownloadFile(fileName, downloadPath, downloadLink);
         }
