@@ -36,15 +36,15 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
         {
             new ViewSolutionOnlyWhenPublished(_test, _context).GivenThatASolutionHasAPublishedStatusOf(3);
             _test.ContactDetails.Add(CreateContactDetails.NewContactDetail());
-            _test.ContactDetails[0].AddMarketingContactForSolution(_test.ConnectionString, _test.solution.Id);
+            _test.ContactDetails[0].AddMarketingContactForSolution(_test.ConnectionString, _test.Solution.Id);
             new ViewSolutionsList(_test, _context).GivenThatAUserHasChosenToViewAListOfAllSolutions();
             var oldDate = new DateTime(2001, 02, 03);
-            LastUpdatedHelper.UpdateLastUpdated(oldDate, "Solution", "id", _test.solution.Id, _test.ConnectionString);
-            LastUpdatedHelper.UpdateLastUpdated(oldDate, "SolutionDetail", "SolutionId", _test.solution.Id,
+            LastUpdatedHelper.UpdateLastUpdated(oldDate, "Solution", "id", _test.Solution.Id, _test.ConnectionString);
+            LastUpdatedHelper.UpdateLastUpdated(oldDate, "SolutionDetail", "SolutionId", _test.Solution.Id,
                 _test.ConnectionString);
-            LastUpdatedHelper.UpdateLastUpdated(oldDate, "MarketingContact", "SolutionId", _test.solution.Id,
+            LastUpdatedHelper.UpdateLastUpdated(oldDate, "MarketingContact", "SolutionId", _test.Solution.Id,
                 _test.ConnectionString);
-            _test.Pages.SolutionsList.OpenNamedSolution(_test.solution.Name);
+            _test.Pages.SolutionsList.OpenNamedSolution(_test.Solution.Name);
         }
 
 
@@ -61,8 +61,8 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
         {
             _test.Pages.ViewASolution.PageDisplayed(_test.Url);
             var id = _test.Pages.ViewASolution.GetSolutionId();
-            _test.solution = new Solution {Id = id}.Retrieve(_test.ConnectionString);
-            _test.solutionDetail = new SolutionDetail {SolutionId = _test.solution.Id}.Retrieve(_test.ConnectionString);
+            _test.Solution = new Solution {Id = id}.Retrieve(_test.ConnectionString);
+            _test.SolutionDetail = new SolutionDetail {SolutionId = _test.Solution.Id}.Retrieve(_test.ConnectionString);
         }
 
         [Then(@"the page will contain Supplier Name")]
@@ -75,31 +75,31 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
         public void ThenSolutionName()
         {
             var solutionName = _test.Pages.ViewASolution.GetSolutionName();
-            solutionName.Should().Be(_test.solution.Name);
+            solutionName.Should().Be(_test.Solution.Name);
         }
 
         [Then(@"Solution Summary")]
         public void ThenSolutionSummary()
         {
             var solutionSummary = _test.Pages.ViewASolution.GetSolutionSummary().TrimEnd();
-            solutionSummary.Should().Be(_test.solutionDetail.Summary.TrimEnd());
+            solutionSummary.Should().Be(_test.SolutionDetail.Summary.TrimEnd());
         }
 
         [Then(@"Solution Full Description")]
         public void ThenSolutionFullDescription()
         {
             var solutionFullDescription = _test.Pages.ViewASolution.GetSolutionFullDescription().TrimEnd();
-            solutionFullDescription.Should().Be(_test.solutionDetail.FullDescription.TrimEnd());
+            solutionFullDescription.Should().Be(_test.SolutionDetail.FullDescription.TrimEnd());
         }
 
 
         [Then(@"About Solution URL")]
         public void ThenAboutSolutionURL()
         {
-            if (!string.IsNullOrEmpty(_test.solutionDetail.AboutUrl))
+            if (!string.IsNullOrEmpty(_test.SolutionDetail.AboutUrl))
             {
                 var solutionAboutUrl = _test.Pages.ViewASolution.GetSolutionAboutUrl();
-                solutionAboutUrl.Should().Be(_test.solutionDetail.AboutUrl);
+                solutionAboutUrl.Should().Be(_test.SolutionDetail.AboutUrl);
             }
         }
 
@@ -108,7 +108,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
         {
             var contactDetails = _test.Pages.ViewASolution.GetSolutionContactDetails();
             _test.ContactDetails = SqlExecutor.Execute<SolutionContactDetails>(_test.ConnectionString,
-                Queries.GetSolutionContactDetails, new {solutionId = _test.solution.Id}).ToList();
+                Queries.GetSolutionContactDetails, new {solutionId = _test.Solution.Id}).ToList();
 
             contactDetails.ContactName.Should().Be(_test.ContactDetails[0].ContactName);
             contactDetails.Department.Should().Be(_test.ContactDetails[0].Department);
@@ -126,7 +126,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
         public void ThenSolutionID()
         {
             var id = _test.Pages.ViewASolution.GetSolutionId();
-            id.Should().Be(_test.solution.Id);
+            id.Should().Be(_test.Solution.Id);
         }
 
         [Then(@"there is a link for the User to download an attachment")]
@@ -146,7 +146,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
         public void ThenTheCapabilitiesListedMatchTheExpectedCapabilitiesInTheDatabase()
         {
             var solutionId = _test.Pages.ViewASolution.GetSolutionId();
-            var capabilities = new Capability().GetSolutionCapabilities(_test.ConnectionString, _test.solution.Id)
+            var capabilities = new Capability().GetSolutionCapabilities(_test.ConnectionString, _test.Solution.Id)
                 .Select(s => s.Name);
             var actualCapabilities = _test.Pages.ViewASolution.GetSolutionCapabilities();
             actualCapabilities.Should().BeEquivalentTo(capabilities);
@@ -177,14 +177,14 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
 
             var whereKey = tableName.Equals("Solution") ? "Id" : "SolutionId";
 
-            LastUpdatedHelper.UpdateLastUpdated(updatedDate, tableName, whereKey, _test.solution.Id,
+            LastUpdatedHelper.UpdateLastUpdated(updatedDate, tableName, whereKey, _test.Solution.Id,
                 _test.ConnectionString);
         }
 
         [Then(@"the page last updated date shown is updated as expected")]
         public void ThenThePageLastUpdatedDateShownIsUpdatedAsExpected()
         {
-            _test.driver.Navigate().Refresh();
+            _test.Driver.Navigate().Refresh();
             var actualLastUpdated = _test.Pages.ViewASolution.GetSolutionLastUpdated();
 
             var convertedDate = ConvertDateToLongDateTime(actualLastUpdated);

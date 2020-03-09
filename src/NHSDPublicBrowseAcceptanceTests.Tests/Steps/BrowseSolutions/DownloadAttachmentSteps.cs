@@ -29,25 +29,25 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
         [Given(@"that a new Solution has been created to view attachments")]
         public void GivenThatANewSolutionHasBeenCreatedToViewAttachments()
         {
-            _test.solution = GenerateSolution.GenerateNewSolution(checkForUnique: true,
+            _test.Solution = GenerateSolution.GenerateNewSolution(checkForUnique: true,
                 connectionString: _test.ConnectionString, publishedStatus: 3);
-            _test.solution.Create(_test.ConnectionString);
-            _test.solutionDetail = GenerateSolutionDetails.GenerateNewSolutionDetail(_test.solution.Id, Guid.NewGuid(),
+            _test.Solution.Create(_test.ConnectionString);
+            _test.SolutionDetail = GenerateSolutionDetails.GenerateNewSolutionDetail(_test.Solution.Id, Guid.NewGuid(),
                 0, false, true, integrationsUrl: true);
-            _test.solutionDetail.Create(_test.ConnectionString);
-            _test.solution.SolutionDetailId = _test.solutionDetail.SolutionDetailId;
-            _test.solution.Update(_test.ConnectionString);
+            _test.SolutionDetail.Create(_test.ConnectionString);
+            _test.Solution.SolutionDetailId = _test.SolutionDetail.SolutionDetailId;
+            _test.Solution.Update(_test.ConnectionString);
             _context.Add("DeleteSolution", true);
             _test.ContactDetails.Add(CreateContactDetails.NewContactDetail());
-            _test.ContactDetails[0].AddMarketingContactForSolution(_test.ConnectionString, _test.solution.Id);
-            new Capability().AddRandomCapabilityToSolution(_test.ConnectionString, _test.solution.Id);
+            _test.ContactDetails[0].AddMarketingContactForSolution(_test.ConnectionString, _test.Solution.Id);
+            new Capability().AddRandomCapabilityToSolution(_test.ConnectionString, _test.Solution.Id);
         }
 
         [StepDefinition(@"the User views the created solution")]
         public void GivenTheUserViewsTheCreatedSolution()
         {
             new ViewSolutionsList(_test, _context).GivenThatAUserHasChosenToViewAListOfAllSolutions();
-            _test.Pages.SolutionsList.OpenNamedSolution(_test.solution.Name);
+            _test.Pages.SolutionsList.OpenNamedSolution(_test.Solution.Name);
             _test.Pages.ViewASolution.PageDisplayed(_test.Url);
         }
 
@@ -63,7 +63,7 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
             var path = Path.Combine(Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), "Azure", "SampleData",
                 fileName);
             await _test.AzureBlobStorage.InsertFileToStorage(_test.DefaultAzureBlobStorageContainerName,
-                _test.solution.Id, fileName, path);
+                _test.Solution.Id, fileName, path);
         }
 
         [Given(

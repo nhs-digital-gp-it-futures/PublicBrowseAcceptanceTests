@@ -19,11 +19,11 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps
         [AfterScenario]
         public async Task AfterScenario()
         {
-            _test.driver.Close();
-            _test.driver.Quit();
+            _test.Driver.Close();
+            _test.Driver.Quit();
 
             if (_context.ContainsKey("DeleteSolution") && (bool) _context["DeleteSolution"])
-                _test.solution.Delete(_test.ConnectionString);
+                _test.Solution.Delete(_test.ConnectionString);
 
             await _test.AzureBlobStorage.ClearStorage();
         }

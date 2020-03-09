@@ -16,28 +16,26 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Utils
         internal List<SolutionContactDetails> ContactDetails = new List<SolutionContactDetails>();
         internal string DefaultAzureBlobStorageContainerName;
         internal string DownloadPath;
-        internal IWebDriver driver;
+        internal IWebDriver Driver;
         internal PageActionCollection Pages;
-        internal Solution solution;
-        internal SolutionDetail solutionDetail;
+        internal Solution Solution;
+        internal SolutionDetail SolutionDetail;
         internal string Url;
 
         public UITest()
-        {
-            var (serverUrl, databaseName, dbUser, dbPassword) = EnvironmentVariables.GetDbConnectionDetails();
-            ConnectionString = string.Format(Utils.ConnectionString.GPitFutures, serverUrl, databaseName, dbUser,
-                dbPassword);
-            AzureBlobStorage = new AzureBlobStorage(EnvironmentVariables.GetAzureBlobStorageConnectionString());
-            DefaultAzureBlobStorageContainerName = EnvironmentVariables.GetAzureContainerName();
+        {   
+            ConnectionString = EnvironmentVariables.ConnectionString();
+            AzureBlobStorage = new AzureBlobStorage(EnvironmentVariables.AzureBlobStorageConnectionString());
+            DefaultAzureBlobStorageContainerName = EnvironmentVariables.AzureContainerName();
             DownloadPath = Path.Combine(Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), "downloads");
 
-            Url = EnvironmentVariables.GetUrl();
+            Url = EnvironmentVariables.Url();
 
-            driver = new BrowserFactory().Driver;
+            Driver = new BrowserFactory().Driver;
 
-            Pages = new PageActions(driver).PageActionCollection;
+            Pages = new PageActions(Driver).PageActionCollection;
 
-            driver.Navigate().GoToUrl(Url);
+            Driver.Navigate().GoToUrl(Url);
         }
     }
 }

@@ -12,8 +12,8 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Utils
     {
         public BrowserFactory()
         {
-            var browser = EnvironmentVariables.GetBrowser();
-            var hubUrl = EnvironmentVariables.GetHubUrl();
+            var browser = EnvironmentVariables.Browser();
+            var hubUrl = EnvironmentVariables.HubUrl();
             Driver = GetBrowser(browser, hubUrl);
         }
 

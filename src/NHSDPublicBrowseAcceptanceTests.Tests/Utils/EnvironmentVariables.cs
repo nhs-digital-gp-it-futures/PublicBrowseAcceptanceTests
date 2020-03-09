@@ -10,59 +10,44 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Utils
     {
         internal static (string, string, string, string, string, string, string) Get()
         {
-            var url = GetUrl();
-            var hubUrl = GetHubUrl();
-            var browser = GetBrowser();
+            var url = Url();
+            var hubUrl = HubUrl();
+            var browser = Browser();
 
-            var (serverUrl, databaseName, dbUser, dbPassword) = GetDbConnectionDetails();
+            var (serverUrl, databaseName, dbUser, dbPassword) = DbConnectionDetails();
 
             return (url, hubUrl, browser, serverUrl, databaseName, dbUser, dbPassword);
         }
 
-        internal static string GetHubUrl()
-        {
-            return Environment.GetEnvironmentVariable("HUBURL") ?? "http://localhost:4444/wd/hub";
-        }
+        internal static string HubUrl() => Environment.GetEnvironmentVariable("HUBURL") ?? "http://localhost:4444/wd/hub";
 
-        internal static string GetUrl()
-        {
-            return Environment.GetEnvironmentVariable("PBURL") ?? "http://gpitfutures-bc-pb.buyingcatalogue:3000";
-        }
+        internal static string Url() => Environment.GetEnvironmentVariable("PBURL") ?? "http://gpitfutures-bc-pb.buyingcatalogue:3000";
 
-        internal static string GetBrowser()
-        {
-            return Environment.GetEnvironmentVariable("BROWSER") ?? "chrome-local";
-        }
+        internal static string Browser() => Environment.GetEnvironmentVariable("BROWSER") ?? "chrome-local";
 
         internal static (string serverUrl, string databaseName, string dbUser, string dbPassword)
-            GetDbConnectionDetails()
+            DbConnectionDetails()
         {
             var serverUrl = Environment.GetEnvironmentVariable("SERVERURL") ?? "127.0.0.1,1450";
             var databaseName = Environment.GetEnvironmentVariable("DATABASENAME") ?? "buyingcatalogue";
-            var dbUser = GetJsonConfigValues("user", "NHSD");
-            var dbPassword = GetJsonConfigValues("password", "DisruptTheMarket1!");
+            var dbUser = JsonConfigValues("user", "NHSD");
+            var dbPassword = JsonConfigValues("password", "DisruptTheMarket1!");
 
             return (serverUrl, databaseName, dbUser, dbPassword);
         }
 
-        internal static string GetConnectionString()
+        internal static string ConnectionString()
         {
-            var (serverUrl, databaseName, dbUser, dbPassword) = GetDbConnectionDetails();
+            var (serverUrl, databaseName, dbUser, dbPassword) = DbConnectionDetails();
 
-            return string.Format(ConnectionString.GPitFutures, serverUrl, databaseName, dbUser, dbPassword);
+            return string.Format(Utils.ConnectionString.GPitFutures, serverUrl, databaseName, dbUser, dbPassword);
         }
 
-        internal static string GetAzureBlobStorageConnectionString()
-        {
-            return GetJsonConfigValues("AzureBlobStorageConnectionString", @"UseDevelopmentStorage=true");
-        }
+        internal static string AzureBlobStorageConnectionString() => JsonConfigValues("AzureBlobStorageConnectionString", @"UseDevelopmentStorage=true");
 
-        internal static string GetAzureContainerName()
-        {
-            return Environment.GetEnvironmentVariable("CONTAINER_NAME") ?? "container-1";
-        }
+        internal static string AzureContainerName() => Environment.GetEnvironmentVariable("CONTAINER_NAME") ?? "container-1";
 
-        private static string GetJsonConfigValues(string section, string defaultValue)
+        private static string JsonConfigValues(string section, string defaultValue)
         {
             var path = Path.Combine(Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), "Utils",
                 "tokens.json");
