@@ -17,7 +17,7 @@ steps:
 - task: UseDotNet@2
   displayName: 'Use DotNet Core 3.1'
   inputs:
-    version: 3.x
+    version: '3.1.101'
     includePreviewVersions: false
 
 - task: AzureKeyVault@1
@@ -51,7 +51,7 @@ steps:
     publishLocation: 'Container'
       
 - bash: 
-    "curl -i $(PBURL) --fail --connect-timeout 30"
+    "curl -k -i $(PBURL) --fail --connect-timeout 30"
   displayName: 'Check URL is reachable'
 
 - task: Bash@3
