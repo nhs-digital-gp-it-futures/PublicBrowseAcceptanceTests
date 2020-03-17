@@ -50,7 +50,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Utils
         private static IWebDriver GetLocalChromeDriver()
         {
             var options = new ChromeOptions();
-            options.AddArguments("start-maximized", "no-sandbox", "auto-open-devtools-for-tabs");
+            options.AddArguments("start-maximized", "no-sandbox", "auto-open-devtools-for-tabs", "ignore-certificate-errors");
 
             return new ChromeDriver(Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), options);
         }
@@ -58,7 +58,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Utils
         private static IWebDriver GetChromeDriver(string hubURL)
         {
             var options = new ChromeOptions();
-            options.AddArguments("headless", "window-size=1920,1080", "no-sandbox");
+            options.AddArguments("headless", "window-size=1920,1080", "no-sandbox", "ignore-certificate-errors");
 
             return new RemoteWebDriver(new Uri(hubURL), options);
         }
@@ -66,7 +66,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Utils
         private static IWebDriver GetFirefoxDriver(string hubURL)
         {
             var options = new FirefoxOptions();
-            options.AddArguments("headless", "window-size=1920,1080", "no-sandbox");
+            options.AddArguments("headless", "window-size=1920,1080", "no-sandbox", "acceptInsecureCerts");
 
             return new RemoteWebDriver(new Uri(hubURL), options);
         }
