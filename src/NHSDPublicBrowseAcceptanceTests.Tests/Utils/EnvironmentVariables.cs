@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 
@@ -73,15 +74,15 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Utils
         private static string DefaultUri()
         {
             var uri = "https://docker.for.win.localhost";
-            //if (Debugger.IsAttached)
-            //{
-                //var builder = new UriBuilder(uri)
-                //{
-                //    Host = "localhost"
-                //};
+            if (Debugger.IsAttached)
+            {
+                var builder = new UriBuilder(uri)
+                {
+                    Host = "localhost"
+                };
 
-                //uri = builder.Uri.ToString();
-            //}
+                uri = builder.Uri.ToString();
+            }
 
             return uri;
         }
