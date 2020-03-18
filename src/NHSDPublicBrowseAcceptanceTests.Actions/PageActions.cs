@@ -17,7 +17,8 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions
                 Header = new Header(driver),
                 BrowseSolutions = new BrowseSolutions(driver),
                 ViewASolution = new ViewASolution(driver),
-                BuyersGuide = new BuyersGuide(driver)
+                BuyersGuide = new BuyersGuide(driver),
+                Authorization = new Authorization(driver)
             };
         }
 

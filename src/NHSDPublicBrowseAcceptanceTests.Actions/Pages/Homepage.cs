@@ -39,5 +39,16 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
         {
             driver.FindElement(pages.Homepage.GuidanceContent).Displayed.Should().BeTrue();
         }
+
+        public void ClickLoginButton()
+        {   
+            driver.FindElement(pages.Homepage.LoginLogoutLink).Click();
+        }
+
+        public string LoginLogoutLinkText()
+        {
+            wait.Until(s => s.FindElement(pages.Homepage.LoginLogoutLink).Displayed);
+            return driver.FindElement(pages.Homepage.LoginLogoutLink).Text;
+        }
     }
 }

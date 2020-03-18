@@ -12,5 +12,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Objects.Pages
         public By BrowseSolutions => CustomBy.DataTestId("browse-promo", "a h3.nhsuk-promo__heading");
 
         public By GuidanceContent => CustomBy.DataTestId("guidance-promo", "a h3.nhsuk-promo__heading");
+
+        public By LoginLogoutLink => CustomBy.DataTestId("login-logout-component", "a");
     }
 }

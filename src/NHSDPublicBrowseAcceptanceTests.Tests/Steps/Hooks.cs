@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using NHSDPublicBrowseAcceptanceTests.Tests.Utils;
+using OpenQA.Selenium;
 using TechTalk.SpecFlow;
 
 namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps
@@ -19,6 +20,11 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps
         [AfterScenario]
         public async Task AfterScenario()
         {
+            var screenshot = ((ITakesScreenshot) _test.Driver).GetScreenshot();
+            var fileName = _context.ScenarioInfo.Title;
+
+            screenshot.SaveAsFile(fileName + ".png", ScreenshotImageFormat.Png);
+
             _test.Driver.Close();
             _test.Driver.Quit();
 

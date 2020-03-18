@@ -51,10 +51,9 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
             _test.Pages.ViewASolution.PageDisplayed(_test.Url);
         }
 
-
         [Given(
             @"(a|an) (Roadmap|NHS Assured Integrations|Authority Provided Solution Document) attachment has been provided for the Solution")]
-        public async Task GivenAnAttachmentHasBeenProvidedForTheSolution(string s1, string documentType)
+        public async Task GivenAnAttachmentHasBeenProvidedForTheSolution(string _1, string documentType)
         {
             string fileName;
             if (documentType.Equals("NHS Assured Integrations", StringComparison.OrdinalIgnoreCase))
@@ -68,7 +67,7 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
 
         [Given(
             @"(a|an) (Roadmap|NHS Assured Integrations|Authority Provided Solution Document) attachment has not been provided for the Solution")]
-        public void GivenAnIntegrationsAttachmentHasNotBeenProvidedForTheSolution(string s1, string s2)
+        public void GivenAnIntegrationsAttachmentHasNotBeenProvidedForTheSolution(string _1, string _2)
         {
         }
 

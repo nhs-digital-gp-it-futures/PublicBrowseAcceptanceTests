@@ -28,7 +28,6 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Utils
             AzureBlobStorage = new AzureBlobStorage(EnvironmentVariables.AzureBlobStorageConnectionString());
             DefaultAzureBlobStorageContainerName = EnvironmentVariables.AzureContainerName();
             DownloadPath = Path.Combine(Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), "downloads");
-
             Url = EnvironmentVariables.Url();
 
             Driver = new BrowserFactory().Driver;

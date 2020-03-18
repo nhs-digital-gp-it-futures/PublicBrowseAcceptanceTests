@@ -11,5 +11,6 @@
         public BrowseSolutions BrowseSolutions { get; set; }
         public ViewSingleSolution ViewSingleSolution { get; set; }
         public BuyersGuide BuyersGuide { get; set; }
+        public Login Login { get; set; }
     }
 }

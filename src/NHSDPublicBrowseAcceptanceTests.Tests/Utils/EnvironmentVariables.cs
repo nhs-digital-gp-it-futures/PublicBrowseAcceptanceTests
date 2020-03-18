@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Newtonsoft.Json.Linq;
 
 namespace NHSDPublicBrowseAcceptanceTests.Tests.Utils
 {
@@ -19,9 +19,11 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Utils
             return (url, hubUrl, browser, serverUrl, databaseName, dbUser, dbPassword);
         }
 
-        internal static string HubUrl() => Environment.GetEnvironmentVariable("HUBURL") ?? "http://localhost:4444/wd/hub";
+        internal static string AzureBlobStorageConnectionString() => JsonConfigValues("AzureBlobStorageConnectionString", @"UseDevelopmentStorage=true");
+        internal static string AzureContainerName() => Environment.GetEnvironmentVariable("CONTAINER_NAME") ?? "container-1";
 
-        internal static string Url() => Environment.GetEnvironmentVariable("PBURL") ?? "http://gpitfutures-bc-pb.buyingcatalogue:3000";
+        internal static string HubUrl() => Environment.GetEnvironmentVariable("HUBURL") ?? "http://localhost:4444/wd/hub";
+        internal static string Url() => Environment.GetEnvironmentVariable("PBURL") ?? DefaultUri();
 
         internal static string Browser() => Environment.GetEnvironmentVariable("BROWSER") ?? "chrome-local";
 
@@ -30,8 +32,8 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Utils
         {
             var serverUrl = Environment.GetEnvironmentVariable("SERVERURL") ?? "127.0.0.1,1450";
             var databaseName = Environment.GetEnvironmentVariable("DATABASENAME") ?? "buyingcatalogue";
-            var dbUser = JsonConfigValues("user", "NHSD");
-            var dbPassword = JsonConfigValues("password", "DisruptTheMarket1!");
+            var dbUser = JsonConfigValues("sqlUser", "NHSD");
+            var dbPassword = JsonConfigValues("sqlPassword", "DisruptTheMarket1!");
 
             return (serverUrl, databaseName, dbUser, dbPassword);
         }
@@ -43,9 +45,16 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Utils
             return string.Format(Utils.ConnectionString.GPitFutures, serverUrl, databaseName, dbUser, dbPassword);
         }
 
-        internal static string AzureBlobStorageConnectionString() => JsonConfigValues("AzureBlobStorageConnectionString", @"UseDevelopmentStorage=true");
-
-        internal static string AzureContainerName() => Environment.GetEnvironmentVariable("CONTAINER_NAME") ?? "container-1";
+        internal static User AdminUser()
+        {
+            var path = Path.Combine(Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), "Utils",
+                "tokens.json");
+            var jsonSection = JObject.Parse(File.ReadAllText(path))["adminUser"];
+            var user = jsonSection.ToObject<User>();
+            user.Username = string.IsNullOrEmpty(user.Username) ? "alicesmith@email.com" : user.Username;
+            user.Password = string.IsNullOrEmpty(user.Password) ? "Pass123$" : user.Password;
+            return user;
+        }
 
         private static string JsonConfigValues(string section, string defaultValue)
         {
@@ -60,8 +69,23 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Utils
 
             return string.IsNullOrEmpty(result) ? defaultValue : result;
         }
-    }
 
+        private static string DefaultUri()
+        {
+            var uri = "https://docker.for.win.localhost";
+            //if (Debugger.IsAttached)
+            //{
+                //var builder = new UriBuilder(uri)
+                //{
+                //    Host = "localhost"
+                //};
+
+                //uri = builder.Uri.ToString();
+            //}
+
+            return uri;
+        }
+    }
 
     public static class ConnectionString
     {
