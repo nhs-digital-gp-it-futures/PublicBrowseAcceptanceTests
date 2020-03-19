@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using System;
+using FluentAssertions;
 using OpenQA.Selenium;
 
 namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
@@ -53,7 +54,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
 
         public void LogOut()
         {
-            if (LoginLogoutLinkText().Equals("Log out"))
+            if (LoginLogoutLinkText().Equals("Log out", StringComparison.OrdinalIgnoreCase))
             {
                 driver.FindElement(pages.Homepage.LoginLogoutLink).Click();
             }

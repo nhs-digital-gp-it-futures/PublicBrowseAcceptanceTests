@@ -95,7 +95,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.Authorization
         [Then(@"the User is logged out")]
         public void ThenTheUserIsLoggedOut()
         {
-            _test.Pages.Homepage.LoginLogoutLinkText().Should().Be("Log in");
+            _test.Pages.Homepage.LoginLogoutLinkText().Should().BeEquivalentTo("Log in");
         }
 
     }
