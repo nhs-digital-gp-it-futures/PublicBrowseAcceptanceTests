@@ -73,16 +73,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Utils
 
         private static string DefaultUri()
         {
-            var uri = "https://docker.for.win.localhost";
-            if (Debugger.IsAttached)
-            {
-                var builder = new UriBuilder(uri)
-                {
-                    Host = "localhost"
-                };
-
-                uri = builder.Uri.ToString();
-            }
+            var uri = "https://host.docker.internal";
 
             return uri;
         }
