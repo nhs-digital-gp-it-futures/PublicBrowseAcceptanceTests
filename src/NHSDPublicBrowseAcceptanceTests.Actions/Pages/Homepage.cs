@@ -50,5 +50,17 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
             wait.Until(s => s.FindElement(pages.Homepage.LoginLogoutLink).Displayed);
             return driver.FindElement(pages.Homepage.LoginLogoutLink).Text;
         }
+
+        public void LogOut()
+        {
+            if (LoginLogoutLinkText().Equals("Log out"))
+            {
+                driver.FindElement(pages.Homepage.LoginLogoutLink).Click();
+            }
+            else
+            {
+                throw new WebDriverException("Log out text incorrect");
+            }
+        }
     }
 }

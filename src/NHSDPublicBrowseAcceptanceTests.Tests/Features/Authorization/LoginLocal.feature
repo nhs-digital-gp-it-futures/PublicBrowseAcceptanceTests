@@ -20,3 +20,8 @@ Scenario Outline: Login with incorrect credentials
 	| true     | false    |
 	| false    | true     |
 	| false    | false    |
+
+Scenario: Log out
+	Given the User is logged in
+	When the User logs out
+	Then the User is logged out
