@@ -78,5 +78,25 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.Authorization
                 _test.Driver.FindElement(By.CssSelector("[data-valmsg-for=Password]")).Displayed.Should().BeTrue();
             }
         }
+
+        [Given(@"the User is logged in")]
+        public void GivenTheUserIsLoggedIn()
+        {
+            GivenThatAUserIsNotLoggedIn();
+            WhenAUserProvidesRecognisedAuthenticationDetailsToLoginLocally();
+        }
+
+        [When(@"the User logs out")]
+        public void WhenTheUserLogsOut()
+        {
+            _test.Pages.Homepage.LogOut();
+        }
+
+        [Then(@"the User is logged out")]
+        public void ThenTheUserIsLoggedOut()
+        {
+            _test.Pages.Homepage.LoginLogoutLinkText().Should().BeEquivalentTo("Log in");
+        }
+
     }
 }
