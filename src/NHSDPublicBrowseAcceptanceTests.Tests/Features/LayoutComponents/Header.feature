@@ -1,4 +1,5 @@
-﻿Feature: Header
+﻿@SmokeTest
+Feature: Header
 	As a Public User 
 	I want a standard Header
 	So that I have a familiar experience throughout the application

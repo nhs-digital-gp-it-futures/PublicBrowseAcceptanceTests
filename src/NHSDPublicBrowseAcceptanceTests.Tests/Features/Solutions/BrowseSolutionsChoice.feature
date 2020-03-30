@@ -1,4 +1,5 @@
-﻿Feature: Browse Solutions by Foundation Solutions or All Solutions
+﻿@SmokeTest
+Feature: Browse Solutions by Foundation Solutions or All Solutions
 	As a Public User
 	I want to browse all the Solutions according to their Foundation or Non-Foundation type
 	So that I can view all the Solutions of both type
