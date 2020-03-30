@@ -3,6 +3,7 @@
 	I want to view a list of Solutions
 	So that I know what those Solutions are
 
+@SmokeTest
 Scenario: List of Solution Cards
 	Given that a User has chosen to view a list of all Solutions
 	When Solutions are presented

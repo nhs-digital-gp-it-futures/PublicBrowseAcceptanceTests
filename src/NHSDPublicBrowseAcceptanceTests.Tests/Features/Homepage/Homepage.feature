@@ -1,4 +1,5 @@
-﻿Feature: Homepage
+﻿@SmokeTest
+Feature: Homepage
 	As a Public User
 	I want to view the Buying Catalogue Homepage
 	So that I can use the Buying Catalogue

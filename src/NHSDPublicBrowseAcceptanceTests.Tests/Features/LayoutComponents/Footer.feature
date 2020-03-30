@@ -3,6 +3,7 @@
 	I want a Footer on every page of the application
 	So that I have a familiar experience throughout the application
 
+@SmokeTest
 Scenario: Footer Presented
 	Given the User chooses any Page in the application
 	When they are on a Page
