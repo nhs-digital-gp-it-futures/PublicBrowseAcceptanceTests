@@ -46,17 +46,6 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Utils
             return string.Format(Utils.ConnectionString.GPitFutures, serverUrl, databaseName, dbUser, dbPassword);
         }
 
-        internal static User AdminUser()
-        {
-            var path = Path.Combine(Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), "Utils",
-                "tokens.json");
-            var jsonSection = JObject.Parse(File.ReadAllText(path))["adminUser"];
-            var user = jsonSection.ToObject<User>();
-            user.Username = string.IsNullOrEmpty(user.Username) ? "alicesmith@email.com" : user.Username;
-            user.Password = string.IsNullOrEmpty(user.Password) ? "Pass123$" : user.Password;
-            return user;
-        }
-
         private static string JsonConfigValues(string section, string defaultValue)
         {
             var path = Path.Combine(Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), "Utils",
