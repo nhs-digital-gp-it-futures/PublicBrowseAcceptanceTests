@@ -18,8 +18,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Objects
                 Header = new Header(),
                 BrowseSolutions = new BrowseSolutions(),
                 ViewSingleSolution = new ViewSingleSolution(),
-                BuyersGuide = new BuyersGuide(),
-                Login = new Login()
+                BuyersGuide = new BuyersGuide()
             };
         }
     }
