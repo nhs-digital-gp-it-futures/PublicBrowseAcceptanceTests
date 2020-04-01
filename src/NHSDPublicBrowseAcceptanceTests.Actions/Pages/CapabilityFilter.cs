@@ -14,8 +14,14 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
         {
         }
 
+        public void CapbilityFilterDisplayed()
+        {
+            wait.Until(d => d.FindElement(pages.CapabilityFilter.Capabilities).Displayed);
+        }
+
         public void ClickCapabilityContinueButton()
         {
+            CapbilityFilterDisplayed();
             driver.FindElement(pages.CapabilityFilter.ApplyCapabilityFilter).Click();
 
             wait.Until(d => d.FindElement(pages.Common.GeneralPageTitle).Text == "Catalogue Solution – results");
@@ -31,6 +37,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
 
         public string SelectCapability(string connectionString)
         {
+            wait.Until(d => driver.FindElement(pages.CapabilityFilter.Capabilities).Displayed);
             var selectedCapabilities =
                 SqlExecutor.Execute<string>(connectionString, Queries.GetSelectedCapabilities, null);
 
