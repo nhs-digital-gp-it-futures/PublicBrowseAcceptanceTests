@@ -15,6 +15,11 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
             wait.Until(s => s.FindElement(pages.Homepage.Title).Displayed);
         }
 
+        public void WaitForPageNotToBeDisplayed()
+        {
+            wait.Until(s => s.FindElements(pages.Homepage.BrowseSolutions).Count == 0);
+        }
+
         public void AboutUsSectionDisplayed()
         {
             driver.FindElement(pages.Homepage.AboutSection).Displayed.Should().BeTrue();
@@ -33,7 +38,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
         public void ClickBrowseSolutions()
         {
             driver.FindElement(pages.Homepage.BrowseSolutions).Click();
-            wait.Until(s => s.FindElement(pages.BrowseSolutions.BrowseLinkSections).Displayed);
+            WaitForPageNotToBeDisplayed();
         }
 
         public void GuidanceContentControlDisplayed()

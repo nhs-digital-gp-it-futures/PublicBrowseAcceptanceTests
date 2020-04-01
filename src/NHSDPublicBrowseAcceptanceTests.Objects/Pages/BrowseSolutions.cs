@@ -5,6 +5,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Objects.Pages
 {
     public class BrowseSolutions
     {
+        public By BrowseSolutionsHeading => CustomBy.DataTestId("browse-solutions-heading");
         public By BrowseLinkSections => By.ClassName("nhsuk-promo__heading");
 
         public By BrowseFoundationSolutions =>
