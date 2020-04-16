@@ -109,20 +109,23 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
         [Then(@"Contact Details")]
         public void ThenContactDetails()
         {
-            
-            _test.ContactDetails = SqlExecutor.Execute<SolutionContactDetails>(_test.ConnectionString,
-                Queries.GetSolutionContactDetails, new {solutionId = _test.Solution.Id}).ToList();
 
-            var contactDetails = _test.Pages.ViewASolution.GetSolutionContactDetails(
-                !String.IsNullOrEmpty(_test.ContactDetails[0].ContactName),
-                !String.IsNullOrEmpty(_test.ContactDetails[0].Department),
-                !String.IsNullOrEmpty(_test.ContactDetails[0].PhoneNumber),
-                !String.IsNullOrEmpty(_test.ContactDetails[0].Email)
-                );
-            contactDetails.ContactName.Should().Be(_test.ContactDetails[0].ContactName);
-            contactDetails.Department.Should().Be(_test.ContactDetails[0].Department);
-            contactDetails.Email.Should().Be(_test.ContactDetails[0].Email);
-            contactDetails.PhoneNumber.Should().Be(_test.ContactDetails[0].PhoneNumber);
+            _test.ContactDetails = SqlExecutor.Execute<SolutionContactDetails>(_test.ConnectionString,
+                Queries.GetSolutionContactDetails, new { solutionId = _test.Solution.Id }).ToList();
+            
+            if (_test.ContactDetails.Count > 0)
+            {
+                var contactDetails = _test.Pages.ViewASolution.GetSolutionContactDetails(
+                    !String.IsNullOrEmpty(_test.ContactDetails[0].ContactName),
+                    !String.IsNullOrEmpty(_test.ContactDetails[0].Department),
+                    !String.IsNullOrEmpty(_test.ContactDetails[0].PhoneNumber),
+                    !String.IsNullOrEmpty(_test.ContactDetails[0].Email)
+                    );
+                contactDetails.ContactName.Should().Be(_test.ContactDetails[0].ContactName);
+                contactDetails.Department.Should().Be(_test.ContactDetails[0].Department);
+                contactDetails.Email.Should().Be(_test.ContactDetails[0].Email);
+                contactDetails.PhoneNumber.Should().Be(_test.ContactDetails[0].PhoneNumber);
+            }
         }
 
         [Then(@"list of Capabilities")]
