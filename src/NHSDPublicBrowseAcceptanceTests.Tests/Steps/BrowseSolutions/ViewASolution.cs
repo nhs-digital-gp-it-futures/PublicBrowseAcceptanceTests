@@ -82,16 +82,16 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
         [Then(@"Solution Summary")]
         public void ThenSolutionSummary()
         {
-            var expected = Regex.Replace(_test.SolutionDetail.Summary, @"/\s+/g", "");
-            var solutionSummary = Regex.Replace(_test.Pages.ViewASolution.GetSolutionSummary(), @"/\s+/g", "");
+            var expected = Regex.Replace(_test.SolutionDetail.Summary, @"\s", "");
+            var solutionSummary = Regex.Replace(_test.Pages.ViewASolution.GetSolutionSummary(), @"\s", "");
             solutionSummary.Should().Be(expected);
         }
 
         [Then(@"Solution Full Description")]
         public void ThenSolutionFullDescription()
         {
-            var expected = Regex.Replace(_test.SolutionDetail.FullDescription, @"/\s+/g", "");
-            var solutionFullDescription = Regex.Replace(_test.Pages.ViewASolution.GetSolutionFullDescription(), @"/\s+/g", "");
+            var expected = Regex.Replace(_test.SolutionDetail.FullDescription, @"\s", "");
+            var solutionFullDescription = Regex.Replace(_test.Pages.ViewASolution.GetSolutionFullDescription(), @"\s", "");
             solutionFullDescription.Should().Be(expected);
         }
 
@@ -112,11 +112,12 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
             var contactDetails = _test.Pages.ViewASolution.GetSolutionContactDetails();
             _test.ContactDetails = SqlExecutor.Execute<SolutionContactDetails>(_test.ConnectionString,
                 Queries.GetSolutionContactDetails, new {solutionId = _test.Solution.Id}).ToList();
-
-            contactDetails.ContactName.Should().Be(_test.ContactDetails[0].ContactName);
-            contactDetails.Department.Should().Be(_test.ContactDetails[0].Department);
-            contactDetails.Email.Should().Be(_test.ContactDetails[0].Email);
-            contactDetails.PhoneNumber.Should().Be(_test.ContactDetails[0].PhoneNumber);
+            if (_test.ContactDetails != null) {
+                contactDetails.ContactName.Should().Be(_test.ContactDetails[0].ContactName);
+                contactDetails.Department.Should().Be(_test.ContactDetails[0].Department);
+                contactDetails.Email.Should().Be(_test.ContactDetails[0].Email);
+                contactDetails.PhoneNumber.Should().Be(_test.ContactDetails[0].PhoneNumber);
+            }
         }
 
         [Then(@"list of Capabilities")]
