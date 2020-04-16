@@ -82,16 +82,16 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
         [Then(@"Solution Summary")]
         public void ThenSolutionSummary()
         {
-            var expected = Regex.Replace(_test.SolutionDetail.Summary, @"\s", "");
-            var solutionSummary = Regex.Replace(_test.Pages.ViewASolution.GetSolutionSummary(), @"\s", "");
+            var expected = Regex.Replace(_test.SolutionDetail.Summary, @"/\s+/g", "");
+            var solutionSummary = Regex.Replace(_test.Pages.ViewASolution.GetSolutionSummary(), @"/\s+/g", "");
             solutionSummary.Should().Be(expected);
         }
 
         [Then(@"Solution Full Description")]
         public void ThenSolutionFullDescription()
         {
-            var expected = Regex.Replace(_test.SolutionDetail.FullDescription, @"\s", "");
-            var solutionFullDescription = Regex.Replace(_test.Pages.ViewASolution.GetSolutionFullDescription(), @"\s", "");
+            var expected = Regex.Replace(_test.SolutionDetail.FullDescription, @"/\s+/g", "");
+            var solutionFullDescription = Regex.Replace(_test.Pages.ViewASolution.GetSolutionFullDescription(), @"/\s+/g", "");
             solutionFullDescription.Should().Be(expected);
         }
 
