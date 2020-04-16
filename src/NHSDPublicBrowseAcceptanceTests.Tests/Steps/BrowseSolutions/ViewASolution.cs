@@ -121,7 +121,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
                     !String.IsNullOrEmpty(_test.ContactDetails[0].PhoneNumber),
                     !String.IsNullOrEmpty(_test.ContactDetails[0].Email)
                     );
-                contactDetails.ContactName.Should().Be(_test.ContactDetails[0].ContactName, _test.Solution.Id);
+                contactDetails.ContactName.Should().Be(_test.ContactDetails[0].ContactName);
                 contactDetails.Department.Should().Be(_test.ContactDetails[0].Department);
                 contactDetails.Email.Should().Be(_test.ContactDetails[0].Email);
                 contactDetails.PhoneNumber.Should().Be(_test.ContactDetails[0].PhoneNumber);
