@@ -81,15 +81,15 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
         [Then(@"Solution Summary")]
         public void ThenSolutionSummary()
         {
-            var solutionSummary = _test.Pages.ViewASolution.GetSolutionSummary().TrimEnd();
-            solutionSummary.Should().Be(_test.SolutionDetail.Summary.TrimEnd().Replace("/r", ""));
+            var solutionSummary = _test.Pages.ViewASolution.GetSolutionSummary().Replace(" ", "").Replace("/r", "").Replace("/n", "");
+            solutionSummary.Should().Be(_test.SolutionDetail.Summary.Replace(" ", "").Replace("/r", "").Replace("/n", ""));
         }
 
         [Then(@"Solution Full Description")]
         public void ThenSolutionFullDescription()
         {
-            var solutionFullDescription = _test.Pages.ViewASolution.GetSolutionFullDescription().TrimEnd();
-            solutionFullDescription.Should().Be(_test.SolutionDetail.FullDescription.TrimEnd().Replace("/r", ""));
+            var solutionFullDescription = _test.Pages.ViewASolution.GetSolutionFullDescription().Replace(" ", "").Replace("/r", "").Replace("/n", "");
+            solutionFullDescription.Should().Be(_test.SolutionDetail.FullDescription.Replace(" ", "").Replace("/r", "").Replace("/n", ""));
         }
 
 
