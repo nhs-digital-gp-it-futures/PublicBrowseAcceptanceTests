@@ -109,10 +109,12 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
         [Then(@"Contact Details")]
         public void ThenContactDetails()
         {
-            var contactDetails = _test.Pages.ViewASolution.GetSolutionContactDetails();
+            
             _test.ContactDetails = SqlExecutor.Execute<SolutionContactDetails>(_test.ConnectionString,
                 Queries.GetSolutionContactDetails, new {solutionId = _test.Solution.Id}).ToList();
+
             if (_test.ContactDetails != null) {
+                var contactDetails = _test.Pages.ViewASolution.GetSolutionContactDetails();
                 contactDetails.ContactName.Should().Be(_test.ContactDetails[0].ContactName);
                 contactDetails.Department.Should().Be(_test.ContactDetails[0].Department);
                 contactDetails.Email.Should().Be(_test.ContactDetails[0].Email);
