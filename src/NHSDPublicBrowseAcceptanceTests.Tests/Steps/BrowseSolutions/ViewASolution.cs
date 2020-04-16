@@ -89,8 +89,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
         public void ThenSolutionFullDescription()
         {
             var solutionFullDescription = _test.Pages.ViewASolution.GetSolutionFullDescription().TrimEnd();
-            //solutionFullDescription.Should().Be(_test.SolutionDetail.FullDescription.TrimEnd());
-            solutionFullDescription.Should().Contain(_test.SolutionDetail.FullDescription.TrimEnd());
+            solutionFullDescription.Should().Be(_test.SolutionDetail.FullDescription.TrimEnd().Replace("/r", ""));
         }
 
 
