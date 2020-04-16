@@ -23,7 +23,7 @@
             "SELECT COUNT(DISTINCT(sc.SolutionId)) FROM SolutionCapability sc INNER JOIN Solution s on SolutionId=s.Id WHERE s.Id NOT IN ( SELECT SolutionId FROM [dbo].FrameworkSolutions WHERE IsFoundation = 1 ) AND s.PublishedStatusId = 3";
 
         public const string GetSolutionsWithCapabilityCount =
-            "SELECT COUNT(*) AS count FROM [dbo].[SolutionCapability] AS sc LEFT JOIN .[dbo].[Capability] AS c ON c.Id = sc.CapabilityId WHERE Name = @capabilityName";
+            "SELECT COUNT(*) AS count FROM [dbo].[SolutionCapability] AS sc LEFT JOIN [dbo].[Capability] AS c ON c.Id = sc.CapabilityId LEFT JOIN [dbo].[Solution] AS sol ON sol.Id = sc.SolutionId WHERE c.Name = @capabilityName AND sol.PublishedStatusId=3";
 
         public const string GetCapabilityById = "SELECT * FROM Capability WHERE Id=@Id";
         public const string GetAllCapabilities = "SELECT * FROM Capability";

@@ -28,7 +28,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Objects.Pages
 
         public By FoundationSolutionIndicator => CustomBy.DataTestId("view-solution-foundation");
 
-        public By SolutionFullDescription => CustomBy.DataTestId("view-question-data-text-description");
+        public By SolutionFullDescription => By.CssSelector("[data-test-id=view-solution-description] [data-test-id=view-question-data-text-description]");
 
         public By SolutionContactName => CustomBy.DataTestId("view-question-data-text-contact-name");
         public By SolutionContactDepartment => CustomBy.DataTestId("view-question-data-text-department-name");

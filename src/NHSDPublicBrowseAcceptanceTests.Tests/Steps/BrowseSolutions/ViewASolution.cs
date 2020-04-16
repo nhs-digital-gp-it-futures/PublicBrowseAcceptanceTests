@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using FluentAssertions;
 using NHSDPublicBrowseAcceptanceTests.TestData.Capabilities;
 using NHSDPublicBrowseAcceptanceTests.TestData.Solutions;
@@ -81,15 +82,17 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
         [Then(@"Solution Summary")]
         public void ThenSolutionSummary()
         {
-            var solutionSummary = _test.Pages.ViewASolution.GetSolutionSummary().TrimEnd();
-            solutionSummary.Should().Be(_test.SolutionDetail.Summary.TrimEnd());
+            var expected = Regex.Replace(_test.SolutionDetail.Summary, @"\s", "");
+            var solutionSummary = Regex.Replace(_test.Pages.ViewASolution.GetSolutionSummary(), @"\s", "");
+            solutionSummary.Should().Be(expected);
         }
 
         [Then(@"Solution Full Description")]
         public void ThenSolutionFullDescription()
         {
-            var solutionFullDescription = _test.Pages.ViewASolution.GetSolutionFullDescription().TrimEnd();
-            solutionFullDescription.Should().Be(_test.SolutionDetail.FullDescription.TrimEnd());
+            var expected = Regex.Replace(_test.SolutionDetail.FullDescription, @"\s", "");
+            var solutionFullDescription = Regex.Replace(_test.Pages.ViewASolution.GetSolutionFullDescription(), @"\s", "");
+            solutionFullDescription.Should().Be(expected);
         }
 
 
@@ -106,14 +109,23 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
         [Then(@"Contact Details")]
         public void ThenContactDetails()
         {
-            var contactDetails = _test.Pages.ViewASolution.GetSolutionContactDetails();
-            _test.ContactDetails = SqlExecutor.Execute<SolutionContactDetails>(_test.ConnectionString,
-                Queries.GetSolutionContactDetails, new {solutionId = _test.Solution.Id}).ToList();
 
-            contactDetails.ContactName.Should().Be(_test.ContactDetails[0].ContactName);
-            contactDetails.Department.Should().Be(_test.ContactDetails[0].Department);
-            contactDetails.Email.Should().Be(_test.ContactDetails[0].Email);
-            contactDetails.PhoneNumber.Should().Be(_test.ContactDetails[0].PhoneNumber);
+            _test.ContactDetails = SqlExecutor.Execute<SolutionContactDetails>(_test.ConnectionString,
+                Queries.GetSolutionContactDetails, new { solutionId = _test.Solution.Id }).ToList();
+
+            if (_test.ContactDetails.Count > 0)
+            {
+                var contactDetails = _test.Pages.ViewASolution.GetSolutionContactDetails(
+                    !String.IsNullOrEmpty(_test.ContactDetails[0].ContactName.Trim()),
+                    !String.IsNullOrEmpty(_test.ContactDetails[0].Department),
+                    !String.IsNullOrEmpty(_test.ContactDetails[0].PhoneNumber),
+                    !String.IsNullOrEmpty(_test.ContactDetails[0].Email)
+                    );
+                contactDetails.ContactName.Should().Be(_test.ContactDetails[0].ContactName);
+                contactDetails.Department.Should().Be(_test.ContactDetails[0].Department);
+                contactDetails.Email.Should().Be(_test.ContactDetails[0].Email);
+                contactDetails.PhoneNumber.Should().Be(_test.ContactDetails[0].PhoneNumber);
+            }
         }
 
         [Then(@"list of Capabilities")]

@@ -16,7 +16,9 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
         public void PageDisplayed(string url)
         {
             // Should be a better way to do this that doesn't rely on RegEx matching
-            Regex.Match(driver.Url, $@"{url}/solutions/(capabilities-selector.*|foundation)/.*").Success.Should()
+            var actual = driver.Url;
+            var expectedPattern = $@"{url}/solutions/(capabilities-selector.*|foundation)/*";
+            Regex.Match(actual, expectedPattern).Success.Should()
                 .BeTrue();
         }
 
@@ -112,16 +114,25 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
             return driver.FindElement(pages.ViewSingleSolution.SolutionFullDescription).Text;
         }
 
-        public SolutionContactDetails GetSolutionContactDetails()
+        public SolutionContactDetails GetSolutionContactDetails(bool GetName=true, bool GetDepartment=true, bool GetPhoneNumber=true, bool GetEmail=true)
         {
-            var contactDetails = new SolutionContactDetails
+            var contactDetails = new SolutionContactDetails();
+            if (GetName) 
             {
-                FirstName = driver.FindElement(pages.ViewSingleSolution.SolutionContactName).Text.Split(' ')[0],
-                LastName = driver.FindElement(pages.ViewSingleSolution.SolutionContactName).Text.Split(' ')[1],
-                Department = driver.FindElement(pages.ViewSingleSolution.SolutionContactDepartment).Text,
-                PhoneNumber = driver.FindElement(pages.ViewSingleSolution.SolutionContactPhoneNumber).Text,
-                Email = driver.FindElement(pages.ViewSingleSolution.SolutionContactEmail).Text
-            };
+                contactDetails.FirstName = driver.FindElement(pages.ViewSingleSolution.SolutionContactName).Text.Split(' ')[0];
+                contactDetails.LastName = driver.FindElement(pages.ViewSingleSolution.SolutionContactName).Text.Split(' ')[1];
+            }
+            if (GetDepartment) 
+            {
+                contactDetails.Department = driver.FindElement(pages.ViewSingleSolution.SolutionContactDepartment).Text;
+            }
+            if (GetPhoneNumber) {
+                contactDetails.PhoneNumber = driver.FindElement(pages.ViewSingleSolution.SolutionContactPhoneNumber).Text;
+            }
+            if(GetEmail)
+            {
+                contactDetails.Email = driver.FindElement(pages.ViewSingleSolution.SolutionContactEmail).Text;
+            }
 
             return contactDetails;
         }
