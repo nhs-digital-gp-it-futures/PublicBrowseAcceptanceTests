@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using FluentAssertions;
 using NHSDPublicBrowseAcceptanceTests.TestData.Capabilities;
 using NHSDPublicBrowseAcceptanceTests.TestData.Solutions;
@@ -81,15 +82,17 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
         [Then(@"Solution Summary")]
         public void ThenSolutionSummary()
         {
-            var solutionSummary = _test.Pages.ViewASolution.GetSolutionSummary().Replace(" ", "").Replace("/r", "").Replace("/n", "");
-            solutionSummary.Should().Be(_test.SolutionDetail.Summary.Replace(" ", "").Replace("/r", "").Replace("/n", ""));
+            var expected = Regex.Replace(_test.SolutionDetail.Summary, @"\s", "");
+            var solutionSummary = Regex.Replace(_test.Pages.ViewASolution.GetSolutionSummary(), @"\s", "");
+            solutionSummary.Should().Be(expected);
         }
 
         [Then(@"Solution Full Description")]
         public void ThenSolutionFullDescription()
         {
-            var solutionFullDescription = _test.Pages.ViewASolution.GetSolutionFullDescription().Replace(" ", "").Replace("/r", "").Replace("/n", "");
-            solutionFullDescription.Should().Be(_test.SolutionDetail.FullDescription.Replace(" ", "").Replace("/r", "").Replace("/n", ""));
+            var expected = Regex.Replace(_test.SolutionDetail.FullDescription, @"\s", "");
+            var solutionFullDescription = Regex.Replace(_test.Pages.ViewASolution.GetSolutionFullDescription(), @"\s", "");
+            solutionFullDescription.Should().Be(expected);
         }
 
 
