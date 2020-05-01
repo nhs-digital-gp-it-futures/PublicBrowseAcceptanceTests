@@ -233,6 +233,16 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
             return driver.FindElements(pages.SolutionsList.FoundationSolutionIndicators).Count;
         }
 
+        public bool CompareSolutionsButtonIsDisplayed()
+        {
+            return driver.FindElements(pages.SolutionsList.CompareSolutions).Count > 0;
+        }
+
+        public string GetCompareSolutionsButtonUrl()
+        {
+            return driver.FindElement(pages.SolutionsList.CompareSolutions).GetAttribute("href");
+        }
+
         private bool FoundationIndicatorDisplayed(IWebElement element)
         {
             try

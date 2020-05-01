@@ -12,5 +12,6 @@ namespace NHSDPublicBrowseAcceptanceTests.Objects.Pages
         public By SolutionCapabilityList => CustomBy.DataTestId("capability-list");
         public By SolutionCapabilityName => CustomBy.DataTestId("capability-list-item");
         public By FoundationSolutionIndicators => CustomBy.DataTestId("solution-card-foundation");
+        public By CompareSolutions => CustomBy.DataTestId("compare-button", "a");
     }
 }

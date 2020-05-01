@@ -12,5 +12,6 @@ namespace NHSDPublicBrowseAcceptanceTests.Objects.Pages
             CustomBy.DataTestId("foundation-solutions-promo", "a h3.nhsuk-promo__heading");
 
         public By BrowseAllSolutions => CustomBy.DataTestId("all-solutions-promo", "a h3.nhsuk-promo__heading");
+        public By CompareAllSolutions => CustomBy.DataTestId("compare-promo", "a");
     }
 }
