@@ -25,4 +25,4 @@ Scenario: Compare solutions - Compare filtered solutions from capability selecto
 Scenario: Compare solutions - Compare document is not available for foundation solutions
 	Given the User wants to view Foundation Solutions only
 	When the User chooses to view Foundation Solutions
-	Then the compare document download button is displayed
+	Then the compare document download button is not displayed

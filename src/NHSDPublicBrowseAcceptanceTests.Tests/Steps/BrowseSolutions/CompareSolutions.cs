@@ -47,8 +47,8 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
             Path.GetExtension(downloadedFile).Should().BeEquivalentTo(".xlsx");
         }
 
-        [Then(@"the compare document download button is displayed")]
-        public void ThenTheCompareDocumentDownloadButtonIsDisplayed()
+        [Then(@"the compare document download button is not displayed")]
+        public void ThenTheCompareDocumentDownloadButtonIsNotDisplayed()
         {
             _test.Pages.SolutionsList.CompareSolutionsButtonIsDisplayed().Should().BeFalse();
         }
