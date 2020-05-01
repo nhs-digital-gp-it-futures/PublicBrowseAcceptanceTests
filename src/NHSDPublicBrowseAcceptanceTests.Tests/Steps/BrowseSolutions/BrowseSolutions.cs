@@ -19,6 +19,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
 
         [Given(@"the User wants to view Foundation Solutions only")]
         [Given(@"the User wants to view all Solutions")]
+        [Given(@"the user navigates to view catalogue solutions")]
         public void GivenIBrowseSolutions()
         {
             _test.Pages.Homepage.ClickBrowseSolutions();
