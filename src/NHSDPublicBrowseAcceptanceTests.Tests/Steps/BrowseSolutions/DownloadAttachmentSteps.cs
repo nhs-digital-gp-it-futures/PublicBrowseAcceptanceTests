@@ -75,7 +75,7 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
         public void WhenTheUserChoosesToDownloadTheAuthorityProvidedDataDocument()
         {
             var url = _test.Pages.ViewASolution.GetAttachmentDownloadLinkUrl();
-            var client = DownloadFileUtility.DownloadFile(providedDataDocumentDownloadFile, _test.DownloadPath, url);
+            var client = DownloadFileUtility.DownloadFile(providedDataDocumentDownloadFile, _test.DownloadPath, url, DownloadFileUtility.GetHeadersFromDriver(_test.Driver));
             _context.Add("ResponseHeaderContentType", client.ResponseHeaders.Get("Content-Type"));
         }
 
@@ -83,7 +83,7 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
         public void WhenTheUserChoosesToDownloadTheIntegrationsAttachment()
         {
             var url = _test.Pages.ViewASolution.GetNhsAssuredIntegrationsDownloadLinkUrl();
-            var client = DownloadFileUtility.DownloadFile(integrationsDownloadFile, _test.DownloadPath, url);
+            var client = DownloadFileUtility.DownloadFile(integrationsDownloadFile, _test.DownloadPath, url, DownloadFileUtility.GetHeadersFromDriver(_test.Driver));
             _context.Add("ResponseHeaderContentType", client.ResponseHeaders.Get("Content-Type"));
         }
 
@@ -91,7 +91,7 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
         public void WhenTheUserChoosesToDownloadTheRoadmapAttachment()
         {
             var url = _test.Pages.ViewASolution.GetRoadmapDownloadLinkUrl();
-            var client = DownloadFileUtility.DownloadFile(roadmapDownloadFile, _test.DownloadPath, url);
+            var client = DownloadFileUtility.DownloadFile(roadmapDownloadFile, _test.DownloadPath, url, DownloadFileUtility.GetHeadersFromDriver(_test.Driver));
             _context.Add("ResponseHeaderContentType", client.ResponseHeaders.Get("Content-Type"));
         }
 

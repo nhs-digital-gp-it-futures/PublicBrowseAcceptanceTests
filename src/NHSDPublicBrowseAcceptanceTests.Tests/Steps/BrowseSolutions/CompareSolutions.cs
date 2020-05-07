@@ -43,12 +43,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
             _test.Pages.SolutionsList.CompareSolutionsButtonIsDisplayed().Should().BeTrue();
             var url = _test.Pages.SolutionsList.GetCompareSolutionsButtonUrl();
             var localFileName = "compare-solutions.xlsx";
-            //var useragent = ((IJavaScriptExecutor)_test.Driver).ExecuteScript("return navigator.userAgent;");
-            //IDictionary<string, string> headers = new Dictionary<string, string>();
-            //headers.Add("user-agent", (string)useragent);
-
-            IDictionary<string, string> headers = DownloadFileUtility.GetHeadersFromDriver(_test.Driver);
-            var client = DownloadFileUtility.DownloadFile(localFileName, _test.DownloadPath, url, headers);
+            var client = DownloadFileUtility.DownloadFile(localFileName, _test.DownloadPath, url, DownloadFileUtility.GetHeadersFromDriver(_test.Driver));
             var downloadedFile = Path.Combine(_test.DownloadPath, localFileName);
             new FileInfo(downloadedFile).Length.Should().BeGreaterThan(0);
             File.ReadAllBytes(downloadedFile).Length.Should().BeGreaterThan(0);
