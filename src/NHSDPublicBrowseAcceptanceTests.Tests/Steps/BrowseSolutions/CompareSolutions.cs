@@ -1,9 +1,12 @@
 ﻿using FluentAssertions;
 using NHSDPublicBrowseAcceptanceTests.Actions.Utils;
 using NHSDPublicBrowseAcceptanceTests.Tests.Utils;
+using OpenQA.Selenium;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using TechTalk.SpecFlow;
 
@@ -40,11 +43,16 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
             _test.Pages.SolutionsList.CompareSolutionsButtonIsDisplayed().Should().BeTrue();
             var url = _test.Pages.SolutionsList.GetCompareSolutionsButtonUrl();
             var localFileName = "compare-solutions.xlsx";
-            DownloadFileUtility.DownloadFile(localFileName, _test.DownloadPath, url);
+            //var useragent = ((IJavaScriptExecutor)_test.Driver).ExecuteScript("return navigator.userAgent;");
+            //IDictionary<string, string> headers = new Dictionary<string, string>();
+            //headers.Add("user-agent", (string)useragent);
+
+            IDictionary<string, string> headers = DownloadFileUtility.GetHeadersFromDriver(_test.Driver);
+            var client = DownloadFileUtility.DownloadFile(localFileName, _test.DownloadPath, url, headers);
             var downloadedFile = Path.Combine(_test.DownloadPath, localFileName);
             new FileInfo(downloadedFile).Length.Should().BeGreaterThan(0);
             File.ReadAllBytes(downloadedFile).Length.Should().BeGreaterThan(0);
-            Path.GetExtension(downloadedFile).Should().BeEquivalentTo(".xlsx");
+            client.ResponseHeaders.Get("Content-Type").Should().ContainEquivalentOf("spreadsheetml");
         }
 
         [Then(@"the compare document download button is not displayed")]

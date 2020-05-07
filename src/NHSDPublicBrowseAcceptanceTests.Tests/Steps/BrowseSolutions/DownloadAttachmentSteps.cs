@@ -75,21 +75,24 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
         public void WhenTheUserChoosesToDownloadTheAuthorityProvidedDataDocument()
         {
             var url = _test.Pages.ViewASolution.GetAttachmentDownloadLinkUrl();
-            DownloadFileUtility.DownloadFile(providedDataDocumentDownloadFile, _test.DownloadPath, url);
+            var client = DownloadFileUtility.DownloadFile(providedDataDocumentDownloadFile, _test.DownloadPath, url);
+            _context.Add("ResponseHeaderContentType", client.ResponseHeaders.Get("Content-Type"));
         }
 
         [When(@"the User chooses to download the Integrations attachment")]
         public void WhenTheUserChoosesToDownloadTheIntegrationsAttachment()
         {
             var url = _test.Pages.ViewASolution.GetNhsAssuredIntegrationsDownloadLinkUrl();
-            DownloadFileUtility.DownloadFile(integrationsDownloadFile, _test.DownloadPath, url);
+            var client = DownloadFileUtility.DownloadFile(integrationsDownloadFile, _test.DownloadPath, url);
+            _context.Add("ResponseHeaderContentType", client.ResponseHeaders.Get("Content-Type"));
         }
 
         [When(@"the User chooses to download the Roadmap attachment")]
         public void WhenTheUserChoosesToDownloadTheRoadmapAttachment()
         {
             var url = _test.Pages.ViewASolution.GetRoadmapDownloadLinkUrl();
-            DownloadFileUtility.DownloadFile(roadmapDownloadFile, _test.DownloadPath, url);
+            var client = DownloadFileUtility.DownloadFile(roadmapDownloadFile, _test.DownloadPath, url);
+            _context.Add("ResponseHeaderContentType", client.ResponseHeaders.Get("Content-Type"));
         }
 
         [Then(@"the Authority Provided Data Document is downloaded")]
@@ -120,6 +123,8 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
                 "SampleData", "authority provided solution document.pdf");
             var downloadedFile = Path.Combine(_test.DownloadPath, providedDataDocumentDownloadFile);
             DownloadFileUtility.CompareTwoFiles(downloadedFile, sourceFile).Should().BeTrue();
+            var ResponseHeaderContentType = (string)_context["ResponseHeaderContentType"];
+            ResponseHeaderContentType.Should().ContainEquivalentOf("pdf");
         }
 
         [Then(@"the attachment contains the Supplier's NHS Assured Integrations")]
@@ -129,6 +134,8 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
                 "SampleData", "integrations.pdf");
             var downloadedFile = Path.Combine(_test.DownloadPath, integrationsDownloadFile);
             DownloadFileUtility.CompareTwoFiles(downloadedFile, sourceFile).Should().BeTrue();
+            var ResponseHeaderContentType = (string)_context["ResponseHeaderContentType"];
+            ResponseHeaderContentType.Should().ContainEquivalentOf("pdf");
         }
 
         [Then(@"the attachment contains the Supplier's Roadmap")]
@@ -138,6 +145,8 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
                 "SampleData", "roadmap.pdf");
             var downloadedFile = Path.Combine(_test.DownloadPath, roadmapDownloadFile);
             DownloadFileUtility.CompareTwoFiles(downloadedFile, sourceFile).Should().BeTrue();
+            var ResponseHeaderContentType = (string)_context["ResponseHeaderContentType"];
+            ResponseHeaderContentType.Should().ContainEquivalentOf("pdf");
         }
 
         [Then(@"there is no call to action to download a file in the Integrations section")]
