@@ -44,7 +44,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
             var randomCapabilityName = RandomInformation.GetRandomItem(selectedCapabilities);
 
             driver.FindElements(pages.CapabilityFilter.Capabilities)
-                .Single(s => s.FindElement(By.TagName("label")).Text.ToLower().Contains(randomCapabilityName.ToLower()))
+                .First(s => s.FindElement(By.TagName("label")).Text.ToLower().Contains(randomCapabilityName.ToLower()))
                 .FindElement(By.TagName("input")).Click();
 
             return randomCapabilityName;
