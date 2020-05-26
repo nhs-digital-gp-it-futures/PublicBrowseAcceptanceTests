@@ -1,6 +1,5 @@
-using System.Threading.Tasks;
 using NHSDPublicBrowseAcceptanceTests.Tests.Utils;
-using OpenQA.Selenium;
+using System.Threading.Tasks;
 using TechTalk.SpecFlow;
 
 namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps

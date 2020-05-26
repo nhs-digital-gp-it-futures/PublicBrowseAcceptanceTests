@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -23,6 +24,8 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Utils
                     }
                 }
 
+                Console.WriteLine(downloadLink);
+
                 client.DownloadFile(downloadLink, Path.Combine(downloadPath, fileName));
                 return client;
             }
@@ -31,8 +34,8 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Utils
         public static string TransformLocalHost(string urlIn)
         {
             return urlIn
-                .Replace("host.docker.internal", "localhost")
-                .Replace("gpitfutures-bc-pb.buyingcatalogue", "localhost");
+                //.Replace("host.docker.internal", "localhost")
+                .Replace("gpitfutures-bc-pb.buyingcatalogue", "host.docker.internal");
         }
 
         public static bool CompareTwoFiles(string filePath1, string filePath2)

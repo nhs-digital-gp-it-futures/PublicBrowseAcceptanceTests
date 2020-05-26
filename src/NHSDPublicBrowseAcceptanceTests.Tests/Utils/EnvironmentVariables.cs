@@ -20,13 +20,14 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Utils
             return (url, hubUrl, browser, serverUrl, databaseName, dbUser, dbPassword);
         }
 
-        internal static string AzureBlobStorageConnectionString() => JsonConfigValues("AzureBlobStorageConnectionString", @"UseDevelopmentStorage=true");
+        internal static string AzureBlobStorageConnectionString() => JsonConfigValues("AzureBlobStorageConnectionString", GetStorageConnectionString(@"UseDevelopmentStorage=true"));
+
         internal static string AzureContainerName() => Environment.GetEnvironmentVariable("CONTAINER_NAME") ?? "container-1";
 
         internal static string HubUrl() => Environment.GetEnvironmentVariable("HUBURL") ?? "http://localhost:4444/wd/hub";
         internal static string Url() => Environment.GetEnvironmentVariable("PBURL") ?? DefaultUri();
 
-        internal static string Browser() => Environment.GetEnvironmentVariable("BROWSER") ?? "chrome-local";
+        internal static string Browser() => Environment.GetEnvironmentVariable("BROWSER") ?? "chrome";
 
         internal static (string serverUrl, string databaseName, string dbUser, string dbPassword)
             DbConnectionDetails()
@@ -65,6 +66,14 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Utils
             var uri = "https://host.docker.internal";
 
             return uri;
+        }
+
+        private static string GetStorageConnectionString(string defaultString)
+        {
+            return "AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;DefaultEndpointsProtocol=http;BlobEndpoint=http://host.docker.internal:10000/devstoreaccount1;QueueEndpoint=http://host.docker.internal:10001/devstoreaccount1;TableEndpoint=http://host.docker.internal:10002/devstoreaccount1;";
+
+
+            //return Environment.GetEnvironmentVariable("STORAGE_CONNECTION_STRING") ?? defaultString;
         }
     }
 
