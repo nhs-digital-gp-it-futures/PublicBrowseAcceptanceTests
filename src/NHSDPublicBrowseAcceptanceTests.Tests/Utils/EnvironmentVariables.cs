@@ -70,10 +70,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Utils
 
         private static string GetStorageConnectionString(string defaultString)
         {
-            return "AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;DefaultEndpointsProtocol=http;BlobEndpoint=http://host.docker.internal:10000/devstoreaccount1;QueueEndpoint=http://host.docker.internal:10001/devstoreaccount1;TableEndpoint=http://host.docker.internal:10002/devstoreaccount1;";
-
-
-            //return Environment.GetEnvironmentVariable("STORAGE_CONNECTION_STRING") ?? defaultString;
+            return Environment.GetEnvironmentVariable("STORAGE_CONNECTION_STRING") ?? defaultString;
         }
     }
 
