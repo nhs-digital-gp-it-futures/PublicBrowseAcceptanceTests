@@ -3,43 +3,33 @@
     public static class Queries
     {
         public const string CreateNewSolution =
-            "INSERT INTO Solution (Id, SupplierId, Name, Version, PublishedStatusId, AuthorityStatusId, SupplierStatusId, OnCatalogueVersion, LastUpdatedBy, LastUpdated) values (@SolutionId, @SupplierId, @SolutionName, @SolutionVersion, @PublishedStatusId,@AuthorityStatusId,@SupplierStatusId, 0, @LastUpdatedBy, @LastUpdated)";
+            "INSERT INTO Solution (Id, Version, Summary, FullDescription, Features, ClientApplication, Hosting, ImplementationDetail, RoadMap, IntegrationsUrl, AboutUrl, ServiceLevelAgreement, LastUpdatedBy, LastUpdated) values (@SolutionId, @Version, @Summary, @FullDescription, @Features, @ClientApplication, @Hosting, @ImplementationDetail, @RoadMap, @IntegrationsUrl, @AboutUrl, @ServiceLevelAgreement, @LastUpdatedBy, @LastUpdated)";
 
         public const string GetSolution = "SELECT * from [dbo].[Solution] WHERE Solution.Id=@solutionId";
 
         public const string UpdateSolution =
-            "UPDATE Solution SET SolutionDetailId=@solutionDetailId, SupplierId=@supplierId, Name=@solutionName, Version=@solutionVersion, PublishedStatusId=@publishedStatusId, AuthorityStatusId=@authorityStatusId, SupplierStatusId=@supplierStatusId WHERE Id=@solutionId";
+            "UPDATE Solution SET Version=@solutionVersion, Summary=@Summary, FullDescription=@FullDescription, Features=@Features, ClientApplication=@ClientApplication, Hosting=@Hosting, ImplementationDetail=@ImplementationDetail, RoadMap=@RoadMap, IntegrationsUrl=@IntegrationsUrl, AboutUrl=@AboutUrl, ServiceLevelAgreement=@ServiceLevelAgreement, LastUpdatedBy=@LastUpdatedBy, LastUpdated=@LastUpdated WHERE Id=@solutionId";
 
         public const string DeleteSolution = "DELETE FROM Solution WHERE Id=@solutionId";
         public const string GetAllSolutions = "SELECT * FROM [dbo].[Solution]";
 
         public const string GetSolutionsCount =
-            "SELECT COUNT(DISTINCT(SolutionId)) FROM SolutionCapability c INNER JOIN Solution s on c.SolutionId=s.Id WHERE s.PublishedStatusId=3";
+            "SELECT COUNT(DISTINCT(SolutionId)) FROM SolutionCapability c INNER JOIN CatalogueItem ci on c.SolutionId=ci.CatalogueItemId WHERE ci.PublishedStatusId=3";
 
         public const string GetFoundationSolutionsCount =
-            "SELECT COUNT(DISTINCT(sc.SolutionId)) FROM SolutionCapability sc INNER JOIN Solution s on sc.SolutionId=s.Id LEFT JOIN FrameworkSolutions fs ON s.Id = fs.SolutionId WHERE COALESCE(fs.IsFoundation, 0) = 1 AND s.PublishedStatusId = 3";
+            "SELECT COUNT(DISTINCT(sc.SolutionId)) FROM SolutionCapability sc INNER JOIN CatalogueItem s on sc.SolutionId=s.CatalogueItemId LEFT JOIN FrameworkSolutions fs ON s.Id = fs.SolutionId WHERE COALESCE(fs.IsFoundation, 0) = 1 AND s.PublishedStatusId = 3";
 
         public const string GetNonFoundationSolutionsCount =
-            "SELECT COUNT(DISTINCT(sc.SolutionId)) FROM SolutionCapability sc INNER JOIN Solution s on SolutionId=s.Id WHERE s.Id NOT IN ( SELECT SolutionId FROM [dbo].FrameworkSolutions WHERE IsFoundation = 1 ) AND s.PublishedStatusId = 3";
+            "SELECT COUNT(DISTINCT(sc.SolutionId)) FROM SolutionCapability sc INNER JOIN CatalogueItem s on SolutionId=s.CatalogueItemId WHERE s.Id NOT IN ( SELECT SolutionId FROM [dbo].FrameworkSolutions WHERE IsFoundation = 1 ) AND s.PublishedStatusId = 3";
 
         public const string GetSolutionsWithCapabilityCount =
-            "SELECT COUNT(*) AS count FROM [dbo].[SolutionCapability] AS sc LEFT JOIN [dbo].[Capability] AS c ON c.Id = sc.CapabilityId LEFT JOIN [dbo].[Solution] AS sol ON sol.Id = sc.SolutionId WHERE c.Name = @capabilityName AND sol.PublishedStatusId=3";
+            "SELECT COUNT(*) AS count FROM [dbo].[SolutionCapability] AS sc LEFT JOIN [dbo].[Capability] AS c ON c.Id = sc.CapabilityId LEFT JOIN [dbo].[CatalogueItem] AS sol ON sol.CatalogueItemId = sc.SolutionId WHERE c.Name = @capabilityName AND sol.PublishedStatusId=3";
 
         public const string GetCapabilityById = "SELECT * FROM Capability WHERE Id=@Id";
         public const string GetAllCapabilities = "SELECT * FROM Capability";
 
         public const string GetAllEpicsByCapabilityId =
             "SELECT e.Id,e.Name,e.CapabilityId,c.Name AS Level FROM Epic AS e INNER JOIN CompliancyLevel AS c ON e.CompliancyLevelId = c.Id WHERE e.CapabilityId=@Id";
-
-        public const string CreateSolutionDetail =
-            "INSERT INTO SolutionDetail (Id, LastUpdatedBy, LastUpdated, SolutionId,AboutUrl,Features,Summary,FullDescription) values (@solutionDetailId, @lastUpdatedBy, @lastUpdated, @solutionId,@AboutUrl,@Features,@Summary,@FullDescription)";
-
-        public const string GetSolutionDetail = "SELECT * from [dbo].[SolutionDetail] where SolutionId=@solutionId";
-
-        public const string UpdateSolutionDetail =
-            "UPDATE SolutionDetail SET Features=@features, ClientApplication=@clientApplication, AboutUrl=@aboutUrl, Summary=@summary, FullDescription=@fullDescription, RoadMap=@roadMap, Hosting=@hostingTypes, IntegrationsUrl=@integrationsUrl, ImplementationDetail=@implementationTimescales WHERE SolutionId=@solutionId";
-
-        public const string DeleteSolutionDetail = "DELETE from SolutionDetail where SolutionId=@solutionId";
 
         public const string CreateMarketingContact =
             "INSERT INTO [MarketingContact] (SolutionId, FirstName, LastName, Email, PhoneNumber, Department, LastUpdated, LastUpdatedBy) VALUES(@solutionId, @firstName, @lastName, @email, @phoneNumber, @department, GETDATE(), '00000000-0000-0000-0000-000000000000')";
@@ -50,9 +40,8 @@
             "UPDATE @table SET LastUpdated=@lastUpdated WHERE @whereKey=@whereValue";
 
         public const string GetLatestLastUpdated =
-            @"Select TOP (1) Solution.LastUpdated AS SolutionLastUpdated, SolutionDetail.LastUpdated AS SolutionDetailLastUpdated, MarketingContact.LastUpdated AS MarketingContactLastUpdated, (select max(LU) FROM (VALUES (Solution.LastUpdated), (SolutionDetail.LastUpdated), (MarketingContact.LastUpdated)) as value(LU)) as [LastestLastUpdated]
+            @"Select TOP (1) Solution.LastUpdated AS SolutionLastUpdated, MarketingContact.LastUpdated AS MarketingContactLastUpdated, (select max(LU) FROM (VALUES (Solution.LastUpdated), (MarketingContact.LastUpdated)) as value(LU)) as [LastestLastUpdated]
                 from Solution
-                Left JOIN SolutionDetail on SolutionDetail.SolutionId = Solution.Id
                 Left Join MarketingContact on MarketingContact.SolutionId = Solution.Id
                 where Solution.Id = @solutionId;
             ";
@@ -76,5 +65,16 @@
 
         public const string GetSolutionCountForCapability =
             "SELECT COUNT(*) FROM Solution s INNER JOIN SolutionCapability sc on sc.SolutionId=s.Id INNER JOIN Capability c on sc.CapabilityId = c.Id WHERE c.Name=@CapabilityName";
+
+        public const string CreateNewCatalogueItem =
+            "INSERT INTO CatalogueItem (CatalogueItemId, Name, CatalogueItemTypeId, SupplierId, PublishedStatusId, Created) values (@CatalogueItemId, @Name, @CatalogueItemTypeId, @SupplierId, @PublishedStatusId, @Created)";
+
+        public const string GetCatalogueItem = "SELECT * from [dbo].[CatalogueItem] WHERE CatalogueItemId=@CatalogueItemId";
+
+        public const string UpdateCatalogueItem =
+            "UPDATE CatalogueItem SET Name=@Name, CatalogueItemTypeId=@CatalogueItemTypeId, SupplierId=@SupplierId, PublishedStatusId=@publishedStatusId, Created=@Created WHERE CatalogueItemId=@CatalogueItemId";
+
+        public const string DeleteCatalogueItem = "DELETE FROM CatalogueItem WHERE CatalogueItemId=@CatalogueItemId";
+        public const string GetAllCatalogueItems = "SELECT * FROM [dbo].[CatalogueItem]";
     }
 }

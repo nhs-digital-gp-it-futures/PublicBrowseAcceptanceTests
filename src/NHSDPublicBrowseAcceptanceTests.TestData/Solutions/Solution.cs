@@ -9,15 +9,18 @@ namespace NHSDPublicBrowseAcceptanceTests.TestData.Solutions
     {
         public string Id { get; set; }
         public string SolutionId => Id;
-        public string Name { get; set; }
-        public string SolutionName => Name;
         public string Version { get; set; }
         public string SolutionVersion => Version;
-        public string SupplierId { get; set; } = "100000";
-        public int PublishedStatusId { get; set; } = 1;
-        public int AuthorityStatusId { get; set; } = 1;
-        public int SupplierStatusId { get; set; } = 1;
-        public Guid SolutionDetailId { get; set; }
+        public string Summary { get; set; }
+        public string FullDescription { get; set; }
+        public string Features { get; set; }
+        public string ClientApplication { get; set; }
+        public string Hosting { get; set; }
+        public string ImplementationDetail { get; set; }
+        public string RoadMap { get; set; }
+        public string IntegrationsUrl { get; set; }
+        public string AboutUrl { get; set; }
+        public string ServiceLevelAgreement { get; set; }
         public DateTime LastUpdated { get; set; }
         public Guid LastUpdatedBy { get; set; }
 

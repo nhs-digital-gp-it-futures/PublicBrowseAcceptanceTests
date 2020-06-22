@@ -21,14 +21,11 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
         [Given(@"that a Solution has a PublishedStatus of (.*)")]
         public void GivenThatASolutionHasAPublishedStatusOf(int status)
         {
-            _test.Solution = GenerateSolution.GenerateNewSolution(checkForUnique: true,
+            _test.CatalogueItem = GenerateCatalogueItem.GenerateNewCatalogueItem(checkForUnique: true,
                 connectionString: _test.ConnectionString, publishedStatus: status);
+            _test.CatalogueItem.Create(_test.ConnectionString);
+            _test.Solution = GenerateSolution.GenerateNewSolution(_test.CatalogueItem.CatalogueItemId, 0, false);
             _test.Solution.Create(_test.ConnectionString);
-            _test.SolutionDetail =
-                GenerateSolutionDetails.GenerateNewSolutionDetail(_test.Solution.Id, Guid.NewGuid(), 0, false);
-            _test.SolutionDetail.Create(_test.ConnectionString);
-            _test.Solution.SolutionDetailId = _test.SolutionDetail.SolutionDetailId;
-            _test.Solution.Update(_test.ConnectionString);
             _context.Add("DeleteSolution", true);
             new Capability().AddRandomCapabilityToSolution(_test.ConnectionString, _test.Solution.Id);
 

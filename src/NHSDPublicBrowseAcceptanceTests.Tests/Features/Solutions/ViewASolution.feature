@@ -37,5 +37,4 @@ Scenario Outline: Last updated date is updated when solution table is updated
 	Examples: 
 	| table_name		|
 	| Solution			|
-	| SolutionDetail	|
 	| MarketingContact	|
