@@ -17,10 +17,10 @@
             "SELECT COUNT(DISTINCT(SolutionId)) FROM SolutionCapability c INNER JOIN CatalogueItem ci on c.SolutionId=ci.CatalogueItemId WHERE ci.PublishedStatusId=3";
 
         public const string GetFoundationSolutionsCount =
-            "SELECT COUNT(DISTINCT(sc.SolutionId)) FROM SolutionCapability sc INNER JOIN CatalogueItem s on sc.SolutionId=s.CatalogueItemId LEFT JOIN FrameworkSolutions fs ON s.Id = fs.SolutionId WHERE COALESCE(fs.IsFoundation, 0) = 1 AND s.PublishedStatusId = 3";
+            "SELECT COUNT(DISTINCT(sc.SolutionId)) FROM SolutionCapability sc INNER JOIN CatalogueItem s on sc.SolutionId=s.CatalogueItemId LEFT JOIN FrameworkSolutions fs ON s.CatalogueItemId = fs.SolutionId WHERE COALESCE(fs.IsFoundation, 0) = 1 AND s.PublishedStatusId = 3";
 
         public const string GetNonFoundationSolutionsCount =
-            "SELECT COUNT(DISTINCT(sc.SolutionId)) FROM SolutionCapability sc INNER JOIN CatalogueItem s on SolutionId=s.CatalogueItemId WHERE s.Id NOT IN ( SELECT SolutionId FROM [dbo].FrameworkSolutions WHERE IsFoundation = 1 ) AND s.PublishedStatusId = 3";
+            "SELECT COUNT(DISTINCT(sc.SolutionId)) FROM SolutionCapability sc INNER JOIN CatalogueItem s on SolutionId=s.CatalogueItemId WHERE s.CatalogueItemId NOT IN ( SELECT SolutionId FROM [dbo].FrameworkSolutions WHERE IsFoundation = 1 ) AND s.PublishedStatusId = 3";
 
         public const string GetSolutionsWithCapabilityCount =
             "SELECT COUNT(*) AS count FROM [dbo].[SolutionCapability] AS sc LEFT JOIN [dbo].[Capability] AS c ON c.Id = sc.CapabilityId LEFT JOIN [dbo].[CatalogueItem] AS sol ON sol.CatalogueItemId = sc.SolutionId WHERE c.Name = @capabilityName AND sol.PublishedStatusId=3";
@@ -61,7 +61,7 @@
             "INSERT INTO MarketingContact (SolutionId, FirstName, LastName,Email,PhoneNumber,Department,LastUpdated,LastUpdatedBy) VALUES(@solutionId, @FirstName, @LastName, @Email, @PhoneNumber, @Department,@LastUpdated,@LastUpdatedBy)";
 
         public const string GetSelectedCapabilities =
-            "SELECT DISTINCT(c.Name) FROM SolutionCapability sc INNER JOIN Solution s on sc.SolutionId=s.Id inner join Capability c on c.Id=sc.CapabilityId WHERE s.PublishedStatusId=3";
+            "SELECT DISTINCT(c.Name) FROM SolutionCapability sc INNER JOIN CatalogueItem s on sc.SolutionId=s.CatalogueItemId inner join Capability c on c.Id=sc.CapabilityId WHERE s.PublishedStatusId=3";
 
         public const string GetSolutionCountForCapability =
             "SELECT COUNT(*) FROM Solution s INNER JOIN SolutionCapability sc on sc.SolutionId=s.Id INNER JOIN Capability c on sc.CapabilityId = c.Id WHERE c.Name=@CapabilityName";
