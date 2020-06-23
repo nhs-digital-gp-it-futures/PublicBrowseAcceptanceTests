@@ -9,21 +9,28 @@ namespace NHSDPublicBrowseAcceptanceTests.TestData.Solutions
 {
     public static class GenerateSolution
     {
-        public static Solution GenerateNewSolution(string prefix = "Auto", bool checkForUnique = false,
-            string connectionString = null, int publishedStatus = 1)
+        public static Solution GenerateNewSolution(string solutionId, int numFeatures = 1,
+            bool clientApplication = true, bool roadMap = false, bool hostingTypes = false,
+            bool integrationsUrl = false, bool implementationTimescales = false)
         {
             var faker = new Faker();
 
-            var Id = checkForUnique ? UniqueSolIdCheck(prefix, connectionString) : RandomSolId(prefix);
-
             var solution = new Solution
             {
-                Id = Id,
-                Name = faker.Name.JobTitle(),
+                Id = solutionId,
                 Version = faker.System.Semver(),
+                AboutUrl = faker.Internet.Url(),
+                Features = GenerateFeatures(numFeatures, faker),
+                ClientApplication =
+                    clientApplication ? ClientApplicationStringBuilder.GetClientAppString() : string.Empty,
+                Summary = faker.Commerce.ProductName(),
+                FullDescription = faker.Name.JobTitle(),
+                RoadMap = roadMap ? faker.Rant.Review() : string.Empty,
+                Hosting = hostingTypes ? GetCompleteHostingTypes() : string.Empty,
+                IntegrationsUrl = integrationsUrl ? faker.Internet.Url() : string.Empty,
+                ImplementationDetail = implementationTimescales ? faker.Lorem.Sentences(2) : string.Empty,
                 LastUpdated = DateTime.Now,
-                LastUpdatedBy = Guid.Empty,
-                PublishedStatusId = publishedStatus
+                LastUpdatedBy = Guid.Empty
             };
 
             if (Debugger.IsAttached) Console.WriteLine(solution.ToString());
@@ -31,63 +38,23 @@ namespace NHSDPublicBrowseAcceptanceTests.TestData.Solutions
             return solution;
         }
 
-        private static string GetSuffix(int solIdLength)
+        private static string GetCompleteHostingTypes()
         {
-            var suffix = string.Empty;
-            for (var i = 0; i < 14 - solIdLength; i++) suffix += GetRandomCharacter();
-            return suffix;
+            return HostingTypeStrings.CompleteHostingTypes;
         }
 
-        private static string GetRandomCharacter()
+        private static string GenerateFeatures(int numFeatures, Faker faker)
         {
-            var faker = new Faker();
-            var randomChars = new List<string>();
-            for (var i = 0; i < 10; i++) randomChars.Add(faker.Random.AlphaNumeric(1));
+            if (numFeatures <= 0)
+                return string.Empty;
 
-            return RandomInformation.GetRandomItem(randomChars);
-        }
+            var featuresArray = new string[numFeatures];
 
-        private static string GetTruncatedTimestamp(string prefix)
-        {
-            var timestamp = DateTimeOffset.Now.ToUnixTimeMilliseconds().ToString();
-            timestamp = timestamp.Substring(timestamp.Length - prefix.Length);
+            if (numFeatures > 0)
+                for (var i = 0; i < numFeatures; i++)
+                    featuresArray[i] = $"\"{faker.Commerce.ProductAdjective()}\"";
 
-            return prefix + timestamp;
-        }
-
-        /// <summary>
-        ///     Get list of existing solution ids, then generate new solution ids until a unique solution id is found
-        /// </summary>
-        /// <param name="prefix"></param>
-        /// <param name="connectionString"></param>
-        /// <returns>A unique solution ID</returns>
-        private static string UniqueSolIdCheck(string prefix, string connectionString)
-        {
-            var solution = new Solution();
-
-            var existingSolIds = solution.RetrieveAll(connectionString).ToList();
-
-            existingSolIds = existingSolIds.Where(s => s.StartsWith(prefix)).ToList();
-
-            var solId = string.Empty;
-
-            for (var i = 0; i < 10; i++)
-            {
-                solId = RandomSolId(prefix);
-                if (!existingSolIds.Contains(solId)) break;
-            }
-
-            return solId;
-        }
-
-        private static string RandomSolId(string prefix)
-        {
-            var timestampPrefixed = GetTruncatedTimestamp(prefix);
-
-            var solId = timestampPrefixed.Length > 13 ? timestampPrefixed.Substring(0, 13) : timestampPrefixed;
-            var suffix = GetSuffix(solId.Length);
-
-            return solId + suffix;
+            return $"[{string.Join(",", featuresArray)}]";
         }
     }
 }
