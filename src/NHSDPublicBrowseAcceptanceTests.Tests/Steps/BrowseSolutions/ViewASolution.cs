@@ -35,7 +35,15 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
         [Given(@"that a User views a created Solution")]
         public void GivenThatAUserViewsACreatedSolution()
         {
-            new ViewSolutionOnlyWhenPublished(_test, _context).GivenThatASolutionHasAPublishedStatusOf(3);
+            _test.CatalogueItem = GenerateCatalogueItem.GenerateNewCatalogueItem(checkForUnique: true,
+                connectionString: _test.ConnectionString, publishedStatus: 3);
+            _test.CatalogueItem.Create(_test.ConnectionString);
+            _test.Solution = GenerateSolution.GenerateNewSolution(_test.CatalogueItem.CatalogueItemId, 0, false);
+            _test.Solution.Create(_test.ConnectionString);
+            _context.Add("DeleteSolution", true);
+            new Capability().AddRandomCapabilityToSolution(_test.ConnectionString, _test.Solution.Id);
+            _test.Driver.Navigate().Refresh();
+
             _test.ContactDetails.Add(CreateContactDetails.NewContactDetail());
             _test.ContactDetails[0].AddMarketingContactForSolution(_test.ConnectionString, _test.Solution.Id);
             new ViewSolutionsList(_test, _context).GivenThatAUserHasChosenToViewAListOfAllSolutions();
