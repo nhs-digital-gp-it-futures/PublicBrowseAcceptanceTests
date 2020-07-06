@@ -17,8 +17,13 @@ steps:
 - task: UseDotNet@2
   displayName: 'Use DotNet Core 3.1'
   inputs:
-    version: '3.1.101'
+    version: '3.1.*'
     includePreviewVersions: false
+
+- task: Docker@2
+  inputs:
+    command: 'build'
+    Dockerfile: 'Dockerfile'
 
 - task: AzureKeyVault@1
   inputs:
