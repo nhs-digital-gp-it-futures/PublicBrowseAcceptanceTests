@@ -25,52 +25,52 @@ steps:
     command: 'build'
     Dockerfile: 'Dockerfile'
 
-- task: AzureKeyVault@1
-  inputs:
-    azureSubscription: 'NHSAPP-BuyingCatalogue (Non-Prod)'
-    KeyVaultName: 'gpitfutures-dev-kv'
-    SecretsFilter: '*'
+#- task: AzureKeyVault@1
+#  inputs:
+#    azureSubscription: 'NHSAPP-BuyingCatalogue (Non-Prod)'
+#    KeyVaultName: 'gpitfutures-dev-kv'
+#    SecretsFilter: '*'
     
-- task: A8515EC8-7254-4FFD-912C-86772E2B5962@3
-  inputs:
-    targetFiles: '**/*.json'
-    encoding: 'auto'
-    writeBOM: true
-    actionOnMissing: 'continue'
-    keepToken: true
-    tokenPrefix: '#{'
-    tokenSuffix: '}#'
-    emptyValue: 
+#- task: A8515EC8-7254-4FFD-912C-86772E2B5962@3
+#  inputs:
+#    targetFiles: '**/*.json'
+#    encoding: 'auto'
+#    writeBOM: true
+#    actionOnMissing: 'continue'
+#    keepToken: true
+#    tokenPrefix: '#{'
+#    tokenSuffix: '}#'
+#    emptyValue: 
 
-- task: CopyFiles@2
-  enabled: false
-  inputs:
-    Contents: '**'
-    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+#- task: CopyFiles@2
+#  enabled: false
+#  inputs:
+#    Contents: '**'
+#    TargetFolder: '$(Build.ArtifactStagingDirectory)'
     
-- task: PublishBuildArtifacts@1
-  enabled: false
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'drop'
-    publishLocation: 'Container'
+#- task: PublishBuildArtifacts@1
+#  enabled: false
+#  inputs:
+#    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+#    ArtifactName: 'drop'
+#    publishLocation: 'Container'
       
-- bash: 
-    "curl -k -i $(PBURL) --fail --connect-timeout 30"
-  displayName: 'Check URL is reachable'
+#- bash: 
+#    "curl -k -i $(PBURL) --fail --connect-timeout 30"
+#  displayName: 'Check URL is reachable'
 
-- task: Bash@3
-  displayName: Selenium Grid Setup
-  inputs:
-    targetType: 'inline'
-    script: |
-      docker-compose stop &&
-      docker-compose rm -f &&
-      docker-compose up --scale chrome=4 --scale firefox=4  -d
+#- task: Bash@3
+#  displayName: Selenium Grid Setup
+#  inputs:
+#    targetType: 'inline'
+#    script: |
+#      docker-compose stop &&
+#      docker-compose rm -f &&
+#      docker-compose up --scale chrome=4 --scale firefox=4  -d
     
-- task: DotNetCoreCLI@2
-  displayName: Run Acceptance Tests
-  inputs:
-    command: 'test'
-    projects: 'src/NHSDPublicBrowseAcceptanceTests.Tests/*.csproj'
-    arguments: '-v n'
+#- task: DotNetCoreCLI@2
+#  displayName: Run Acceptance Tests
+#  inputs:
+#    command: 'test'
+#    projects: 'src/NHSDPublicBrowseAcceptanceTests.Tests/*.csproj'
+#    arguments: '-v n'
