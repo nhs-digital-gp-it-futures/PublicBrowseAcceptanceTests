@@ -46,14 +46,12 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Utils
 
         public static IDictionary<string,string> GetHeadersFromDriver(IWebDriver driver)
         {
-            var cookies = driver.Manage().Cookies.AllCookies;
             var useragent = ((IJavaScriptExecutor)driver).ExecuteScript("return navigator.userAgent;");
             var referer = ((IJavaScriptExecutor)driver).ExecuteScript("return navigator.referer;");
             IDictionary<string, string> headers = new Dictionary<string, string>();
-            //headers.Add("cookie", (string)cookies.ToDictionary());
             headers.Add("user-agent", (string)useragent);
             headers.Add("referer", (string)referer);
-            return new Dictionary<string, string>();
+            return headers;
         }
     }
 }

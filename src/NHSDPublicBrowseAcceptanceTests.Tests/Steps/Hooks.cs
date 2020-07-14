@@ -1,5 +1,7 @@
-using NHSDPublicBrowseAcceptanceTests.Tests.Utils;
 using System.Threading.Tasks;
+using NHSDPublicBrowseAcceptanceTests.TestData.Solutions;
+using NHSDPublicBrowseAcceptanceTests.Tests.Utils;
+using OpenQA.Selenium;
 using TechTalk.SpecFlow;
 
 namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps
@@ -22,8 +24,11 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps
             _test.Driver.Close();
             _test.Driver.Quit();
 
-            if (_context.ContainsKey("DeleteSolution") && (bool) _context["DeleteSolution"])
+            if (_context.ContainsKey("DeleteSolution") && (bool)_context["DeleteSolution"])
+            {
                 _test.Solution.Delete(_test.ConnectionString);
+                _test.CatalogueItem.Delete(_test.ConnectionString);
+            }
 
             await _test.AzureBlobStorage.ClearStorage();
         }

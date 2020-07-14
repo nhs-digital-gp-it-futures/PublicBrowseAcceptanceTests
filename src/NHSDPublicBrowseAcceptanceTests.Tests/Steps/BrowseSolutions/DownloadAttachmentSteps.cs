@@ -29,14 +29,11 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
         [Given(@"that a new Solution has been created to view attachments")]
         public void GivenThatANewSolutionHasBeenCreatedToViewAttachments()
         {
-            _test.Solution = GenerateSolution.GenerateNewSolution(checkForUnique: true,
+            _test.CatalogueItem = GenerateCatalogueItem.GenerateNewCatalogueItem(checkForUnique: true,
                 connectionString: _test.ConnectionString, publishedStatus: 3);
+            _test.CatalogueItem.Create(_test.ConnectionString);
+            _test.Solution = GenerateSolution.GenerateNewSolution(_test.CatalogueItem.CatalogueItemId, 0, false, true, integrationsUrl: true);
             _test.Solution.Create(_test.ConnectionString);
-            _test.SolutionDetail = GenerateSolutionDetails.GenerateNewSolutionDetail(_test.Solution.Id, Guid.NewGuid(),
-                0, false, true, integrationsUrl: true);
-            _test.SolutionDetail.Create(_test.ConnectionString);
-            _test.Solution.SolutionDetailId = _test.SolutionDetail.SolutionDetailId;
-            _test.Solution.Update(_test.ConnectionString);
             _context.Add("DeleteSolution", true);
             _test.ContactDetails.Add(CreateContactDetails.NewContactDetail());
             _test.ContactDetails[0].AddMarketingContactForSolution(_test.ConnectionString, _test.Solution.Id);
@@ -47,7 +44,7 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
         public void GivenTheUserViewsTheCreatedSolution()
         {
             new ViewSolutionsList(_test, _context).GivenThatAUserHasChosenToViewAListOfAllSolutions();
-            _test.Pages.SolutionsList.OpenNamedSolution(_test.Solution.Name);
+            _test.Pages.SolutionsList.OpenNamedSolution(_test.CatalogueItem.Name);
             _test.Pages.ViewASolution.PageDisplayed(_test.Url);
         }
 
@@ -75,7 +72,7 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
         public void WhenTheUserChoosesToDownloadTheAuthorityProvidedDataDocument()
         {
             var url = _test.Pages.ViewASolution.GetAttachmentDownloadLinkUrl();
-            var client = DownloadFileUtility.DownloadFile(providedDataDocumentDownloadFile, _test.DownloadPath, url);
+            var client = DownloadFileUtility.DownloadFile(providedDataDocumentDownloadFile, _test.DownloadPath, url, DownloadFileUtility.GetHeadersFromDriver(_test.Driver));
             _context.Add("ResponseHeaderContentType", client.ResponseHeaders.Get("Content-Type"));
         }
 
@@ -83,7 +80,7 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
         public void WhenTheUserChoosesToDownloadTheIntegrationsAttachment()
         {
             var url = _test.Pages.ViewASolution.GetNhsAssuredIntegrationsDownloadLinkUrl();
-            var client = DownloadFileUtility.DownloadFile(integrationsDownloadFile, _test.DownloadPath, url);
+            var client = DownloadFileUtility.DownloadFile(integrationsDownloadFile, _test.DownloadPath, url, DownloadFileUtility.GetHeadersFromDriver(_test.Driver));
             _context.Add("ResponseHeaderContentType", client.ResponseHeaders.Get("Content-Type"));
         }
 
@@ -91,7 +88,7 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
         public void WhenTheUserChoosesToDownloadTheRoadmapAttachment()
         {
             var url = _test.Pages.ViewASolution.GetRoadmapDownloadLinkUrl();
-            var client = DownloadFileUtility.DownloadFile(roadmapDownloadFile, _test.DownloadPath, url);
+            var client = DownloadFileUtility.DownloadFile(roadmapDownloadFile, _test.DownloadPath, url, DownloadFileUtility.GetHeadersFromDriver(_test.Driver));
             _context.Add("ResponseHeaderContentType", client.ResponseHeaders.Get("Content-Type"));
         }
 

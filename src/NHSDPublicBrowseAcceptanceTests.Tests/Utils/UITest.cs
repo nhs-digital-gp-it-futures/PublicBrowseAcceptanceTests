@@ -19,7 +19,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Utils
         internal IWebDriver Driver;
         internal PageActionCollection Pages;
         internal Solution Solution;
-        internal SolutionDetail SolutionDetail;
+        internal CatalogueItem CatalogueItem;
         internal string Url;
 
         public UITest()

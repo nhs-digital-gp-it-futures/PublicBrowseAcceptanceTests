@@ -35,17 +35,23 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
         [Given(@"that a User views a created Solution")]
         public void GivenThatAUserViewsACreatedSolution()
         {
-            new ViewSolutionOnlyWhenPublished(_test, _context).GivenThatASolutionHasAPublishedStatusOf(3);
+            _test.CatalogueItem = GenerateCatalogueItem.GenerateNewCatalogueItem(checkForUnique: true,
+                connectionString: _test.ConnectionString, publishedStatus: 3);
+            _test.CatalogueItem.Create(_test.ConnectionString);
+            _test.Solution = GenerateSolution.GenerateNewSolution(_test.CatalogueItem.CatalogueItemId, 0, false);
+            _test.Solution.Create(_test.ConnectionString);
+            _context.Add("DeleteSolution", true);
+            new Capability().AddRandomCapabilityToSolution(_test.ConnectionString, _test.Solution.Id);
+            _test.Driver.Navigate().Refresh();
+
             _test.ContactDetails.Add(CreateContactDetails.NewContactDetail());
             _test.ContactDetails[0].AddMarketingContactForSolution(_test.ConnectionString, _test.Solution.Id);
             new ViewSolutionsList(_test, _context).GivenThatAUserHasChosenToViewAListOfAllSolutions();
             var oldDate = new DateTime(2001, 02, 03);
             LastUpdatedHelper.UpdateLastUpdated(oldDate, "Solution", "id", _test.Solution.Id, _test.ConnectionString);
-            LastUpdatedHelper.UpdateLastUpdated(oldDate, "SolutionDetail", "SolutionId", _test.Solution.Id,
-                _test.ConnectionString);
             LastUpdatedHelper.UpdateLastUpdated(oldDate, "MarketingContact", "SolutionId", _test.Solution.Id,
                 _test.ConnectionString);
-            _test.Pages.SolutionsList.OpenNamedSolution(_test.Solution.Name);
+            _test.Pages.SolutionsList.OpenNamedSolution(_test.CatalogueItem.Name);
         }
 
 
@@ -63,7 +69,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
             _test.Pages.ViewASolution.PageDisplayed(_test.Url);
             var id = _test.Pages.ViewASolution.GetSolutionId();
             _test.Solution = new Solution {Id = id}.Retrieve(_test.ConnectionString);
-            _test.SolutionDetail = new SolutionDetail {SolutionId = _test.Solution.Id}.Retrieve(_test.ConnectionString);
+            _test.CatalogueItem = new CatalogueItem { CatalogueItemId = id }.Retrieve(_test.ConnectionString);
         }
 
         [Then(@"the page will contain Supplier Name")]
@@ -76,13 +82,13 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
         public void ThenSolutionName()
         {
             var solutionName = _test.Pages.ViewASolution.GetSolutionName();
-            solutionName.Should().Be(_test.Solution.Name);
+            solutionName.Should().Be(_test.CatalogueItem.Name);
         }
 
         [Then(@"Solution Summary")]
         public void ThenSolutionSummary()
         {
-            var expected = Regex.Replace(_test.SolutionDetail.Summary, @"\s", "");
+            var expected = Regex.Replace(_test.Solution.Summary, @"\s", "");
             var solutionSummary = Regex.Replace(_test.Pages.ViewASolution.GetSolutionSummary(), @"\s", "");
             solutionSummary.Should().Be(expected);
         }
@@ -90,7 +96,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
         [Then(@"Solution Full Description")]
         public void ThenSolutionFullDescription()
         {
-            var expected = Regex.Replace(_test.SolutionDetail.FullDescription, @"\s", "");
+            var expected = Regex.Replace(_test.Solution.FullDescription, @"\s", "");
             var solutionFullDescription = Regex.Replace(_test.Pages.ViewASolution.GetSolutionFullDescription(), @"\s", "");
             solutionFullDescription.Should().Be(expected);
         }
@@ -99,10 +105,10 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
         [Then(@"About Solution URL")]
         public void ThenAboutSolutionURL()
         {
-            if (!string.IsNullOrEmpty(_test.SolutionDetail.AboutUrl))
+            if (!string.IsNullOrEmpty(_test.Solution.AboutUrl))
             {
                 var solutionAboutUrl = _test.Pages.ViewASolution.GetSolutionAboutUrl();
-                solutionAboutUrl.Should().Be(_test.SolutionDetail.AboutUrl);
+                solutionAboutUrl.Should().Be(_test.Solution.AboutUrl);
             }
         }
 
