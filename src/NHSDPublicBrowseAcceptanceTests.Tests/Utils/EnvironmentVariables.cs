@@ -33,7 +33,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Utils
         {
             var serverUrl = Environment.GetEnvironmentVariable("SERVERURL") ?? "127.0.0.1,1450";
             var databaseName = Environment.GetEnvironmentVariable("DATABASENAME") ?? "buyingcatalogue";
-            var dbUser = JsonConfigValues("sqlUser", "NHSD");
+            var dbUser = JsonConfigValues("sqlUser", "NHSD-BAPI");
             var dbPassword = JsonConfigValues("sqlPassword", "DisruptTheMarket1!");
 
             return (serverUrl, databaseName, dbUser, dbPassword);

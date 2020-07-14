@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using Microsoft.Extensions.Configuration;
 using NHSDPublicBrowseAcceptanceTests.Actions;
 using NHSDPublicBrowseAcceptanceTests.Actions.Pages;
 using NHSDPublicBrowseAcceptanceTests.TestData.Azure;
@@ -21,14 +22,22 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Utils
         internal Solution Solution;
         internal CatalogueItem CatalogueItem;
         internal string Url;
+        internal readonly Settings _settings;
 
         public UITest()
-        {   
+        {
+            var configurationBuilder = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json")
+                .AddEnvironmentVariables()
+                .Build();
+            _settings = new Settings(configurationBuilder);
+
             ConnectionString = EnvironmentVariables.ConnectionString();
-            AzureBlobStorage = new AzureBlobStorage(EnvironmentVariables.AzureBlobStorageConnectionString());
-            DefaultAzureBlobStorageContainerName = EnvironmentVariables.AzureContainerName();
+            AzureBlobStorage = new AzureBlobStorage(_settings.AzureBlobStorageSettings.ConnectionString);
+
+            DefaultAzureBlobStorageContainerName = _settings.AzureBlobStorageSettings.ContainerName;
             DownloadPath = Path.Combine(Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), "downloads");
-            Url = EnvironmentVariables.Url();
+            Url = _settings.PbUrl;
 
             Driver = new BrowserFactory().Driver;
 
