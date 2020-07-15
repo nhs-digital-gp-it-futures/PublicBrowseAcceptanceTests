@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using NHSDPublicBrowseAcceptanceTests.Actions;
 using NHSDPublicBrowseAcceptanceTests.Actions.Pages;
 using NHSDPublicBrowseAcceptanceTests.TestData.Azure;
 using NHSDPublicBrowseAcceptanceTests.TestData.Solutions;
 using OpenQA.Selenium;
+using System.Collections.Generic;
 
 namespace NHSDPublicBrowseAcceptanceTests.Tests.Utils
 {
@@ -22,22 +20,17 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Utils
         internal Solution Solution;
         internal CatalogueItem CatalogueItem;
         internal string Url;
-        internal readonly Settings _settings;
 
         public UITest()
         {
-            var configurationBuilder = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json")
-                .AddEnvironmentVariables()
-                .Build();
-            _settings = new Settings(configurationBuilder);
+            var settings = GetSettings();
 
-            ConnectionString = EnvironmentVariables.ConnectionString();
-            AzureBlobStorage = new AzureBlobStorage(_settings.AzureBlobStorageSettings.ConnectionString);
+            ConnectionString = settings.DatabaseSettings.ConnectionString;
+            AzureBlobStorage = new AzureBlobStorage(settings.AzureBlobStorageSettings.ConnectionString);
 
-            DefaultAzureBlobStorageContainerName = _settings.AzureBlobStorageSettings.ContainerName;
-            DownloadPath = Path.Combine(Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), "downloads");
-            Url = _settings.PbUrl;
+            DefaultAzureBlobStorageContainerName = settings.AzureBlobStorageSettings.ContainerName;
+            DownloadPath = settings.DownloadPath;
+            Url = settings.PbUrl;
 
             Driver = new BrowserFactory().Driver;
 
@@ -45,5 +38,16 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Utils
 
             Driver.Navigate().GoToUrl(Url);
         }
+
+        private static Settings GetSettings()
+        {
+            var configurationBuilder = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json")
+                .AddEnvironmentVariables()
+                .Build();
+            return new Settings(configurationBuilder);
+        }
+
+
     }
 }
