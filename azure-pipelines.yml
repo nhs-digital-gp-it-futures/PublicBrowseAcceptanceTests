@@ -75,6 +75,7 @@ steps:
 - bash: |
     export DB__SERVERURL=gpitfutures-dev-sql-pri.database.windows.net
     export DB__PASSWORD=$(gpitfuturesdevdbpassword)
+    dotnet test src/NHSDPublicBrowseAcceptanceTests.Tests/*.csproj -v n
   name: setUpVars
   displayName: Set up environment variables  
 
@@ -87,3 +88,4 @@ steps:
     command: 'test'
     projects: 'src/NHSDPublicBrowseAcceptanceTests.Tests/*.csproj'
     arguments: '-v n'
+  enabled: false
