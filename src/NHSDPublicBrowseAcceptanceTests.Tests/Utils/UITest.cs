@@ -32,7 +32,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Utils
             DownloadPath = settings.DownloadPath;
             Url = settings.PbUrl;
 
-            Driver = new BrowserFactory().Driver;
+            Driver = new BrowserFactory(settings).Driver;
 
             Pages = new PageActions(Driver).PageActionCollection;
 

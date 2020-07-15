@@ -1,4 +1,6 @@
 using System.Threading.Tasks;
+using BoDi;
+using Microsoft.Extensions.Configuration;
 using NHSDPublicBrowseAcceptanceTests.TestData.Solutions;
 using NHSDPublicBrowseAcceptanceTests.Tests.Utils;
 using OpenQA.Selenium;
@@ -11,11 +13,24 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps
     {
         private readonly ScenarioContext _context;
         private readonly UITest _test;
+        private readonly IObjectContainer _objectContainer;
 
-        public Hooks(UITest test, ScenarioContext context)
+        public Hooks(UITest test, ScenarioContext context, IObjectContainer objectContainer)
         {
             _test = test;
             _context = context;
+            _objectContainer = objectContainer;
+        }
+
+        [BeforeScenario]
+        public void BeforeScenario()
+        {
+            var configurationBuilder = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json")
+                .AddEnvironmentVariables()
+                .Build();
+
+            _objectContainer.RegisterInstanceAs<IConfiguration>(configurationBuilder);
         }
 
         [AfterScenario]

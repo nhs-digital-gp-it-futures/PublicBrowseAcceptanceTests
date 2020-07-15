@@ -10,18 +10,20 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Utils
 {
     public sealed class BrowserFactory
     {
-        public BrowserFactory()
+        private readonly Settings _settings;
+        public BrowserFactory(Settings settings)
         {
-            var browser = EnvironmentVariables.Browser();
-            var hubUrl = EnvironmentVariables.HubUrl();
-            Driver = GetBrowser(browser, hubUrl);
+            _settings = settings;
+            Driver = GetBrowser();
         }
 
         public IWebDriver Driver { get; }
 
-        private IWebDriver GetBrowser(string browser, string huburl)
+        private IWebDriver GetBrowser()
         {
             IWebDriver driver;
+            var browser = _settings.Browser;
+            var huburl = _settings.HubUrl;
 
             if (Debugger.IsAttached)
                 driver = GetLocalChromeDriver();

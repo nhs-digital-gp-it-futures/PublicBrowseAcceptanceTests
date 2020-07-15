@@ -9,6 +9,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Utils
         public string HubUrl { get; }
         public string PbUrl { get; }
         public string DownloadPath { get; }
+        public string Browser { get; }
         public AzureBlobStorageSettings AzureBlobStorageSettings { get; }
         public DatabaseSettings DatabaseSettings { get; }
 
@@ -17,6 +18,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Utils
             HubUrl = config.GetValue<string>("hubUrl");
             PbUrl = config.GetValue<string>("pbUrl");
             DownloadPath = Path.Combine(Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), config.GetValue<string>("downloadDirectory"));
+            DownloadPath = config.GetValue<string>("browser");
             AzureBlobStorageSettings = config.GetSection("azureBlobStorage").Get<AzureBlobStorageSettings>();
             DatabaseSettings = SetUpDatabaseSettings(config);
         }
