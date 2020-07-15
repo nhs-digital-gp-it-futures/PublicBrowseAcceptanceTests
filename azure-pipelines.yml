@@ -76,8 +76,6 @@ steps:
     export DB__SERVERURL=gpitfutures-dev-sql-pri.database.windows.net
     export DB__DATABASENAME=bc-buyingcatalogue-development-helm-bapi
     export DB__PASSWORD=$(gpitfuturesdevdbpassword)
-#    export AZUREBLOBSTORAGE__CONNECTIONSTRING=$(gpitdevstorageaccountconnectionstring)
-#    export AZUREBLOBSTORAGE__CONTAINERNAME=buyingcatalogue-development-helm-documents
 
     dotnet test src/NHSDPublicBrowseAcceptanceTests.Tests/*.csproj -v n
   name: setUpVars
