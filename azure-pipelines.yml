@@ -78,7 +78,7 @@ steps:
   name: setUpVars
   displayName: Set up environment variables  
 
-- bash: 'printenv | grep DB__SERVERURL'
+- bash: 'printenv'
   name: debug
 
 - task: DotNetCoreCLI@2
