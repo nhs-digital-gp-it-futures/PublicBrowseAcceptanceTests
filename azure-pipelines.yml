@@ -77,7 +77,10 @@ steps:
     export DB__PASSWORD=$(gpitfuturesdevdbpassword)
   name: setUpVars
   displayName: Set up environment variables  
-  
+
+- bash: 'printenv | grep DB__SERVERURL'
+  name: debug
+
 - task: DotNetCoreCLI@2
   displayName: Run Acceptance Tests
   inputs:
