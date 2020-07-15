@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Azure.Storage.Blobs;
@@ -15,6 +16,7 @@ namespace NHSDPublicBrowseAcceptanceTests.TestData.Azure
 
         public AzureBlobStorage(string connectionString)
         {
+            Console.WriteLine(connectionString.Substring(31,55));   
             blobServiceClient = new BlobServiceClient(connectionString);
         }
 
