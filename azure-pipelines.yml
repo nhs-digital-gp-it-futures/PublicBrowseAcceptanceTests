@@ -10,8 +10,11 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-  buildConfiguration: 'Release'
-  BROWSER: chrome
+  - name: buildConfiguration
+    value: 'Release'
+  - name: BROWSER
+    value: chrome
+  - group: dev-secrets
 
 steps:
 - script: |
@@ -43,23 +46,6 @@ steps:
     version: '3.1.101'
     includePreviewVersions: false
 
-- task: AzureKeyVault@1
-  inputs:
-    azureSubscription: 'NHSAPP-BuyingCatalogue (Non-Prod)'
-    KeyVaultName: 'gpitfutures-dev-kv'
-    SecretsFilter: '*'
-    
-- task: A8515EC8-7254-4FFD-912C-86772E2B5962@3
-  inputs:
-    targetFiles: '**/*.json'
-    encoding: 'auto'
-    writeBOM: true
-    actionOnMissing: 'continue'
-    keepToken: true
-    tokenPrefix: '#{'
-    tokenSuffix: '}#'
-    emptyValue: 
-
 - task: CopyFiles@2
   enabled: false
   inputs:
@@ -86,6 +72,12 @@ steps:
       docker-compose rm -f &&
       docker-compose -f docker-compose.yml -f domain.yml up --scale chrome=4 --scale firefox=4  -d
     
+- bash: |
+    export DB__SERVERURL=gpitfutures-dev-sql-pri.database.windows.net
+    export DB__PASSWORD=$(gpitfuturesdevdbpassword)
+  name: setUpVars
+  displayName: Set up environment variables  
+  
 - task: DotNetCoreCLI@2
   displayName: Run Acceptance Tests
   inputs:
