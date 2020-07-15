@@ -22,8 +22,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Utils
         internal string Url;
         internal Settings Settings;
 
-
-        public UITest(Settings settings)
+        public UITest(Settings settings, BrowserFactory browserFactory)
         {
             Settings = settings;
 
@@ -34,7 +33,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Utils
             DownloadPath = settings.DownloadPath;
             Url = settings.PbUrl;
 
-            Driver = new BrowserFactory(settings).Driver;
+            Driver = browserFactory.Driver;
 
             Pages = new PageActions(Driver).PageActionCollection;
 
