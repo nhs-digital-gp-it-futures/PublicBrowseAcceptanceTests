@@ -1,9 +1,7 @@
-using System.Threading.Tasks;
 using BoDi;
 using Microsoft.Extensions.Configuration;
-using NHSDPublicBrowseAcceptanceTests.TestData.Solutions;
 using NHSDPublicBrowseAcceptanceTests.Tests.Utils;
-using OpenQA.Selenium;
+using System.Threading.Tasks;
 using TechTalk.SpecFlow;
 
 namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps

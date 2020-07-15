@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-using NHSDPublicBrowseAcceptanceTests.Actions;
+﻿using NHSDPublicBrowseAcceptanceTests.Actions;
 using NHSDPublicBrowseAcceptanceTests.Actions.Pages;
 using NHSDPublicBrowseAcceptanceTests.TestData.Azure;
 using NHSDPublicBrowseAcceptanceTests.TestData.Solutions;

@@ -54,5 +54,4 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Utils
         public string Password { get; set; }
         public string ConnectionString { get; set; }
     }
-
 }
