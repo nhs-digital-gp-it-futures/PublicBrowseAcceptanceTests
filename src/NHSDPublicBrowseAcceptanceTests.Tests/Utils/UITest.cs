@@ -20,10 +20,12 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Utils
         internal Solution Solution;
         internal CatalogueItem CatalogueItem;
         internal string Url;
+        internal Settings Settings;
 
-        public UITest()
+
+        public UITest(Settings settings)
         {
-            var settings = GetSettings();
+            Settings = settings;
 
             ConnectionString = settings.DatabaseSettings.ConnectionString;
             AzureBlobStorage = new AzureBlobStorage(settings.AzureBlobStorageSettings.ConnectionString);
@@ -38,16 +40,5 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Utils
 
             Driver.Navigate().GoToUrl(Url);
         }
-
-        private static Settings GetSettings()
-        {
-            var configurationBuilder = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json")
-                .AddEnvironmentVariables()
-                .Build();
-            return new Settings(configurationBuilder);
-        }
-
-
     }
 }
