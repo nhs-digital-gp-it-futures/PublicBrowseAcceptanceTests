@@ -1,10 +1,9 @@
-﻿using System;
+﻿using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
+using FluentAssertions;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using Azure.Storage.Blobs;
-using Azure.Storage.Blobs.Models;
-using FluentAssertions;
 
 namespace NHSDPublicBrowseAcceptanceTests.TestData.Azure
 {
@@ -16,7 +15,6 @@ namespace NHSDPublicBrowseAcceptanceTests.TestData.Azure
 
         public AzureBlobStorage(string connectionString)
         {
-            Console.WriteLine(connectionString.Substring(31,55));   
             blobServiceClient = new BlobServiceClient(connectionString);
         }
 
