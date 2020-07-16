@@ -10,8 +10,17 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-  buildConfiguration: 'Release'
-  BROWSER: chrome
+  - name: buildConfiguration
+    value: 'Release'
+  - name: BROWSER
+    value: chrome
+  - name: DB__SERVERURL
+    value: gpitfutures-dev-sql-pri.database.windows.net
+  - name: DB__DATABASENAME
+    value: bc-buyingcatalogue-development-helm-bapi
+  - name: AZUREBLOBSTORAGE__CONTAINERNAME
+    value: buyingcatalogue-development-helm-documents
+  - group: dev-secrets
 
 steps:
 - task: UseDotNet@2
@@ -24,23 +33,6 @@ steps:
   inputs:
     command: 'build'
     Dockerfile: 'Dockerfile'
-
-#- task: AzureKeyVault@1
-#  inputs:
-#    azureSubscription: 'NHSAPP-BuyingCatalogue (Non-Prod)'
-#    KeyVaultName: 'gpitfutures-dev-kv'
-#    SecretsFilter: '*'
-    
-#- task: A8515EC8-7254-4FFD-912C-86772E2B5962@3
-#  inputs:
-#    targetFiles: '**/*.json'
-#    encoding: 'auto'
-#    writeBOM: true
-#    actionOnMissing: 'continue'
-#    keepToken: true
-#    tokenPrefix: '#{'
-#    tokenSuffix: '}#'
-#    emptyValue: 
 
 #- task: CopyFiles@2
 #  enabled: false
@@ -68,9 +60,11 @@ steps:
 #      docker-compose rm -f &&
 #      docker-compose up --scale chrome=4 --scale firefox=4  -d
     
-#- task: DotNetCoreCLI@2
+#- bash: |
+#    export DB__PASSWORD="$(gpitfuturesdevdbpassword)"
+#    export AZUREBLOBSTORAGE__CONNECTIONSTRING="$(gpitdevstorageaccountconnectionstring)"
+#    
+#    dotnet test src/NHSDPublicBrowseAcceptanceTests.Tests/*.csproj -v n
+#  name: runTests
 #  displayName: Run Acceptance Tests
-#  inputs:
-#    command: 'test'
-#    projects: 'src/NHSDPublicBrowseAcceptanceTests.Tests/*.csproj'
-#    arguments: '-v n'
+

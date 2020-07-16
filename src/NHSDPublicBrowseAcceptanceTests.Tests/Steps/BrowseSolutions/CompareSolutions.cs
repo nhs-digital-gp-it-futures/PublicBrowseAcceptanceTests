@@ -1,13 +1,7 @@
 ﻿using FluentAssertions;
 using NHSDPublicBrowseAcceptanceTests.Actions.Utils;
 using NHSDPublicBrowseAcceptanceTests.Tests.Utils;
-using OpenQA.Selenium;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using TechTalk.SpecFlow;
 
 namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
@@ -15,13 +9,13 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
     [Binding]
     public class CompareSolutions
     {
-        private readonly ScenarioContext _context;
         private readonly UITest _test;
+        private readonly Settings _settings;
 
-        public CompareSolutions(UITest test, ScenarioContext context)
+        public CompareSolutions(UITest test, Settings settings)
         {
             _test = test;
-            _context = context;
+            _settings = settings;
         }
 
         [Then(@"the compare all solutions tile is displayed")]
@@ -43,8 +37,8 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
             _test.Pages.SolutionsList.CompareSolutionsButtonIsDisplayed().Should().BeTrue();
             var url = _test.Pages.SolutionsList.GetCompareSolutionsButtonUrl();
             var localFileName = "compare-solutions.xlsx";
-            var client = DownloadFileUtility.DownloadFile(localFileName, _test.DownloadPath, url, DownloadFileUtility.GetHeadersFromDriver(_test.Driver));
-            var downloadedFile = Path.Combine(_test.DownloadPath, localFileName);
+            var client = DownloadFileUtility.DownloadFile(localFileName, _settings.DownloadPath, url, DownloadFileUtility.GetHeadersFromDriver(_test.Driver));
+            var downloadedFile = Path.Combine(_settings.DownloadPath, localFileName);
             new FileInfo(downloadedFile).Length.Should().BeGreaterThan(0);
             File.ReadAllBytes(downloadedFile).Length.Should().BeGreaterThan(0);
             client.ResponseHeaders.Get("Content-Type").Should().ContainEquivalentOf("spreadsheetml");
