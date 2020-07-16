@@ -40,7 +40,9 @@ steps:
 #    ArtifactName: 'drop'
 #    publishLocation: 'Container'
       
-- bash: "curl -k -i $(PBURL) --fail --connect-timeout 30"
+- bash: |
+    echo "51.11.46.27    $PBURL" | sudo tee -a /etc/hosts
+    curl -k -i $(PBURL) --fail --connect-timeout 30
   displayName: 'Check URL is reachable'
 
 - task: Bash@3
@@ -55,11 +57,12 @@ steps:
 - bash: |
     docker run \
       --env PBURL="$PBURL" \
-      --env BROWSER="$BROWSER"
+      --env BROWSER="$BROWSER" \
+      --env HUBURL="http://host.docker.internal:4444/wd/hub" \
       --env DB__SERVERURL="$DB__SERVERURL" \
       --env DB__DATABASENAME="$DB__DATABASENAME" \
-      --env DB__PASSWORD="$(gpitfuturesdevdbpassword)"
-      --env AZUREBLOBSTORAGE__CONNECTIONSTRING="$(gpitdevstorageaccountconnectionstring)"
+      --env DB__PASSWORD="$(gpitfuturesdevdbpassword)" \
+      --env AZUREBLOBSTORAGE__CONNECTIONSTRING="$(gpitdevstorageaccountconnectionstring)" \
       --env AZUREBLOBSTORAGE__CONTAINERNAME="$AZUREBLOBSTORAGE__CONTAINERNAME" \
       pb-ac-tests
   name: runTests
