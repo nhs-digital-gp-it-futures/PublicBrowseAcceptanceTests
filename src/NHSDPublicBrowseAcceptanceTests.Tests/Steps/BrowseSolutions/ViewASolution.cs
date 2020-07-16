@@ -17,12 +17,14 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
         private const string dateFormat = "dd MMMM yyyy";
         private readonly ScenarioContext _context;
         private readonly UITest _test;
-        private string expectedLastUpdatedDate;
+        private readonly Settings _settings;
+        private string _expectedLastUpdatedDate;
 
-        public ViewASolution(UITest test, ScenarioContext context)
+        public ViewASolution(UITest test, ScenarioContext context, Settings settings)
         {
             _test = test;
             _context = context;
+            _settings = settings;
         }
 
         [Given(@"that a User views a Solution")]
@@ -66,7 +68,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
         [StepDefinition(@"the User is viewing the Solution Page")]
         public void WhenTheUserIsViewingTheSolutionPage()
         {
-            _test.Pages.ViewASolution.PageDisplayed(_test.Url);
+            _test.Pages.ViewASolution.PageDisplayed(_settings.PublicBrowseUrl);
             var id = _test.Pages.ViewASolution.GetSolutionId();
             _test.Solution = new Solution {Id = id}.Retrieve(_test.ConnectionString);
             _test.CatalogueItem = new CatalogueItem { CatalogueItemId = id }.Retrieve(_test.ConnectionString);
@@ -191,7 +193,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
             var updatedDate = DateTime.Now;
 
             // Use long variant of date (i.e. 12 December 2019)
-            expectedLastUpdatedDate = ConvertDateToLongDateTime(updatedDate);
+            _expectedLastUpdatedDate = ConvertDateToLongDateTime(updatedDate);
 
             var whereKey = tableName.Equals("Solution") ? "Id" : "SolutionId";
 
@@ -207,7 +209,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
 
             var convertedDate = ConvertDateToLongDateTime(actualLastUpdated);
 
-            convertedDate.Should().Be(expectedLastUpdatedDate);
+            convertedDate.Should().Be(_expectedLastUpdatedDate);
         }
 
         [Then(@"Features")]

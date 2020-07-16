@@ -7,7 +7,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Utils
     public class Settings
     {
         public string HubUrl { get; }
-        public string PbUrl { get; }
+        public string PublicBrowseUrl { get; }
         public string DownloadPath { get; }
         public string Browser { get; }
         public AzureBlobStorageSettings AzureBlobStorageSettings { get; }
@@ -16,7 +16,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Utils
         public Settings(IConfiguration config)
         {
             HubUrl = config.GetValue<string>("hubUrl");
-            PbUrl = config.GetValue<string>("pbUrl");
+            PublicBrowseUrl = config.GetValue<string>("pbUrl");
             DownloadPath = Path.Combine(Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), config.GetValue<string>("downloadDirectory"));
             Browser = config.GetValue<string>("browser");
             AzureBlobStorageSettings = config.GetSection("azureBlobStorage").Get<AzureBlobStorageSettings>();

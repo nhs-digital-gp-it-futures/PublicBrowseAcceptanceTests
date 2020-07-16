@@ -33,7 +33,6 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps
         public async Task AfterScenario()
         {
             var test = _objectContainer.Resolve<UITest>();
-            test.Driver.Close();
             test.Driver.Quit();
 
             if (_context.ContainsKey("DeleteSolution") && (bool)_context["DeleteSolution"])

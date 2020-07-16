@@ -12,31 +12,23 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Utils
         internal AzureBlobStorage AzureBlobStorage;
         internal string ConnectionString;
         internal List<SolutionContactDetails> ContactDetails = new List<SolutionContactDetails>();
-        internal string DefaultAzureBlobStorageContainerName;
-        internal string DownloadPath;
         internal IWebDriver Driver;
         internal PageActionCollection Pages;
         internal Solution Solution;
         internal CatalogueItem CatalogueItem;
-        internal string Url;
-        internal Settings Settings;
 
         public UITest(Settings settings, BrowserFactory browserFactory)
         {
-            Settings = settings;
-
             ConnectionString = settings.DatabaseSettings.ConnectionString;
             AzureBlobStorage = new AzureBlobStorage(settings.AzureBlobStorageSettings.ConnectionString);
 
-            DefaultAzureBlobStorageContainerName = settings.AzureBlobStorageSettings.ContainerName;
-            DownloadPath = settings.DownloadPath;
-            Url = settings.PbUrl;
+            var publicBrowseUrl = settings.PublicBrowseUrl;
 
             Driver = browserFactory.Driver;
 
             Pages = new PageActions(Driver).PageActionCollection;
 
-            Driver.Navigate().GoToUrl(Url);
+            Driver.Navigate().GoToUrl(publicBrowseUrl);
         }
     }
 }
