@@ -14,6 +14,12 @@ variables:
     value: 'Release'
   - name: BROWSER
     value: chrome
+  - name: DB__SERVERURL
+    value: gpitfutures-dev-sql-pri.database.windows.net
+  - name: DB__DATABASENAME
+    value: bc-buyingcatalogue-development-helm-bapi
+  - name: AZUREBLOBSTORAGE__CONTAINERNAME
+    value: buyingcatalogue-development-helm-documents
   - group: dev-secrets
 
 steps:
@@ -73,12 +79,9 @@ steps:
       docker-compose -f docker-compose.yml -f domain.yml up --scale chrome=4 --scale firefox=4  -d
     
 - bash: |
-    export DB__SERVERURL=gpitfutures-dev-sql-pri.database.windows.net
-    export DB__DATABASENAME=bc-buyingcatalogue-development-helm-bapi
     export DB__PASSWORD="$(gpitfuturesdevdbpassword)"
     export AZUREBLOBSTORAGE__CONNECTIONSTRING="$(gpitdevstorageaccountconnectionstring)"
-    export AZUREBLOBSTORAGE__CONTAINERNAME=buyingcatalogue-development-helm-documents
-
+    
     dotnet test src/NHSDPublicBrowseAcceptanceTests.Tests/*.csproj -v n
   name: runTests
   displayName: Run Acceptance Tests
