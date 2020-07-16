@@ -1,9 +1,7 @@
-# ASP.NET Core
-# Build and test ASP.NET Core projects targeting .NET Core.
-# Add steps that run tests, create a NuGet package, deploy, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
-
 trigger:
+- development
+
+pr:
 - development
 
 pool:
@@ -23,16 +21,11 @@ variables:
   - group: dev-secrets
 
 steps:
-- task: UseDotNet@2
-  displayName: 'Use DotNet Core 3.1'
-  inputs:
-    version: '3.1.x'
-    includePreviewVersions: false
-
 - task: Docker@2
   inputs:
     command: 'build'
     Dockerfile: 'Dockerfile'
+    tags: 'pb-ac-tests'
 
 #- task: CopyFiles@2
 #  enabled: false
@@ -47,24 +40,39 @@ steps:
 #    ArtifactName: 'drop'
 #    publishLocation: 'Container'
       
-#- bash: 
-#    "curl -k -i $(PBURL) --fail --connect-timeout 30"
-#  displayName: 'Check URL is reachable'
+- bash: "curl -k -i $(PBURL) --fail --connect-timeout 30"
+  displayName: 'Check URL is reachable'
 
-#- task: Bash@3
-#  displayName: Selenium Grid Setup
-#  inputs:
-#    targetType: 'inline'
-#    script: |
-#      docker-compose stop &&
-#      docker-compose rm -f &&
-#      docker-compose up --scale chrome=4 --scale firefox=4  -d
-    
-#- bash: |
-#    export DB__PASSWORD="$(gpitfuturesdevdbpassword)"
-#    export AZUREBLOBSTORAGE__CONNECTIONSTRING="$(gpitdevstorageaccountconnectionstring)"
-#    
-#    dotnet test src/NHSDPublicBrowseAcceptanceTests.Tests/*.csproj -v n
-#  name: runTests
-#  displayName: Run Acceptance Tests
+- task: Bash@3
+  displayName: Selenium Grid Setup
+  inputs:
+    targetType: 'inline'
+    script: |
+      docker-compose stop &&
+      docker-compose rm -f &&
+      docker-compose up --scale chrome=4 --scale firefox=4 -d
+
+- bash: |
+    docker run \
+      --env PBURL="$PBURL" \
+      --env BROWSER="$BROWSER"
+      --env DB__SERVERURL="$DB__SERVERURL" \
+      --env DB__DATABASENAME="$DB__DATABASENAME" \
+      --env DB__PASSWORD="$(gpitfuturesdevdbpassword)"
+      --env AZUREBLOBSTORAGE__CONNECTIONSTRING="$(gpitdevstorageaccountconnectionstring)"
+      --env AZUREBLOBSTORAGE__CONTAINERNAME="$AZUREBLOBSTORAGE__CONTAINERNAME" \
+      pb-ac-tests
+  name: runTests
+  displayName: Run Acceptance Tests
+
+- task: Docker@2
+  displayName: Push image
+#  condition: eq(variables['Build.SourceBranch'], 'refs/heads/development')
+  inputs:
+    azureSubscription: 'NHSAPP-BuyingCatalogue (Non-Prod)'
+    azureContainerRegistry: '{"loginServer":"gpitfuturesdevacr.azurecr.io", "id" : "/subscriptions/7b12a8a2-f06f-456f-b6f9-aa2d92e0b2ec/resourceGroups/gpitfutures-dev-rg-acr/providers/Microsoft.ContainerRegistry/registries/gpitfuturesdevacr"}'
+    repository: 'pb-ac-tests'
+    command: push
+
+
 
