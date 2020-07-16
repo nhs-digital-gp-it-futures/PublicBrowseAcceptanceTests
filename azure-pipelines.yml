@@ -21,12 +21,15 @@ variables:
   - group: dev-secrets
 
 steps:
-- task: Docker@2
-  inputs:
-    command: 'build'
-    Dockerfile: 'Dockerfile'
-    tags: 'pb-ac-tests'
+# - task: Docker@2
+#   inputs:
+#     command: 'build'
+#     Dockerfile: 'Dockerfile'
+#     tags: 'pb-ac-tests'
 
+- bash: 'docker build . -t pb-ac-tests'
+  name: dockerBuild
+  displayName: Build docker image
 #- task: CopyFiles@2
 #  enabled: false
 #  inputs:
