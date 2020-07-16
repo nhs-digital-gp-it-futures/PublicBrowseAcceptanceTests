@@ -7,13 +7,13 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.LayoutComponents
     [Binding]
     public sealed class Header
     {
-        private readonly ScenarioContext _context;
         private readonly UITest _test;
+        private readonly Settings _settings;
 
-        public Header(UITest test, ScenarioContext context)
+        public Header(UITest test, Settings settings)
         {
             _test = test;
-            _context = context;
+            _settings = settings;
         }
 
         [Then(@"the Header is presented")]
@@ -38,7 +38,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.LayoutComponents
         [Then(@"they are directed to the domain URL")]
         public void ThenTheyAreDirectedToTheDomainURL()
         {
-            _test.Pages.Common.GetUrl().Should().Be(_test.Url + '/');
+            _test.Pages.Common.GetUrl().Should().Be(_settings.PublicBrowseUrl + '/');
         }
 
         [Then(@"a Terms of use banner is displayed")]

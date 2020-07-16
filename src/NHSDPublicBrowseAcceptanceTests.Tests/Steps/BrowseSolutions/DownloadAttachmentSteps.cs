@@ -19,11 +19,13 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
         private const string roadmapDownloadFile = "downloadedRoadmap.pdf";
         private readonly ScenarioContext _context;
         private readonly UITest _test;
+        private readonly Settings _settings;
 
-        public DownloadAttachmentSteps(UITest test, ScenarioContext context)
+        public DownloadAttachmentSteps(UITest test, ScenarioContext context, Settings settings)
         {
             _test = test;
             _context = context;
+            _settings = settings;
         }
 
         [Given(@"that a new Solution has been created to view attachments")]
@@ -45,7 +47,7 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
         {
             new ViewSolutionsList(_test, _context).GivenThatAUserHasChosenToViewAListOfAllSolutions();
             _test.Pages.SolutionsList.OpenNamedSolution(_test.CatalogueItem.Name);
-            _test.Pages.ViewASolution.PageDisplayed(_test.Url);
+            _test.Pages.ViewASolution.PageDisplayed(_settings.PublicBrowseUrl);
         }
 
         [Given(
@@ -58,7 +60,7 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
             fileName = documentType.ToLower() + ".pdf";
             var path = Path.Combine(Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), "Azure", "SampleData",
                 fileName);
-            await _test.AzureBlobStorage.InsertFileToStorage(_test.DefaultAzureBlobStorageContainerName,
+            await _test.AzureBlobStorage.InsertFileToStorage(_settings.AzureBlobStorageSettings.ContainerName,
                 _test.Solution.Id, fileName, path);
         }
 
@@ -72,7 +74,7 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
         public void WhenTheUserChoosesToDownloadTheAuthorityProvidedDataDocument()
         {
             var url = _test.Pages.ViewASolution.GetAttachmentDownloadLinkUrl();
-            var client = DownloadFileUtility.DownloadFile(providedDataDocumentDownloadFile, _test.DownloadPath, url, DownloadFileUtility.GetHeadersFromDriver(_test.Driver));
+            var client = DownloadFileUtility.DownloadFile(providedDataDocumentDownloadFile, _settings.DownloadPath, url, DownloadFileUtility.GetHeadersFromDriver(_test.Driver));
             _context.Add("ResponseHeaderContentType", client.ResponseHeaders.Get("Content-Type"));
         }
 
@@ -80,7 +82,7 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
         public void WhenTheUserChoosesToDownloadTheIntegrationsAttachment()
         {
             var url = _test.Pages.ViewASolution.GetNhsAssuredIntegrationsDownloadLinkUrl();
-            var client = DownloadFileUtility.DownloadFile(integrationsDownloadFile, _test.DownloadPath, url, DownloadFileUtility.GetHeadersFromDriver(_test.Driver));
+            var client = DownloadFileUtility.DownloadFile(integrationsDownloadFile, _settings.DownloadPath, url, DownloadFileUtility.GetHeadersFromDriver(_test.Driver));
             _context.Add("ResponseHeaderContentType", client.ResponseHeaders.Get("Content-Type"));
         }
 
@@ -88,28 +90,28 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
         public void WhenTheUserChoosesToDownloadTheRoadmapAttachment()
         {
             var url = _test.Pages.ViewASolution.GetRoadmapDownloadLinkUrl();
-            var client = DownloadFileUtility.DownloadFile(roadmapDownloadFile, _test.DownloadPath, url, DownloadFileUtility.GetHeadersFromDriver(_test.Driver));
+            var client = DownloadFileUtility.DownloadFile(roadmapDownloadFile, _settings.DownloadPath, url, DownloadFileUtility.GetHeadersFromDriver(_test.Driver));
             _context.Add("ResponseHeaderContentType", client.ResponseHeaders.Get("Content-Type"));
         }
 
         [Then(@"the Authority Provided Data Document is downloaded")]
         public void ThenTheAuthorityProvidedDataDocumentIsDownloaded()
         {
-            var downloadedFile = Path.Combine(_test.DownloadPath, providedDataDocumentDownloadFile);
+            var downloadedFile = Path.Combine(_settings.DownloadPath, providedDataDocumentDownloadFile);
             File.Exists(downloadedFile).Should().BeTrue();
         }
 
         [Then(@"the Integrations attachment is downloaded")]
         public void ThenTheIntegrationsAttachmentIsDownloaded()
         {
-            var downloadedFile = Path.Combine(_test.DownloadPath, integrationsDownloadFile);
+            var downloadedFile = Path.Combine(_settings.DownloadPath, integrationsDownloadFile);
             File.Exists(downloadedFile).Should().BeTrue();
         }
 
         [Then(@"the Roadmap attachment is downloaded")]
         public void ThenTheRoadmapAttachmentIsDownloaded()
         {
-            var downloadedFile = Path.Combine(_test.DownloadPath, roadmapDownloadFile);
+            var downloadedFile = Path.Combine(_settings.DownloadPath, roadmapDownloadFile);
             File.Exists(downloadedFile).Should().BeTrue();
         }
 
@@ -118,10 +120,10 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
         {
             var sourceFile = Path.Combine(Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), "Azure",
                 "SampleData", "authority provided solution document.pdf");
-            var downloadedFile = Path.Combine(_test.DownloadPath, providedDataDocumentDownloadFile);
+            var downloadedFile = Path.Combine(_settings.DownloadPath, providedDataDocumentDownloadFile);
             DownloadFileUtility.CompareTwoFiles(downloadedFile, sourceFile).Should().BeTrue();
-            var ResponseHeaderContentType = (string)_context["ResponseHeaderContentType"];
-            ResponseHeaderContentType.Should().ContainEquivalentOf("pdf");
+            var responseHeaderContentType = (string)_context["ResponseHeaderContentType"];
+            responseHeaderContentType.Should().ContainEquivalentOf("pdf");
         }
 
         [Then(@"the attachment contains the Supplier's NHS Assured Integrations")]
@@ -129,10 +131,10 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
         {
             var sourceFile = Path.Combine(Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), "Azure",
                 "SampleData", "integrations.pdf");
-            var downloadedFile = Path.Combine(_test.DownloadPath, integrationsDownloadFile);
+            var downloadedFile = Path.Combine(_settings.DownloadPath, integrationsDownloadFile);
             DownloadFileUtility.CompareTwoFiles(downloadedFile, sourceFile).Should().BeTrue();
-            var ResponseHeaderContentType = (string)_context["ResponseHeaderContentType"];
-            ResponseHeaderContentType.Should().ContainEquivalentOf("pdf");
+            var responseHeaderContentType = (string)_context["ResponseHeaderContentType"];
+            responseHeaderContentType.Should().ContainEquivalentOf("pdf");
         }
 
         [Then(@"the attachment contains the Supplier's Roadmap")]
@@ -140,10 +142,10 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
         {
             var sourceFile = Path.Combine(Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), "Azure",
                 "SampleData", "roadmap.pdf");
-            var downloadedFile = Path.Combine(_test.DownloadPath, roadmapDownloadFile);
+            var downloadedFile = Path.Combine(_settings.DownloadPath, roadmapDownloadFile);
             DownloadFileUtility.CompareTwoFiles(downloadedFile, sourceFile).Should().BeTrue();
-            var ResponseHeaderContentType = (string)_context["ResponseHeaderContentType"];
-            ResponseHeaderContentType.Should().ContainEquivalentOf("pdf");
+            var responseHeaderContentType = (string)_context["ResponseHeaderContentType"];
+            responseHeaderContentType.Should().ContainEquivalentOf("pdf");
         }
 
         [Then(@"there is no call to action to download a file in the Integrations section")]
