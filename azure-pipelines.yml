@@ -21,46 +21,22 @@ variables:
   - group: dev-secrets
 
 steps:
-# - task: Docker@2
-#   inputs:
-#     command: 'build'
-#     Dockerfile: 'Dockerfile'
-#     tags: 'pb-ac-tests'
-
 - bash: 'docker build . -t pb-ac-tests'
   name: dockerBuild
   displayName: Build docker image
-#- task: CopyFiles@2
-#  enabled: false
-#  inputs:
-#    Contents: '**'
-#    TargetFolder: '$(Build.ArtifactStagingDirectory)'
-    
-#- task: PublishBuildArtifacts@1
-#  enabled: false
-#  inputs:
-#    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-#    ArtifactName: 'drop'
-#    publishLocation: 'Container'
-      
+
 - bash: |
     PBHOSTURL=$(echo "${PBURL#'https://'}")
     echo "51.11.46.27    $PBHOSTURL" | sudo tee -a /etc/hosts
     curl -k -i $(PBURL) --fail --connect-timeout 30
   displayName: 'Check URL is reachable'
 
-- task: Bash@3
+- bash: |
+    export PBHOSTURL=$(echo "${PBURL#'https://'}")
+    docker-compose stop &&
+    docker-compose rm -f &&
+    docker-compose up --scale chrome=4 -d
   displayName: Selenium Grid Setup
-  inputs:
-    targetType: 'inline'
-    script: |
-      export PBHOSTURL=$(echo "${PBURL#'https://'}")
-      docker-compose stop &&
-      docker-compose rm -f &&
-      docker-compose up --scale chrome=4 -d
-      sleep 30
-      docker-compose logs
-
 - bash: |
     docker run \
       --env PBURL="$PBURL" \
@@ -81,7 +57,7 @@ steps:
   inputs:
     azureSubscription: 'NHSAPP-BuyingCatalogue (Non-Prod)'
     azureContainerRegistry: '{"loginServer":"gpitfuturesdevacr.azurecr.io", "id" : "/subscriptions/7b12a8a2-f06f-456f-b6f9-aa2d92e0b2ec/resourceGroups/gpitfutures-dev-rg-acr/providers/Microsoft.ContainerRegistry/registries/gpitfuturesdevacr"}'
-    repository: 'pb-ac-tests'
+    repository: 'pb-ac-tests:latest'
     command: push
 
 
