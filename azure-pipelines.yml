@@ -37,7 +37,18 @@ steps:
     docker-compose stop &&
     docker-compose rm -f &&
     docker-compose up --scale chrome=4 -d
-    sleep 30
+    
+    n=0
+    until [ "$n" -ge 30 ]
+    do
+      status=$(docker inspect --format "{{json .State.Health.Status }}" publicbrowseacceptancetests_chrome_1 | tr -d '"')
+      
+      if [ "$status" = "healthy" ]; then exit 0; fi
+      n=$((n+1)) 
+      sleep 1
+    done
+
+    exit 1
   displayName: Selenium Grid Setup
 
 - bash: |
