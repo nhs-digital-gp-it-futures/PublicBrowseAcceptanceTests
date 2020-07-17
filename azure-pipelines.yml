@@ -36,7 +36,9 @@ steps:
     docker-compose stop &&
     docker-compose rm -f &&
     docker-compose up --scale chrome=4 -d
+    sleep 30
   displayName: Selenium Grid Setup
+
 - bash: |
     docker run \
       --env PBURL="$PBURL" \
