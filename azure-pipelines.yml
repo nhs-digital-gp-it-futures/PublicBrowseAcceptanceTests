@@ -57,10 +57,10 @@ steps:
   displayName: Push image
 #  condition: eq(variables['Build.SourceBranch'], 'refs/heads/development')
   inputs:
-    azureSubscription: 'NHSAPP-BuyingCatalogue (Non-Prod)'
-    azureContainerRegistry: '{"loginServer":"gpitfuturesdevacr.azurecr.io", "id" : "/subscriptions/7b12a8a2-f06f-456f-b6f9-aa2d92e0b2ec/resourceGroups/gpitfutures-dev-rg-acr/providers/Microsoft.ContainerRegistry/registries/gpitfuturesdevacr"}'
-    repository: 'pb-ac-tests:latest'
-    command: push
+    containerRegistry: 'gpitfuturesdevacr'
+    repository: 'pb-ac-tests'
+    command: 'push'
+    addPipelineData: false
 
 
 
