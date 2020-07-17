@@ -45,7 +45,7 @@ steps:
       firstNode=$(echo $chromeNodeNames | cut -d" " -f2)
       status=$(docker inspect --format "{{json .State.Health.Status }}" "$firstNode" | tr -d '"')
       
-      if [ "$status" = "healthy" ]; then exit 0; fi
+      if [ "$status" = "healthy" ]; then echo "Selenium grid is ready" && exit 0; fi
       n=$((n+1)) 
       sleep 1
     done
