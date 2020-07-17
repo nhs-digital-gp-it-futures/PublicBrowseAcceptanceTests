@@ -14,12 +14,7 @@ services:
     environment:
       - HUB_HOST=selenium-hub
       - HUB_PORT=4444
-  firefox:
-    image: selenium/node-firefox
-    volumes:
-      - /dev/shm:/dev/shm
-    depends_on:
-      - selenium-hub
-    environment:
-      - HUB_HOST=selenium-hub
-      - HUB_PORT=4444
+    entrypoint: 
+      - /bin/sh
+      - -c 
+      - ip -4 route list match 0/0 | awk '{print $$3" host.docker.internal"}' >> /etc/hosts && echo "51.11.46.27    $$PBHOSTURL" >> /etc/hosts && cat /etc/hosts && /opt/bin/entry_point.sh 
