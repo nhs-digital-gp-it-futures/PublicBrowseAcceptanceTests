@@ -54,7 +54,7 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      PBHOSTURL=$(echo "${PBURL#'https://'}")
+      export PBHOSTURL=$(echo "${PBURL#'https://'}")
       docker-compose stop &&
       docker-compose rm -f &&
       docker-compose up --scale chrome=4 -d
