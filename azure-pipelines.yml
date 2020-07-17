@@ -16,20 +16,15 @@ variables:
     value: gpitfutures-dev-sql-pri.database.windows.net
   - name: DB__DATABASENAME
     value: bc-buyingcatalogue-development-helm-bapi
+  - name: DB__PASSWORD
+    value: "$(gpitfuturesdevdbpassword)"  
   - name: AZUREBLOBSTORAGE__CONTAINERNAME
     value: buyingcatalogue-development-helm-documents
+  - name: AZUREBLOBSTORAGE__CONNECTIONSTRING
+    value: "$(gpitdevstorageaccountconnectionstring)"
   - group: dev-secrets
 
 steps:
-- task: Docker@2
-  inputs:
-    containerRegistry: 'gpitfuturesdevacr'
-    repository: 'nhsd/buying-catalogue/pb-ac-tests'
-    command: 'buildAndPush'
-    Dockerfile: '**/Dockerfile'
-    tags: latest
-    addPipelineData: false
-    
 - bash: |
     PBHOSTURL=$(echo "${PBURL#'https://'}")
     echo "51.11.46.27    $PBHOSTURL" | sudo tee -a /etc/hosts
@@ -44,20 +39,20 @@ steps:
     sleep 30
   displayName: Selenium Grid Setup
 
-- bash: |
-    docker run \
-      --env PBURL="$PBURL" \
-      --env BROWSER="$BROWSER" \
-      --env HUBURL="http://host.docker.internal:4444/wd/hub" \
-      --env DB__SERVERURL="$DB__SERVERURL" \
-      --env DB__DATABASENAME="$DB__DATABASENAME" \
-      --env DB__PASSWORD="$(gpitfuturesdevdbpassword)" \
-      --env AZUREBLOBSTORAGE__CONNECTIONSTRING="$(gpitdevstorageaccountconnectionstring)" \
-      --env AZUREBLOBSTORAGE__CONTAINERNAME="$AZUREBLOBSTORAGE__CONTAINERNAME" \
-      nhsd/buying-catalogue/pb-ac-tests
-  name: runTests
+- task: DotNetCoreCLI@2
   displayName: Run Acceptance Tests
+  inputs:
+    command: 'test'
+    projects: 'src/NHSDPublicBrowseAcceptanceTests.Tests/*.csproj'
+    arguments: '-v n'
 
-
+- task: Docker@2
+  inputs:
+    containerRegistry: 'gpitfuturesdevacr'
+    repository: 'nhsd/buying-catalogue/pb-ac-tests'
+    command: 'buildAndPush'
+    Dockerfile: '**/Dockerfile'
+    tags: latest
+    addPipelineData: false
 
 
