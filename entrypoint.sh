@@ -6,6 +6,6 @@ echo "Resolved address for $PBURL"
 ip -4 route list match 0/0 | awk '{print $3" host.docker.internal"}' >> /etc/hosts
 echo "Resolved address for host.docker.internal"
 
-apk add curl && curl -k -i $(PBURL) --fail --connect-timeout 30
+apk add curl && curl -k -i $PBURL --fail --connect-timeout 30
 
 dotnet test out/NHSDPublicBrowseAcceptanceTests.Tests.dll -v n
