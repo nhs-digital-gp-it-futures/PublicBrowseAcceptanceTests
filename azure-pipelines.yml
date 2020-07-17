@@ -37,7 +37,9 @@ steps:
     docker-compose stop &&
     docker-compose rm -f &&
     docker-compose up --scale chrome=4 -d
-    
+
+    docker ps -a
+    sleep 30 && exit 0
     n=0
     until [ "$n" -ge 30 ]
     do
