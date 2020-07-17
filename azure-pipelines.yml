@@ -21,10 +21,15 @@ variables:
   - group: dev-secrets
 
 steps:
-- bash: 'docker build . -t pb-ac-tests'
-  name: dockerBuild
-  displayName: Build docker image
-
+- task: Docker@2
+  inputs:
+    containerRegistry: 'gpitfuturesdevacr'
+    repository: 'nhsd/buying-catalogue/pb-ac-tests'
+    command: 'buildAndPush'
+    Dockerfile: '**/Dockerfile'
+    tags: latest
+    addPipelineData: false
+    
 - bash: |
     PBHOSTURL=$(echo "${PBURL#'https://'}")
     echo "51.11.46.27    $PBHOSTURL" | sudo tee -a /etc/hosts
@@ -49,18 +54,10 @@ steps:
       --env DB__PASSWORD="$(gpitfuturesdevdbpassword)" \
       --env AZUREBLOBSTORAGE__CONNECTIONSTRING="$(gpitdevstorageaccountconnectionstring)" \
       --env AZUREBLOBSTORAGE__CONTAINERNAME="$AZUREBLOBSTORAGE__CONTAINERNAME" \
-      pb-ac-tests
+      nhsd/buying-catalogue/pb-ac-tests
   name: runTests
   displayName: Run Acceptance Tests
 
-- task: Docker@2
-  displayName: Push image
-#  condition: eq(variables['Build.SourceBranch'], 'refs/heads/development')
-  inputs:
-    containerRegistry: 'gpitfuturesdevacr'
-    repository: 'pb-ac-tests'
-    command: 'push'
-    addPipelineData: false
 
 
 
