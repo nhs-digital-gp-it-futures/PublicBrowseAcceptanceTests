@@ -24,13 +24,16 @@ variables:
 
 steps:
 - bash: |
-    PBHOSTURL=$(echo "${PBURL#'https://'}")
+    echo "##vso[task.setvariable variable=PBHOSTURL]$(echo "${PBURL#'https://'}")"
+  displayName: Set up PB Host URL
+
+- bash: |
     echo "51.11.46.27    $PBHOSTURL" | sudo tee -a /etc/hosts
     curl -k -i $(PBURL) --fail --connect-timeout 30
   displayName: 'Check URL is reachable'
 
 - bash: |
-    export PBHOSTURL=$(echo "${PBURL#'https://'}")
+    export PBHOSTURL
     docker-compose stop &&
     docker-compose rm -f &&
     docker-compose up --scale chrome=4 -d
@@ -45,6 +48,7 @@ steps:
   displayName: Run Acceptance Tests
   
 - task: Docker@2
+  condition: eq(variables['Build.SourceBranch'], 'refs/heads/development')
   inputs:
     containerRegistry: 'gpitfuturesdevacr'
     repository: 'nhsd/buying-catalogue/pb-ac-tests'
