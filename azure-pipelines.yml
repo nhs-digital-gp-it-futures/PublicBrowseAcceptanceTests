@@ -10,6 +10,8 @@ pool:
 variables:
   - name: buildConfiguration
     value: 'Release'
+  - name: MSBUILDSINGLELOADCONTEXT
+    value: '1'
   - name: BROWSER
     value: chrome
   - name: DB__SERVERURL
