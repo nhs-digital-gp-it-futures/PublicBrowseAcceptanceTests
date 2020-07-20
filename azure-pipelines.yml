@@ -23,6 +23,12 @@ variables:
   - group: dev-secrets
 
 steps:
+- task: UseGitVersion@5
+  name: gitversion
+  displayName: Work out version
+  inputs:
+    versionSpec: '5.x'
+
 - bash: |
     echo "##vso[task.setvariable variable=PBHOSTURL]$(echo "${PBURL#'https://'}")"
   displayName: Set up PB Host URL
@@ -39,10 +45,11 @@ steps:
     docker-compose up --scale chrome=4 -d
 
     n=0
+    chromeNodeNames=$(docker ps --filter "name=chrome" --format "table {{.Names}}")
+    firstNode=$(echo $chromeNodeNames | cut -d" " -f2)
+    
     until [ "$n" -ge 30 ]
     do
-      chromeNodeNames=$(docker ps --filter "name=chrome" --format "table {{.Names}}")
-      firstNode=$(echo $chromeNodeNames | cut -d" " -f2)
       status=$(docker inspect --format "{{json .State.Health.Status }}" "$firstNode" | tr -d '"')
       
       if [ "$status" = "healthy" ]; then echo "Selenium grid is ready" && exit 0; fi
@@ -62,13 +69,13 @@ steps:
   displayName: Run Acceptance Tests
   
 - task: Docker@2
-  condition: eq(variables['Build.SourceBranch'], 'refs/heads/development')
+#  condition: eq(variables['Build.SourceBranch'], 'refs/heads/development')
   inputs:
     containerRegistry: 'gpitfuturesdevacr'
     repository: 'nhsd/buying-catalogue/pb-ac-tests'
     command: 'buildAndPush'
     Dockerfile: '**/Dockerfile'
-    tags: latest
+    tags: "$(GitVersion.SemVer)"
     addPipelineData: false
 
 
