@@ -69,8 +69,7 @@ steps:
   displayName: Run Acceptance Tests
   
 - task: Docker@2
-#  condition: and(always(), eq(variables['Build.SourceBranch'], 'refs/heads/development'))
-  condition: always()
+  condition: and(always(), eq(variables['Build.SourceBranch'], 'refs/heads/development'))
   inputs:
     containerRegistry: 'gpitfuturesdevacr'
     repository: 'nhsd/buying-catalogue/pb-ac-tests'
