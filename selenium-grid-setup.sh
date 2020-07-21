@@ -3,7 +3,7 @@
 export PBHOSTURL
 docker-compose stop &&
 docker-compose rm -f &&
-docker-compose up --scale chrome=4 -d
+docker-compose -f "docker-compose.yml" -f "docker-compose-pipeline.yml" up --scale chrome=4 -d
 
 n=0
 chromeNodeNames=$(docker ps --filter "name=chrome" --format "table {{.Names}}")
