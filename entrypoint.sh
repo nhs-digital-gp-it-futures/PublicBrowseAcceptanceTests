@@ -1,9 +1,19 @@
 #!/bin/bash
 
+timeout=${SETUP_TIMEOUT:-600}
 additionalDotnetArgs=""
 
-ip -4 route list match 0/0 | awk '{print $3" host.docker.internal"}' >> /etc/hosts
-echo "Resolved address for host.docker.internal"
+n=0
+until [ "$n" -ge "$timeout" ]; do
+  httpStatusCode=$(curl -I -s --insecure $PBURL | cat | head -n 1 | cut -d" " -f2)
+
+  if [ "$httpStatusCode" = "200" ]; then echo "$PBURL was ready in $n seconds" && break; fi
+  n=$((n+1)) 
+  sleep 1
+done
+
+if [ "$n" -eq "$timeout" ]; then echo "$PBURL is not ready after $n seconds" && exit 1; fi
+
 
 if [ -n "${TEST_RESULT_DIR}" ]; then
   echo "Directing test results to '$TEST_RESULT_DIR'"
