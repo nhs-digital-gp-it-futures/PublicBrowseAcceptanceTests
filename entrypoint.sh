@@ -3,6 +3,8 @@
 timeout=${SETUP_TIMEOUT:-600}
 additionalDotnetArgs=""
 
+echo "Waiting for $PBURL to be ready..."
+
 n=0
 until [ "$n" -ge "$timeout" ]; do
   httpStatusCode=$(curl -I -s --insecure $PBURL | cat | head -n 1 | cut -d" " -f2)
