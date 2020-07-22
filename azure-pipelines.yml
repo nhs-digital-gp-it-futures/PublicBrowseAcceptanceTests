@@ -71,8 +71,7 @@ steps:
 
 - task: HelmInstaller@1
   displayName: 'Install helm'
-  #condition: and(always(), eq(variables['Build.SourceBranch'], 'refs/heads/development'))
-  condition: always()
+  condition: and(always(), eq(variables['Build.SourceBranch'], 'refs/heads/development'))
   inputs:
     helmVersionToInstall: 'latest'
 
@@ -83,8 +82,7 @@ steps:
         --app-version $(GitVersion.SemVer) \
         pb-ac-tests
   failOnStderr: true
-  #condition: and(always(), eq(variables['Build.SourceBranch'], 'refs/heads/development'))
-  condition: always()
+  condition: and(always(), eq(variables['Build.SourceBranch'], 'refs/heads/development'))
   name: helmPackage
   displayName: 'Helm package'
 
@@ -96,9 +94,8 @@ steps:
         -u "gpitfuturesdevacr" \
         -p $(gpitfuturesdevacr-pass) \
         $chartPackage      
-  failOnStderr: true
-  #condition: and(always(), eq(variables['Build.SourceBranch'], 'refs/heads/development'))
-  condition: always()
+  failOnStderr: false
+  condition: and(always(), eq(variables['Build.SourceBranch'], 'refs/heads/development'))
   name: helmPush
   displayName: 'Push helm chart to acr'
 
