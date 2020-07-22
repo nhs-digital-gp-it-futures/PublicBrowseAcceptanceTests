@@ -71,8 +71,11 @@ steps:
 
 - task: HelmInstaller@1
   displayName: 'Install helm'
+  #condition: and(always(), eq(variables['Build.SourceBranch'], 'refs/heads/development'))
+  condition: always()
   inputs:
     helmVersionToInstall: 'latest'
+
 - bash: |
     cd charts
     helm package \
@@ -80,8 +83,11 @@ steps:
         --app-version $(semVer) \
         pb-ac-tests
   failOnStderr: true
+  #condition: and(always(), eq(variables['Build.SourceBranch'], 'refs/heads/development'))
+  condition: always()
+  name: helmPackage
   displayName: 'Helm package'
-  
+
 - bash: |
     cd charts
     chartPackage=$(ls pb-ac-tests-*.tgz)
@@ -91,7 +97,10 @@ steps:
         -p $(gpitfuturesdevacr-pass) \
         $chartPackage      
   failOnStderr: true
+  #condition: and(always(), eq(variables['Build.SourceBranch'], 'refs/heads/development'))
+  condition: always()
   name: helmPush
   displayName: 'Push helm chart to acr'
+
 
 
