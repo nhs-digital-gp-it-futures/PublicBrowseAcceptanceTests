@@ -69,4 +69,29 @@ steps:
     tags: "$(GitVersion.SemVer)"
     addPipelineData: false
 
+- task: HelmInstaller@1
+  displayName: 'Install helm'
+  inputs:
+    helmVersionToInstall: 'latest'
+- bash: |
+    cd charts
+    helm package \
+        --version $(semVer) \
+        --app-version $(semVer) \
+        pb-ac-tests
+  failOnStderr: true
+  displayName: 'Helm package'
+  
+- bash: |
+    cd charts
+    chartPackage=$(ls pb-ac-tests-*.tgz)
+    az acr helm push --force \
+        -n "gpitfuturesdevacr" \
+        -u "gpitfuturesdevacr" \
+        -p $(gpitfuturesdevacr-pass) \
+        $chartPackage      
+  failOnStderr: true
+  name: helmPush
+  displayName: 'Push helm chart to acr'
+
 
