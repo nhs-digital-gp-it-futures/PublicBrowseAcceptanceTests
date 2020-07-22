@@ -79,8 +79,8 @@ steps:
 - bash: |
     cd charts
     helm package \
-        --version $(semVer) \
-        --app-version $(semVer) \
+        --version $(GitVersion.SemVer) \
+        --app-version $(GitVersion.SemVer) \
         pb-ac-tests
   failOnStderr: true
   #condition: and(always(), eq(variables['Build.SourceBranch'], 'refs/heads/development'))
