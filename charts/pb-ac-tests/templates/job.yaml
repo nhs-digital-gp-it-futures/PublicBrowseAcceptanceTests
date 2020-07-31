@@ -61,11 +61,11 @@ spec:
                 name: {{ .containerNameConfig.name }}
                 key: {{ .containerNameConfig.key }}
           {{- end }}  
-          {{- if .Values.testFilter -}}
+          {{- if .Values.testFilter }}
           - name: TEST_FILTER
             value: {{ .Values.testFilter | quote }}
           {{- end -}}
-          {{- if .Values.testResultDirectory -}}
+          {{- if .Values.testResultDirectory }}
           - name: TEST_RESULT_DIR
             value: {{ .Values.testResultDirectory | quote }}
           {{- end -}}
