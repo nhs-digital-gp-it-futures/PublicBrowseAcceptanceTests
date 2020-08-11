@@ -1,6 +1,5 @@
 {{- $name := include "pb-ac-tests.fullname" . -}}
 {{- $cfgname := printf "%s-%s" "cfg" $name -}}
-{{- $testStorageClaimName:= ternary (printf "bc-test-result-local-pvc") (printf "bc-test-result-remote-pvc") .Values.useLocalTestResultStorage -}}
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -19,7 +18,7 @@ spec:
       volumes:
         - name: test-result-storage
           persistentVolumeClaim:
-            claimName: {{ $testStorageClaimName }}
+            claimName: "bc-test-result-pvc"
       containers:
       - name: {{ .Chart.Name }}
         securityContext:
