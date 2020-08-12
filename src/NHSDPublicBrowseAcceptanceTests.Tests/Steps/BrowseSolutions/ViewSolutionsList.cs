@@ -22,7 +22,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
         [Given(@"that a User has chosen to view a list of all Solutions")]
         public void GivenThatAUserHasChosenToViewAListOfAllSolutions()
         {
-            //instantiated BrowseSolutions for reuse
+            //instantiated BrowseSolutions for reuse	
             var bs = new BrowseSolutions(_test, _context);
             bs.GivenIBrowseSolutions();
             bs.WhenTheUserChoosesToViewAllSolutions();
@@ -85,7 +85,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
         public void ThenCapabilityIsListedInTheSolutionCapabilities(string expectedCapabilityName)
         {
             var dbCount = SqlExecutor.ExecuteScalar(_test.ConnectionString, Queries.GetSolutionsWithCapabilityCount,
-                new {capabilityName = expectedCapabilityName});
+                new { capabilityName = expectedCapabilityName });
             var uiCount = _test.Pages.SolutionsList.GetSolutionsWithCapabilityCount(expectedCapabilityName);
             uiCount.Should().Be(dbCount);
         }
