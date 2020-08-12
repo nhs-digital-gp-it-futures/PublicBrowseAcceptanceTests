@@ -1,17 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="FluentAssertions" Version="5.9.0" />
+    <PackageReference Include="FluentAssertions" Version="5.10.2" />
     <PackageReference Include="Selenium.WebDriver" Version="3.141.0" />
+    <PackageReference Include="System.Collections" Version="4.3.0" />
     <PackageReference Include="xunit.abstractions" Version="2.0.3" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\NHSDPublicBrowseAcceptanceTests.Objects\NHSDPublicBrowseAcceptanceTests.Objects.csproj" />
+    <ProjectReference Include="..\NHSDPublicBrowseAcceptanceTests.TestData\NHSDPublicBrowseAcceptanceTests.TestData.csproj" />
   </ItemGroup>
 
 </Project>

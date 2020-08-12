@@ -1,18 +1,103 @@
-# ASP.NET Core
-# Build and test ASP.NET Core projects targeting .NET Core.
-# Add steps that run tests, create a NuGet package, deploy, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
-
 trigger:
+- development
+
+pr:
 - development
 
 pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-  buildConfiguration: 'Release'
+  - name: buildConfiguration
+    value: 'Release'
+  - name: dotnetVersion
+    value: '3.1.x'
+  - name: MSBUILDSINGLELOADCONTEXT
+    value: '1'
+  - name: BROWSER
+    value: chrome
+  - name: DB__SERVERURL
+    value: gpitfutures-dev-sql-pri.database.windows.net
+  - name: DB__DATABASENAME
+    value: bc-buyingcatalogue-development-helm-bapi
+  - name: AZUREBLOBSTORAGE__CONTAINERNAME
+    value: buyingcatalogue-development-helm-documents
+  - group: dev-secrets
 
 steps:
-- script: docker-compose up --scale chrome=4 -d
-  displayName: docker-compose
-- bash: export BROWSER=chrome && export PBURL=http://gpitfuturesdev.uksouth.cloudapp.azure.com/ && dotnet test src/ -v n
+- task: UseGitVersion@5
+  name: gitversion
+  displayName: Work out version
+  inputs:
+    versionSpec: '5.x'
+
+- task: UseDotNet@2
+  displayName: 'Use DotNet Core $(dotnetVersion)'
+  inputs:
+    version: $(dotnetVersion)
+    includePreviewVersions: false
+
+- bash: |
+    echo "##vso[task.setvariable variable=PBHOSTURL]$(echo "${PBURL#'https://'}")"
+  displayName: Set up PB Host URL
+
+- bash: |
+    echo "51.11.46.27    $PBHOSTURL" | sudo tee -a /etc/hosts
+    curl -k -i $(PBURL) --fail --connect-timeout 30
+  displayName: 'Check URL is reachable'
+
+- bash: |
+    ./selenium-grid-setup.sh
+    if [ $? -ne 0 ]; then exit 1; fi
+  displayName: Selenium Grid Setup
+
+- bash: |
+    export DB__PASSWORD="$(gpitfuturesdevdbpassword)" 
+    export AZUREBLOBSTORAGE__CONNECTIONSTRING="$(gpitdevstorageaccountconnectionstring)"
+
+    dotnet test src/NHSDPublicBrowseAcceptanceTests.Tests/*.csproj -v n
+  displayName: Run Acceptance Tests
+  
+- task: Docker@2
+  condition: and(always(), eq(variables['Build.SourceBranch'], 'refs/heads/development'))
+  displayName: Build and push docker image
+  inputs:
+    containerRegistry: 'gpitfuturesdevacr'
+    repository: 'nhsd/buying-catalogue/pb-ac-tests'
+    command: 'buildAndPush'
+    Dockerfile: '**/Dockerfile'
+    tags: "$(GitVersion.SemVer)"
+    addPipelineData: false
+
+- task: HelmInstaller@1
+  displayName: 'Install helm'
+  condition: and(always(), eq(variables['Build.SourceBranch'], 'refs/heads/development'))
+  inputs:
+    helmVersionToInstall: 'latest'
+
+- bash: |
+    cd charts
+    helm package \
+        --version $(GitVersion.SemVer) \
+        --app-version $(GitVersion.SemVer) \
+        pb-ac-tests
+  failOnStderr: true
+  condition: and(always(), eq(variables['Build.SourceBranch'], 'refs/heads/development'))
+  name: helmPackage
+  displayName: 'Helm package'
+
+- bash: |
+    cd charts
+    chartPackage=$(ls pb-ac-tests-*.tgz)
+    az acr helm push --force \
+        -n "gpitfuturesdevacr" \
+        -u "gpitfuturesdevacr" \
+        -p $(gpitfuturesdevacr-pass) \
+        $chartPackage      
+  failOnStderr: false
+  condition: and(always(), eq(variables['Build.SourceBranch'], 'refs/heads/development'))
+  name: helmPush
+  displayName: 'Push helm chart to acr'
+
+
+

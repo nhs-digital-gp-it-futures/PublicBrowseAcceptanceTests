@@ -1,4 +1,6 @@
-﻿using FluentAssertions;
+﻿using System.IO;
+using System.Net;
+using FluentAssertions;
 using OpenQA.Selenium;
 
 namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
@@ -10,8 +12,8 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
         }
 
         /// <summary>
-        /// Ensure the page has loaded fully
-        /// note; footer is the last element to fully render
+        ///     Ensure the page has loaded fully
+        ///     note; footer is the last element to fully render
         /// </summary>
         public void WaitForPageLoad()
         {
@@ -19,11 +21,16 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
         }
 
         /// <summary>
-        /// Click the NHS logo in the header
+        ///     Click the NHS logo in the header
         /// </summary>
         public void ClickLogo()
         {
             driver.FindElement(pages.Common.NHSLogo).Click();
+        }
+
+        public void PageDisplayed(string pageTitle)
+        {
+            driver.FindElement(pages.Common.PageTitle).Text.Should().Be(pageTitle);
         }
 
         public void URLContains(string href)
@@ -34,6 +41,14 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
         public string GetUrl()
         {
             return driver.Url;
+        }
+
+        public void DownloadFile(string fileName, string downloadPath, string downloadLink)
+        {
+            using (var client = new WebClient())
+            {
+                client.DownloadFile(downloadLink, Path.Combine(downloadPath, fileName));
+            }
         }
     }
 }

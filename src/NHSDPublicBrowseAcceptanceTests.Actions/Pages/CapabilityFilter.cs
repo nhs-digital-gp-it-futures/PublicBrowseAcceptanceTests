@@ -1,4 +1,9 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
+using FluentAssertions;
+using NHSDPublicBrowseAcceptanceTests.TestData.Capabilities;
+using NHSDPublicBrowseAcceptanceTests.TestData.Information;
+using NHSDPublicBrowseAcceptanceTests.TestData.Utils;
 using OpenQA.Selenium;
 
 namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
@@ -9,48 +14,40 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
         {
         }
 
-        /// <summary>
-        /// Get a capability name from the checkbox list
-        /// </summary>
-        /// <param name="index"></param>
-        /// <returns>Name of capability from checkbox label</returns>
-        public string GetCapabilityName(int index = 0)
+        public void CapbilityFilterDisplayed()
         {
-            var capability = driver.FindElements(pages.CapabilityFilter.Capabilities)[index];
-
-            return capability.FindElement(By.TagName("label")).Text.Trim();
+            wait.Until(d => d.FindElement(pages.CapabilityFilter.Capabilities).Displayed);
         }
 
-        /// <summary>
-        /// Toggle a capability checkbox and click Apply Filters
-        /// </summary>
-        /// <param name="capabilityName"></param>
-        public void ToggleFilter(string capabilityName)
+        public void ClickCapabilityContinueButton()
         {
-            var capabilities = driver.FindElements(pages.CapabilityFilter.Capabilities);
+            CapbilityFilterDisplayed();
+            driver.FindElement(pages.CapabilityFilter.ApplyCapabilityFilter).Click();
 
-            var capability = capabilities.First(s => s.Text == capabilityName);
-
-            capability.FindElement(By.TagName("input")).Click();
-
-            driver.FindElement(pages.CapabilityFilter.ApplyFilter).Click();
+            wait.Until(d => d.FindElement(pages.Common.GeneralPageTitle).Text == "Catalogue Solution – results");
         }
 
-        /// <summary>
-        /// Click the `Foundation only` button
-        /// </summary>
-        public void FoundationSolutionsFilter()
+        public void CapabilityNamesShown(IEnumerable<Capability> capabilities)
         {
-            driver.FindElement(pages.CapabilityFilter.ApplyFoundationFilter).Click();
+            var capabilityLabels = driver.FindElements(pages.CapabilityFilter.Capabilities)
+                .Select(s => s.FindElement(By.TagName("label")).Text);
+
+            capabilityLabels.Should().BeEquivalentTo(capabilities.Select(s => s.Name));
         }
 
-        public void SelectLastCapability()
+        public string SelectCapability(string connectionString)
         {
-            var capabilities = driver.FindElements(pages.CapabilityFilter.Capabilities);
+            wait.Until(d => driver.FindElement(pages.CapabilityFilter.Capabilities).Displayed);
+            var selectedCapabilities =
+                SqlExecutor.Execute<string>(connectionString, Queries.GetSelectedCapabilities, null);
 
-            var capName = GetCapabilityName(capabilities.Count - 1);
+            var randomCapabilityName = RandomInformation.GetRandomItem(selectedCapabilities);
 
-            ToggleFilter(capName);
+            driver.FindElements(pages.CapabilityFilter.Capabilities)
+                .First(s => s.FindElement(By.TagName("label")).Text.ToLower().Contains(randomCapabilityName.ToLower()))
+                .FindElement(By.TagName("input")).Click();
+
+            return randomCapabilityName;
         }
     }
 }
