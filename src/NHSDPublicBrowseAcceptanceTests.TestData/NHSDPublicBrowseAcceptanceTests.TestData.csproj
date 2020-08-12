@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <Folder Include="Azure\" />
+    <Folder Include="Utils\SqlDataReaders\" />
   </ItemGroup>
 
   <ItemGroup>
