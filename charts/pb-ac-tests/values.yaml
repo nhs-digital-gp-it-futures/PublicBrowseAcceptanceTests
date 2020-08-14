@@ -74,7 +74,9 @@ azureBlobStore:
     key:
 testFilter:
 testResultDirectory:
-
+systemVersionConfig:
+  name:
+  key:
 env:
   configmap:
   secrets:
