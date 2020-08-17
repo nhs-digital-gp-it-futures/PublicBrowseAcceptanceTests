@@ -41,10 +41,10 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.LayoutComponents
             _test.Pages.Common.GetUrl().Should().Be(_settings.PublicBrowseUrl + '/');
         }
 
-        [Then(@"a Terms of use banner is displayed")]
-        public void ThenATermsOfUseBannerIsDisplayed()
+        [Then(@"a banner is displayed")]
+        public void ThenABannerIsDisplayed()
         {
-            _test.Pages.Header.TermsBannerDisplayed();
+            _test.Pages.Header.BannerDisplayed();
         }
     }
 }
