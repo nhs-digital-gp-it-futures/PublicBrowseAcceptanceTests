@@ -42,8 +42,8 @@ spec:
           - name: RUN_ID
             valueFrom:
               configMapKeyRef:
-                name: {{ .Values.systemVersionConfig.name }}
-                key: {{ .Values.systemVersionConfig.key }}
+                name: {{ .Values.runIdConfig.name }}
+                key: {{ .Values.runIdConfig.key }}
           {{- with .Values.db }}
           - name: DB__SERVERURL
             valueFrom:
