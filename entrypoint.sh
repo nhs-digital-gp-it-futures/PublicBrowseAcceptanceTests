@@ -1,5 +1,5 @@
 #!/bin/bash
-version=${VERSION:-0.1.0}
+runId=${RUN_ID:-0.1.0}
 timeout=${SETUP_TIMEOUT:-600}
 timestamp=$(date +%d-%m-%Y-%H-%M-%S)
 additionalDotnetArgs=""
@@ -20,7 +20,7 @@ if [ "$n" -eq "$timeout" ]; then echo "$PBURL is not ready after $n seconds" && 
 
 if [ -n "${TEST_RESULT_DIR}" ]; then
   echo "Directing test results to '$TEST_RESULT_DIR'"
-  additionalDotnetArgs+="--logger \"trx;LogFileName=pb-system-version-$version-$timestamp.trx\" --results-directory $TEST_RESULT_DIR "
+  additionalDotnetArgs+="--logger \"trx;LogFileName=pb-$runId-$timestamp.trx\" --results-directory $TEST_RESULT_DIR "
 fi
 
 if [ -n "${TEST_FILTER}" ]; then
