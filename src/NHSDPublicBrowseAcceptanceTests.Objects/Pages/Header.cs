@@ -9,6 +9,6 @@ namespace NHSDPublicBrowseAcceptanceTests.Objects.Pages
 
         public By Container => By.ClassName("nhsuk-header");
 
-        public By TermsBanner => CustomBy.DataTestId("beta-banner");
+        public By Banner => CustomBy.DataTestId("beta-banner");
     }
 }

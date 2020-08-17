@@ -19,9 +19,9 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
             driver.FindElement(pages.Header.Container).Displayed.Should().BeTrue();
         }
 
-        public void TermsBannerDisplayed()
+        public void BannerDisplayed()
         {
-            driver.FindElement(pages.Header.TermsBanner).Displayed.Should().BeTrue();
+            driver.FindElement(pages.Header.Banner).Displayed.Should().BeTrue();
         }
     }
 }
