@@ -16,10 +16,9 @@ Scenario Outline: Link in Footer
 
 	# Add href when available
 	Examples: 
-	| text                           | href                                                              |
-	| NHS Digital                    | https://digital.nhs.uk/                                           |
-	| NHS Digital Helpdesk           | /guide#contact-us                                                 |
-	| About GP IT Futures            | https://digital.nhs.uk/services/future-gp-it-systems-and-services |
-	| Capabilities & Standards Model | https://gpitbjss.atlassian.net/wiki/spaces/GPITF/overview         |
-	| Buyer's Guide                  | /guide                                                            |
-	| Terms & Conditions             | /document/terms-of-use.pdf                                        |
+	| text                             | href                                                              |
+	| NHS Digital                      | https://digital.nhs.uk/                                           |
+	| NHS Digital Helpdesk             | /guide#contact-us                                                 |
+	| About GP IT Futures              | https://digital.nhs.uk/services/future-gp-it-systems-and-services |
+	| Capabilities and Standards Model | https://gpitbjss.atlassian.net/wiki/spaces/GPITF/overview         |
+	| Buyer's Guide                    | /guide                                                            |
