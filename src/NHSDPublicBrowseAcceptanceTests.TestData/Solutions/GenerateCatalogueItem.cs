@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Bogus;
+using NHSDPublicBrowseAcceptanceTests.TestData.Information;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using Bogus;
-using NHSDPublicBrowseAcceptanceTests.TestData.Information;
 
 namespace NHSDPublicBrowseAcceptanceTests.TestData.Solutions
 {
@@ -22,7 +22,7 @@ namespace NHSDPublicBrowseAcceptanceTests.TestData.Solutions
                 Name = faker.Name.JobTitle(),
                 PublishedStatusId = publishedStatus,
                 Created = DateTime.Now,
-            };                  
+            };
 
             if (Debugger.IsAttached) Console.WriteLine(catalogueItem.ToString());
 
@@ -48,7 +48,7 @@ namespace NHSDPublicBrowseAcceptanceTests.TestData.Solutions
         private static string GetTruncatedTimestamp(string prefix)
         {
             var timestamp = DateTimeOffset.Now.ToUnixTimeMilliseconds().ToString();
-            timestamp = timestamp.Substring(timestamp.Length - prefix.Length);
+            timestamp = timestamp[^prefix.Length..];
 
             return prefix + timestamp;
         }
@@ -63,7 +63,7 @@ namespace NHSDPublicBrowseAcceptanceTests.TestData.Solutions
         {
             var solution = new Solution();
 
-            var existingSolIds = solution.RetrieveAll(connectionString).ToList();
+            var existingSolIds = Solution.RetrieveAll(connectionString).ToList();
 
             existingSolIds = existingSolIds.Where(s => s.StartsWith(prefix)).ToList();
 

@@ -8,13 +8,11 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
     [Binding]
     public class BrowseSolutions
     {
-        private readonly ScenarioContext _context;
         private readonly UITest _test;
 
-        public BrowseSolutions(UITest test, ScenarioContext context)
+        public BrowseSolutions(UITest test)
         {
             _test = test;
-            _context = context;
         }
 
         [Given(@"the User wants to view Foundation Solutions only")]

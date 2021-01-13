@@ -1,7 +1,7 @@
-﻿using System;
-using System.IO;
-using FluentAssertions;
+﻿using FluentAssertions;
 using NHSDPublicBrowseAcceptanceTests.Tests.Utils;
+using System;
+using System.IO;
 using TechTalk.SpecFlow;
 
 namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.PublicViewBuyerGuide
@@ -33,7 +33,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.PublicViewBuyerGuide
             var fileName = "BuyersGuide.pdf";
             var downloadPath = Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory);
 
-            _test.Pages.Common.DownloadFile(fileName, downloadPath, downloadLink);
+            Actions.Pages.Common.DownloadFile(fileName, downloadPath, downloadLink);
         }
 
         [Then(@"they are presented with guidance content about the Buying Catalogue")]

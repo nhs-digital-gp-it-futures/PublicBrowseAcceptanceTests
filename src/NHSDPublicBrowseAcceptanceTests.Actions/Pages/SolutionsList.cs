@@ -1,8 +1,8 @@
-﻿using System;
+﻿using NHSDPublicBrowseAcceptanceTests.Objects.Utils;
+using OpenQA.Selenium;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using NHSDPublicBrowseAcceptanceTests.Objects.Utils;
-using OpenQA.Selenium;
 
 namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
 {
@@ -61,7 +61,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
             var solutions = driver.FindElements(pages.SolutionsList.Solutions)
                 .Where(s => FoundationIndicatorDisplayed(s)).ToList();
             var random = new Random();
-            var solution = solutions[random.Next(solutions.Count())].FindElement(pages.SolutionsList.SolutionName)
+            var solution = solutions[random.Next(solutions.Count)].FindElement(pages.SolutionsList.SolutionName)
                 .FindElement(By.TagName("a"));
             solution.Click();
         }
@@ -121,7 +121,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
 
         public int GetSolutionCapabilityListCount()
         {
-            return driver.FindElements(pages.SolutionsList.SolutionCapabilityList).Count();
+            return driver.FindElements(pages.SolutionsList.SolutionCapabilityList).Count;
         }
 
         public int GetSolutionSummaryCount()
@@ -179,7 +179,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
         /// </summary>
         /// <param name="solution"></param>
         /// <returns>List of names of features</returns>
-        public IList<string> GetFeaturesForSolution(IWebElement solution)
+        public static IList<string> GetFeaturesForSolution(IWebElement solution)
         {
             return solution.FindElements(CustomBy.DataTestId("features-value")).Select(s => s.Text).ToList();
         }
@@ -201,7 +201,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
         /// </summary>
         /// <param name="solution"></param>
         /// <returns>Solution name (string)</returns>
-        public string SolutionCanBeViewed(IWebElement solution)
+        public static string SolutionCanBeViewed(IWebElement solution)
         {
             var solutionName = solution.FindElement(By.TagName("h3")).Text;
 
@@ -215,7 +215,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
         /// </summary>
         /// <param name="solution"></param>
         /// <returns>List of capability names</returns>
-        public IList<string> GetCapabilitiesForSolution(IWebElement solution)
+        public static IList<string> GetCapabilitiesForSolution(IWebElement solution)
         {
             IList<IWebElement> capabilities = solution.FindElements(CustomBy.DataTestId("capability-section-value"));
 

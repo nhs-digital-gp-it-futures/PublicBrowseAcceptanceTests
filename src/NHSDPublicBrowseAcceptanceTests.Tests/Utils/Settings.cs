@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Microsoft.Extensions.Configuration;
+using System;
 using System.IO;
-using Microsoft.Extensions.Configuration;
 
 namespace NHSDPublicBrowseAcceptanceTests.Tests.Utils
 {
@@ -27,9 +27,9 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Utils
         {
             var databaseSettings = config.GetSection("db").Get<DatabaseSettings>();
             databaseSettings.ConnectionString = ConstructDatabaseConnectionString(
-                databaseSettings.ServerUrl, 
-                databaseSettings.DatabaseName, 
-                databaseSettings.User, 
+                databaseSettings.ServerUrl,
+                databaseSettings.DatabaseName,
+                databaseSettings.User,
                 databaseSettings.Password);
             return databaseSettings;
         }

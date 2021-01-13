@@ -1,9 +1,7 @@
-﻿using Bogus.DataSets;
-using NHSDPublicBrowseAcceptanceTests.TestData.Utils;
+﻿using NHSDPublicBrowseAcceptanceTests.TestData.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace NHSDPublicBrowseAcceptanceTests.TestData.Solutions
 {
@@ -41,7 +39,7 @@ namespace NHSDPublicBrowseAcceptanceTests.TestData.Solutions
             SqlExecutor.Execute<CatalogueItem>(connectionString, query, this);
         }
 
-        public IEnumerable<string> RetrieveAll(string connectionString)
+        public static IEnumerable<string> RetrieveAll(string connectionString)
         {
             var query = Queries.GetAllCatalogueItems;
             return SqlExecutor.Execute<CatalogueItem>(connectionString, query, null).Select(c => c.CatalogueItemId);

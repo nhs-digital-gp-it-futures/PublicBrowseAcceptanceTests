@@ -1,6 +1,6 @@
-﻿using System;
-using FluentAssertions;
+﻿using FluentAssertions;
 using OpenQA.Selenium;
+using System;
 
 namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
 {
@@ -47,7 +47,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
         }
 
         public void ClickLoginButton()
-        {   
+        {
             driver.FindElement(pages.Homepage.LoginLogoutLink).Click();
         }
 

@@ -1,5 +1,4 @@
 ﻿using FluentAssertions;
-using NHSDPublicBrowseAcceptanceTests.TestData.Solutions;
 using NHSDPublicBrowseAcceptanceTests.TestData.Utils;
 using NHSDPublicBrowseAcceptanceTests.Tests.Utils;
 using TechTalk.SpecFlow;
@@ -9,23 +8,21 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
     [Binding]
     public class ViewSolutionsList
     {
-        private readonly ScenarioContext _context;
         private readonly UITest _test;
         private int expectedNumberOfSolutions;
 
-        public ViewSolutionsList(UITest test, ScenarioContext context)
+        public ViewSolutionsList(UITest test)
         {
             _test = test;
-            _context = context;
         }
 
         [Given(@"that a User has chosen to view a list of all Solutions")]
         public void GivenThatAUserHasChosenToViewAListOfAllSolutions()
         {
             //instantiated BrowseSolutions for reuse	
-            var bs = new BrowseSolutions(_test, _context);
-            bs.GivenIBrowseSolutions();
-            bs.WhenTheUserChoosesToViewAllSolutions();
+            BrowseSolutions browse = new(_test);
+            browse.GivenIBrowseSolutions();
+            browse.WhenTheUserChoosesToViewAllSolutions();
         }
 
         [Given(@"has not chosen to filter the solutions")]
@@ -36,7 +33,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
         }
 
         [When("Solutions are presented")]
-        public void SolutionsPresented()
+        public static void SolutionsPresented()
         {
         }
 
@@ -44,9 +41,6 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
         [Then("no Solutions are excluded on the basis of the Capabilities they deliver")]
         public void ThenThereIsACardForEachSolution()
         {
-            var solutions = SqlExecutor.Execute<Solution>(query: Queries.GetAllSolutions,
-                connectionString: _test.ConnectionString,
-                param: null);
             expectedNumberOfSolutions =
                 SqlExecutor.ExecuteScalar(_test.ConnectionString, Queries.GetSolutionsCount, null);
             var actualNumberOfSolutionCards = _test.Pages.SolutionsList.GetSolutionsCount();

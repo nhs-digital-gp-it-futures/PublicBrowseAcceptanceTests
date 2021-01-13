@@ -1,12 +1,11 @@
-﻿using System;
-using System.IO;
-using System.Threading.Tasks;
-using FluentAssertions;
+﻿using FluentAssertions;
 using NHSDPublicBrowseAcceptanceTests.Actions.Utils;
 using NHSDPublicBrowseAcceptanceTests.TestData.Capabilities;
 using NHSDPublicBrowseAcceptanceTests.TestData.Solutions;
 using NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions;
 using NHSDPublicBrowseAcceptanceTests.Tests.Utils;
+using System;
+using System.IO;
 using TechTalk.SpecFlow;
 
 namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
@@ -39,34 +38,20 @@ namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
             _context.Add("DeleteSolution", true);
             _test.ContactDetails.Add(CreateContactDetails.NewContactDetail());
             _test.ContactDetails[0].AddMarketingContactForSolution(_test.ConnectionString, _test.Solution.Id);
-            new Capability().AddRandomCapabilityToSolution(_test.ConnectionString, _test.Solution.Id);
+            Capability.AddRandomCapabilityToSolution(_test.ConnectionString, _test.Solution.Id);
         }
 
         [StepDefinition(@"the User views the created solution")]
         public void GivenTheUserViewsTheCreatedSolution()
         {
-            new ViewSolutionsList(_test, _context).GivenThatAUserHasChosenToViewAListOfAllSolutions();
+            new ViewSolutionsList(_test).GivenThatAUserHasChosenToViewAListOfAllSolutions();
             _test.Pages.SolutionsList.OpenNamedSolution(_test.CatalogueItem.Name);
             _test.Pages.ViewASolution.PageDisplayed(_settings.PublicBrowseUrl);
         }
 
         [Given(
-            @"(a|an) (Roadmap|NHS Assured Integrations|Authority Provided Solution Document) attachment has been provided for the Solution")]
-        public async Task GivenAnAttachmentHasBeenProvidedForTheSolution(string _1, string documentType)
-        {
-            string fileName;
-            if (documentType.Equals("NHS Assured Integrations", StringComparison.OrdinalIgnoreCase))
-                documentType = "Integrations";
-            fileName = documentType.ToLower() + ".pdf";
-            var path = Path.Combine(Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), "Azure", "SampleData",
-                fileName);
-            await _test.AzureBlobStorage.InsertFileToStorage(_settings.AzureBlobStorageSettings.ContainerName,
-                _test.Solution.Id, fileName, path);
-        }
-
-        [Given(
             @"(a|an) (Roadmap|NHS Assured Integrations|Authority Provided Solution Document) attachment has not been provided for the Solution")]
-        public void GivenAnIntegrationsAttachmentHasNotBeenProvidedForTheSolution(string _1, string _2)
+        public static void GivenAnIntegrationsAttachmentHasNotBeenProvidedForTheSolution(string _1, string _2)
         {
         }
 

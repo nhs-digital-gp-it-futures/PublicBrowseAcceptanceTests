@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using FluentAssertions;
+﻿using FluentAssertions;
 using NHSDPublicBrowseAcceptanceTests.TestData.Capabilities;
 using NHSDPublicBrowseAcceptanceTests.TestData.Utils;
 using NHSDPublicBrowseAcceptanceTests.Tests.Utils;
+using System.Collections.Generic;
 using TechTalk.SpecFlow;
 
 namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.Capabilities
@@ -39,7 +39,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.Capabilities
 
             selectedCapability = _test.Pages.CapabilityFilter.SelectCapability(_test.ConnectionString);
             solutionsForCapability = SqlExecutor.ExecuteScalar(_test.ConnectionString,
-                Queries.GetSolutionsWithCapabilityCount, new {CapabilityName = selectedCapability});
+                Queries.GetSolutionsWithCapabilityCount, new { CapabilityName = selectedCapability });
         }
 
         [Then(@"Solution results are presented")]
