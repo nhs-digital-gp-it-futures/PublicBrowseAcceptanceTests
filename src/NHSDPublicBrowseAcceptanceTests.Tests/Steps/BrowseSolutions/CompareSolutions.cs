@@ -1,7 +1,7 @@
-﻿using FluentAssertions;
+﻿using System.IO;
+using FluentAssertions;
 using NHSDPublicBrowseAcceptanceTests.Actions.Utils;
 using NHSDPublicBrowseAcceptanceTests.Tests.Utils;
-using System.IO;
 using TechTalk.SpecFlow;
 
 namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions

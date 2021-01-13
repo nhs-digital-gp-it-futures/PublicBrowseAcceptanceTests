@@ -1,7 +1,6 @@
 using BoDi;
 using Microsoft.Extensions.Configuration;
 using NHSDPublicBrowseAcceptanceTests.Tests.Utils;
-using System.Threading.Tasks;
 using TechTalk.SpecFlow;
 
 namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps

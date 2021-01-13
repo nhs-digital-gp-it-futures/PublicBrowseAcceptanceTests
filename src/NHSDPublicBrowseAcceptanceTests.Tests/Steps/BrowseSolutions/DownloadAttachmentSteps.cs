@@ -1,11 +1,11 @@
-﻿using FluentAssertions;
+﻿using System;
+using System.IO;
+using FluentAssertions;
 using NHSDPublicBrowseAcceptanceTests.Actions.Utils;
 using NHSDPublicBrowseAcceptanceTests.TestData.Capabilities;
 using NHSDPublicBrowseAcceptanceTests.TestData.Solutions;
 using NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions;
 using NHSDPublicBrowseAcceptanceTests.Tests.Utils;
-using System;
-using System.IO;
 using TechTalk.SpecFlow;
 
 namespace NHSDPublicBrowseAcceptanceTestsSpecflow.Steps.BrowseSolutions
