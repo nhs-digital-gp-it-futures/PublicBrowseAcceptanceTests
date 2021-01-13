@@ -10,7 +10,6 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Utils
         public string PublicBrowseUrl { get; }
         public string DownloadPath { get; }
         public string Browser { get; }
-        public AzureBlobStorageSettings AzureBlobStorageSettings { get; }
         public DatabaseSettings DatabaseSettings { get; }
 
         public Settings(IConfiguration config)
@@ -19,7 +18,6 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Utils
             PublicBrowseUrl = config.GetValue<string>("pbUrl");
             DownloadPath = Path.Combine(Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), config.GetValue<string>("downloadDirectory"));
             Browser = config.GetValue<string>("browser");
-            AzureBlobStorageSettings = config.GetSection("azureBlobStorage").Get<AzureBlobStorageSettings>();
             DatabaseSettings = SetUpDatabaseSettings(config);
         }
 
@@ -27,9 +25,9 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Utils
         {
             var databaseSettings = config.GetSection("db").Get<DatabaseSettings>();
             databaseSettings.ConnectionString = ConstructDatabaseConnectionString(
-                databaseSettings.ServerUrl, 
-                databaseSettings.DatabaseName, 
-                databaseSettings.User, 
+                databaseSettings.ServerUrl,
+                databaseSettings.DatabaseName,
+                databaseSettings.User,
                 databaseSettings.Password);
             return databaseSettings;
         }
@@ -38,12 +36,6 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Utils
             string.Format(ConnectionStringTemplate, serverUrl, databaseName, user, password);
 
         private static string ConnectionStringTemplate => @"Server={0};Initial Catalog={1};Persist Security Info=false;User Id={2};Password={3}";
-    }
-
-    public class AzureBlobStorageSettings
-    {
-        public string ConnectionString { get; set; }
-        public string ContainerName { get; set; }
     }
 
     public class DatabaseSettings

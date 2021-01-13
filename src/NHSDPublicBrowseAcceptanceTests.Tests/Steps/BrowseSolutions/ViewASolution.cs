@@ -30,7 +30,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
         [Given(@"that a User views a Solution")]
         public void GivenThatAUserViewsASolution()
         {
-            new ViewSolutionsList(_test, _context).GivenThatAUserHasChosenToViewAListOfAllSolutions();
+            new ViewSolutionsList(_test).GivenThatAUserHasChosenToViewAListOfAllSolutions();
             _test.Pages.SolutionsList.OpenRandomSolution();
         }
 
@@ -43,12 +43,12 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
             _test.Solution = GenerateSolution.GenerateNewSolution(_test.CatalogueItem.CatalogueItemId, 0, false);
             _test.Solution.Create(_test.ConnectionString);
             _context.Add("DeleteSolution", true);
-            new Capability().AddRandomCapabilityToSolution(_test.ConnectionString, _test.Solution.Id);
+            Capability.AddRandomCapabilityToSolution(_test.ConnectionString, _test.Solution.Id);
             _test.Driver.Navigate().Refresh();
 
             _test.ContactDetails.Add(CreateContactDetails.NewContactDetail());
             _test.ContactDetails[0].AddMarketingContactForSolution(_test.ConnectionString, _test.Solution.Id);
-            new ViewSolutionsList(_test, _context).GivenThatAUserHasChosenToViewAListOfAllSolutions();
+            new ViewSolutionsList(_test).GivenThatAUserHasChosenToViewAListOfAllSolutions();
             var oldDate = new DateTime(2001, 02, 03);
             LastUpdatedHelper.UpdateLastUpdated(oldDate, "Solution", "id", _test.Solution.Id, _test.ConnectionString);
             LastUpdatedHelper.UpdateLastUpdated(oldDate, "MarketingContact", "SolutionId", _test.Solution.Id,
@@ -70,7 +70,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
         {
             _test.Pages.ViewASolution.PageDisplayed(_settings.PublicBrowseUrl);
             var id = _test.Pages.ViewASolution.GetSolutionId();
-            _test.Solution = new Solution {Id = id}.Retrieve(_test.ConnectionString);
+            _test.Solution = new Solution { Id = id }.Retrieve(_test.ConnectionString);
             _test.CatalogueItem = new CatalogueItem { CatalogueItemId = id }.Retrieve(_test.ConnectionString);
         }
 
@@ -166,7 +166,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
         public void ThenTheCapabilitiesListedMatchTheExpectedCapabilitiesInTheDatabase()
         {
             var solutionId = _test.Pages.ViewASolution.GetSolutionId();
-            var capabilities = new Capability().GetSolutionCapabilities(_test.ConnectionString, _test.Solution.Id)
+            var capabilities = Capability.GetSolutionCapabilities(_test.ConnectionString, _test.Solution.Id)
                 .Select(s => s.Name);
             var actualCapabilities = _test.Pages.ViewASolution.GetSolutionCapabilities();
             actualCapabilities.Should().BeEquivalentTo(capabilities);
@@ -184,7 +184,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
 
             downloadLink.Should().Contain(fileName);
 
-            _test.Pages.Common.DownloadFile(fileName, downloadPath, downloadLink);
+            Actions.Pages.Common.DownloadFile(fileName, downloadPath, downloadLink);
         }
 
         [When(@"the LastUpdated value in the (.*) table is updated")]
@@ -218,12 +218,12 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
             _test.Pages.ViewASolution.GetFeatures().Should().HaveCountGreaterThan(0);
         }
 
-        private string ConvertDateToLongDateTime(string date)
+        private static string ConvertDateToLongDateTime(string date)
         {
             return ConvertDateToLongDateTime(Convert.ToDateTime(date));
         }
 
-        private string ConvertDateToLongDateTime(DateTime date)
+        private static string ConvertDateToLongDateTime(DateTime date)
         {
             return date.ToString(dateFormat);
         }

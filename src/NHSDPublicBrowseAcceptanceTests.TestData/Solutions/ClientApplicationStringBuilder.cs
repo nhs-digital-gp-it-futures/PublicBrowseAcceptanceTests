@@ -7,9 +7,9 @@ namespace NHSDPublicBrowseAcceptanceTests.TestData.Solutions
     {
         private static readonly
             Dictionary<string, (string conversion, string clientAppString, Func<string, string> parseString)>
-            clientAppTypes = new Dictionary<string, (string, string, Func<string, string>)>
+            clientAppTypes = new()
             {
-                {"Browser based", ("browser-based", ClientApplicationStrings.BrowserBasedComplete, ParseBrowserBased)},
+                { "Browser based", ("browser-based", ClientApplicationStrings.BrowserBasedComplete, ParseBrowserBased) },
                 {
                     "Native mobile or tablet",
                     ("native-mobile", ClientApplicationStrings.NativeMobileComplete, ParseNativeMobile)
@@ -23,7 +23,7 @@ namespace NHSDPublicBrowseAcceptanceTests.TestData.Solutions
         public static string GetClientAppString(string ignoredSection = null,
             string clientApplicationTypes = "Browser based")
         {
-            var clientAppString = new List<string>();
+            List<string> clientAppString = new();
 
             var finishedString = string.Empty;
 
@@ -46,7 +46,7 @@ namespace NHSDPublicBrowseAcceptanceTests.TestData.Solutions
 
         private static string BuildClientApplicationString(string clientApplicationType, string clientAppString)
         {
-            var converted = new List<string>();
+            List<string> converted = new();
 
             foreach (var key in clientAppTypes.Keys)
                 if (clientApplicationType.Contains(key))

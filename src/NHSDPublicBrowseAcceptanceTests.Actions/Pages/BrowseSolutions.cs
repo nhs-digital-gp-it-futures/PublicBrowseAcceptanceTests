@@ -21,7 +21,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
         public void OpenAllSolutions()
         {
             PageDisplayed();
-            wait.Until(d => d.FindElement(pages.BrowseSolutions.BrowseAllSolutions).Displayed);            
+            wait.Until(d => d.FindElement(pages.BrowseSolutions.BrowseAllSolutions).Displayed);
             driver.FindElement(pages.BrowseSolutions.BrowseAllSolutions).Click();
             WaitForPageNotToBeDisplayed();
         }
@@ -38,7 +38,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
             PageDisplayed();
             wait.Until(d => d.FindElements(pages.BrowseSolutions.CompareAllSolutions).Count > 0);
             return driver.FindElement(pages.BrowseSolutions.CompareAllSolutions).Displayed;
-             
+
         }
 
         public void OpenCompareAllSolutions()

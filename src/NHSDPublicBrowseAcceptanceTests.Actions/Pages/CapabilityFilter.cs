@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using FluentAssertions;
+﻿using FluentAssertions;
 using NHSDPublicBrowseAcceptanceTests.TestData.Capabilities;
 using NHSDPublicBrowseAcceptanceTests.TestData.Information;
 using NHSDPublicBrowseAcceptanceTests.TestData.Utils;
 using OpenQA.Selenium;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
 {

@@ -1,7 +1,7 @@
-﻿using System.IO;
-using System.Net;
-using FluentAssertions;
+﻿using FluentAssertions;
 using OpenQA.Selenium;
+using System.IO;
+using System.Net;
 
 namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
 {
@@ -43,12 +43,10 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
             return driver.Url;
         }
 
-        public void DownloadFile(string fileName, string downloadPath, string downloadLink)
+        public static void DownloadFile(string fileName, string downloadPath, string downloadLink)
         {
-            using (var client = new WebClient())
-            {
-                client.DownloadFile(downloadLink, Path.Combine(downloadPath, fileName));
-            }
+            using var client = new WebClient();
+            client.DownloadFile(downloadLink, Path.Combine(downloadPath, fileName));
         }
     }
 }

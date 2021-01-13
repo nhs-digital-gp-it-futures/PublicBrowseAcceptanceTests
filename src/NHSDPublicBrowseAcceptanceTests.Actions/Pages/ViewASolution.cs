@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
-using FluentAssertions;
+﻿using FluentAssertions;
 using NHSDPublicBrowseAcceptanceTests.TestData.Solutions;
 using OpenQA.Selenium;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
 {
@@ -114,22 +114,23 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
             return driver.FindElement(pages.ViewSingleSolution.SolutionFullDescription).Text;
         }
 
-        public SolutionContactDetails GetSolutionContactDetails(bool GetName=true, bool GetDepartment=true, bool GetPhoneNumber=true, bool GetEmail=true)
+        public SolutionContactDetails GetSolutionContactDetails(bool GetName = true, bool GetDepartment = true, bool GetPhoneNumber = true, bool GetEmail = true)
         {
-            var contactDetails = new SolutionContactDetails();
-            if (GetName) 
+            SolutionContactDetails contactDetails = new();
+            if (GetName)
             {
                 contactDetails.FirstName = driver.FindElement(pages.ViewSingleSolution.SolutionContactName).Text.Split(' ')[0];
                 contactDetails.LastName = driver.FindElement(pages.ViewSingleSolution.SolutionContactName).Text.Split(' ')[1];
             }
-            if (GetDepartment) 
+            if (GetDepartment)
             {
                 contactDetails.Department = driver.FindElement(pages.ViewSingleSolution.SolutionContactDepartment).Text;
             }
-            if (GetPhoneNumber) {
+            if (GetPhoneNumber)
+            {
                 contactDetails.PhoneNumber = driver.FindElement(pages.ViewSingleSolution.SolutionContactPhoneNumber).Text;
             }
-            if(GetEmail)
+            if (GetEmail)
             {
                 contactDetails.Email = driver.FindElement(pages.ViewSingleSolution.SolutionContactEmail).Text;
             }

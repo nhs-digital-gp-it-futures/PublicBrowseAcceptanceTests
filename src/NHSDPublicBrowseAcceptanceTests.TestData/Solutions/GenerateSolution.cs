@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using Bogus;
-using NHSDPublicBrowseAcceptanceTests.TestData.Information;
 
 namespace NHSDPublicBrowseAcceptanceTests.TestData.Solutions
 {

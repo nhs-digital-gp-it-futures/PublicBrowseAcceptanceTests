@@ -39,7 +39,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.Capabilities
 
             selectedCapability = _test.Pages.CapabilityFilter.SelectCapability(_test.ConnectionString);
             solutionsForCapability = SqlExecutor.ExecuteScalar(_test.ConnectionString,
-                Queries.GetSolutionsWithCapabilityCount, new {CapabilityName = selectedCapability});
+                Queries.GetSolutionsWithCapabilityCount, new { CapabilityName = selectedCapability });
         }
 
         [Then(@"Solution results are presented")]

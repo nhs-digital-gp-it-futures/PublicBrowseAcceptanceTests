@@ -33,7 +33,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.PublicViewBuyerGuide
             var fileName = "BuyersGuide.pdf";
             var downloadPath = Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory);
 
-            _test.Pages.Common.DownloadFile(fileName, downloadPath, downloadLink);
+            Actions.Pages.Common.DownloadFile(fileName, downloadPath, downloadLink);
         }
 
         [Then(@"they are presented with guidance content about the Buying Catalogue")]

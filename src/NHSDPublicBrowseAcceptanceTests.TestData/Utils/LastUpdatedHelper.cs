@@ -11,19 +11,19 @@ namespace NHSDPublicBrowseAcceptanceTests.TestData.Utils
         {
             var query = Queries.UpdateLastUpdated;
             query = query.Replace("@table", table).Replace("@whereKey", whereKey);
-            SqlExecutor.Execute<object>(connectionString, query, new {whereValue, lastUpdated});
+            SqlExecutor.Execute<object>(connectionString, query, new { whereValue, lastUpdated });
         }
 
         public static DateTime GetLastUpdated(string table, string whereKey, string whereValue, string connectionString)
         {
             var query = Queries.GetLastUpdated;
             query = query.Replace("@table", table).Replace("@whereKey", whereKey);
-            return SqlExecutor.Execute<DateTime>(connectionString, query, new {whereValue}).Single();
+            return SqlExecutor.Execute<DateTime>(connectionString, query, new { whereValue }).Single();
         }
 
         public static DateTime GetLatestUpdated(string[] tables, string whereValue, string connectionString)
         {
-            var lastUpdatedValues = new List<DateTime>();
+            List<DateTime> lastUpdatedValues = new();
             foreach (var table in tables)
             {
                 var whereKeyParsed = table.Equals("Solution") ? "Id" : "SolutionId";

@@ -1,7 +1,6 @@
 using BoDi;
 using Microsoft.Extensions.Configuration;
 using NHSDPublicBrowseAcceptanceTests.Tests.Utils;
-using System.Threading.Tasks;
 using TechTalk.SpecFlow;
 
 namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps
@@ -30,7 +29,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps
         }
 
         [AfterScenario]
-        public async Task AfterScenario()
+        public void AfterScenario()
         {
             var test = _objectContainer.Resolve<UITest>();
             test.Driver.Quit();
@@ -40,8 +39,6 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps
                 test.Solution.Delete(test.ConnectionString);
                 test.CatalogueItem.Delete(test.ConnectionString);
             }
-
-            await test.AzureBlobStorage.ClearStorage();
         }
     }
 }

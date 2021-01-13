@@ -42,9 +42,11 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Utils
         {
             var useragent = ((IJavaScriptExecutor)driver).ExecuteScript("return navigator.userAgent;");
             var referer = ((IJavaScriptExecutor)driver).ExecuteScript("return navigator.referer;");
-            IDictionary<string, string> headers = new Dictionary<string, string>();
-            headers.Add("user-agent", (string)useragent);
-            headers.Add("referer", (string)referer);
+            Dictionary<string, string> headers = new()
+            {
+                { "user-agent", (string)useragent },
+                { "referer", (string)referer }
+            };
             return headers;
         }
     }

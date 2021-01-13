@@ -11,32 +11,28 @@ namespace NHSDPublicBrowseAcceptanceTests.TestData.Utils
         internal static T Read<T>(string connectionString, string query, SqlParameter[] sqlParameters,
             Func<IDataReader, T> mapDataReader)
         {
-            using (var connection = new SqlConnection(connectionString))
+            using SqlConnection connection = new(connectionString);
+            connection.Open();
+
+            using SqlCommand command = new(query, connection);
+            //add the params
+            command.Parameters.AddRange(sqlParameters);
+
+            var reader = command.ExecuteReader();
+            try
             {
-                connection.Open();
-
-                using (var command = new SqlCommand(query, connection))
-                {
-                    //add the params
-                    command.Parameters.AddRange(sqlParameters);
-
-                    var reader = command.ExecuteReader();
-                    try
-                    {
-                        return mapDataReader(reader);
-                    }
-                    finally
-                    {
-                        reader.Close();
-                    }
-                }
+                return mapDataReader(reader);
+            }
+            finally
+            {
+                reader.Close();
             }
         }
 
         public static IEnumerable<T> Execute<T>(string connectionString, string query, object param)
         {
             IEnumerable<T> returnValue = null;
-            using (var connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new(connectionString))
             {
                 connection.Open();
                 Policies.RetryPolicy().Execute(() => { returnValue = connection.Query<T>(query, param); });
@@ -48,7 +44,7 @@ namespace NHSDPublicBrowseAcceptanceTests.TestData.Utils
         public static int ExecuteScalar(string connectionString, string query, object param)
         {
             var result = 0;
-            using (var connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new(connectionString))
             {
                 connection.Open();
                 Policies.RetryPolicy().Execute(() => { result = connection.ExecuteScalar<int>(query, param); });
