@@ -25,12 +25,12 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
         /// </summary>
         public void ClickLogo()
         {
-            driver.FindElement(pages.Common.NHSLogo).Click();
+            driver.FindElement(Objects.Pages.Common.NHSLogo).Click();
         }
 
         public void PageDisplayed(string pageTitle)
         {
-            driver.FindElement(pages.Common.PageTitle).Text.Should().Be(pageTitle);
+            driver.FindElement(Objects.Pages.Common.PageTitle).Text.Should().Be(pageTitle);
         }
 
         public void URLContains(string href)

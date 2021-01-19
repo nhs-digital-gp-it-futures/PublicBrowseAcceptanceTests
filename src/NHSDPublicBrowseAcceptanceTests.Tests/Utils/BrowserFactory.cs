@@ -28,24 +28,12 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Utils
             if (Debugger.IsAttached)
                 driver = GetLocalChromeDriver();
             else
-                switch (browser.ToLower())
+                driver = (browser.ToLower()) switch
                 {
-                    case "chrome":
-                    case "googlechrome":
-                        driver = GetChromeDriver(huburl);
-                        break;
-                    case "firefox":
-                    case "ff":
-                    case "mozilla":
-                        driver = GetFirefoxDriver(huburl);
-                        break;
-                    case "chrome-local":
-                        driver = GetLocalChromeDriver();
-                        break;
-                    default:
-                        throw new WebDriverException($"Browser {browser} not supported");
-                }
-
+                    "chrome" or "googlechrome" => GetChromeDriver(huburl),
+                    "firefox" or "ff" or "mozilla" => GetFirefoxDriver(huburl),
+                    _ => GetLocalChromeDriver()
+                };
             return driver;
         }
 

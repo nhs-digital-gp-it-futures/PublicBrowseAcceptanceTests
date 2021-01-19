@@ -24,7 +24,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.LayoutComponents
         }
 
         [Given(@"the User chooses to select the logo in the Header")]
-        public void GivenTheUserChoosesToSelectTheLogoInTheHeader()
+        public static void GivenTheUserChoosesToSelectTheLogoInTheHeader()
         {
         }
 

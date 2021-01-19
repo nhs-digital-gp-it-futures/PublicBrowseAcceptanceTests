@@ -12,56 +12,56 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
 
         public void PageDisplayed()
         {
-            wait.Until(s => s.FindElement(pages.Homepage.Title).Displayed);
+            wait.Until(s => s.FindElement(Objects.Pages.Homepage.Title).Displayed);
         }
 
         public void WaitForPageNotToBeDisplayed()
         {
-            wait.Until(s => s.FindElements(pages.Homepage.BrowseSolutions).Count == 0);
+            wait.Until(s => s.FindElements(Objects.Pages.Homepage.BrowseSolutions).Count == 0);
         }
 
         public void AboutUsSectionDisplayed()
         {
-            driver.FindElement(pages.Homepage.AboutSection).Displayed.Should().BeTrue();
+            driver.FindElement(Objects.Pages.Homepage.AboutSection).Displayed.Should().BeTrue();
         }
 
         public void BrowseSolutionsControlDisplayed()
         {
-            driver.FindElement(pages.Homepage.BrowseSolutions).Displayed.Should().BeTrue();
+            driver.FindElement(Objects.Pages.Homepage.BrowseSolutions).Displayed.Should().BeTrue();
         }
 
         public void ClickBuyersGuideControl()
         {
-            driver.FindElement(pages.Homepage.GuidanceContent).Click();
+            driver.FindElement(Objects.Pages.Homepage.GuidanceContent).Click();
         }
 
         public void ClickBrowseSolutions()
         {
-            driver.FindElement(pages.Homepage.BrowseSolutions).Click();
+            driver.FindElement(Objects.Pages.Homepage.BrowseSolutions).Click();
             WaitForPageNotToBeDisplayed();
         }
 
         public void GuidanceContentControlDisplayed()
         {
-            driver.FindElement(pages.Homepage.GuidanceContent).Displayed.Should().BeTrue();
+            driver.FindElement(Objects.Pages.Homepage.GuidanceContent).Displayed.Should().BeTrue();
         }
 
         public void ClickLoginButton()
         {
-            driver.FindElement(pages.Homepage.LoginLogoutLink).Click();
+            driver.FindElement(Objects.Pages.Homepage.LoginLogoutLink).Click();
         }
 
         public string LoginLogoutLinkText()
         {
-            wait.Until(s => s.FindElement(pages.Homepage.LoginLogoutLink).Displayed);
-            return driver.FindElement(pages.Homepage.LoginLogoutLink).Text;
+            wait.Until(s => s.FindElement(Objects.Pages.Homepage.LoginLogoutLink).Displayed);
+            return driver.FindElement(Objects.Pages.Homepage.LoginLogoutLink).Text;
         }
 
         public void LogOut()
         {
             if (LoginLogoutLinkText().Equals("Log out", StringComparison.OrdinalIgnoreCase))
             {
-                driver.FindElement(pages.Homepage.LoginLogoutLink).Click();
+                driver.FindElement(Objects.Pages.Homepage.LoginLogoutLink).Click();
             }
             else
             {

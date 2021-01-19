@@ -10,41 +10,41 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
 
         public void PageDisplayed()
         {
-            wait.Until(d => d.FindElement(pages.BrowseSolutions.BrowseSolutionsHeading).Displayed);
+            wait.Until(d => d.FindElement(Objects.Pages.BrowseSolutions.BrowseSolutionsHeading).Displayed);
         }
 
         public void WaitForPageNotToBeDisplayed()
         {
-            wait.Until(d => d.FindElements(pages.BrowseSolutions.BrowseFoundationSolutions).Count == 0);
+            wait.Until(d => d.FindElements(Objects.Pages.BrowseSolutions.BrowseFoundationSolutions).Count == 0);
         }
 
         public void OpenAllSolutions()
         {
             PageDisplayed();
-            wait.Until(d => d.FindElement(pages.BrowseSolutions.BrowseAllSolutions).Displayed);
-            driver.FindElement(pages.BrowseSolutions.BrowseAllSolutions).Click();
+            wait.Until(d => d.FindElement(Objects.Pages.BrowseSolutions.BrowseAllSolutions).Displayed);
+            driver.FindElement(Objects.Pages.BrowseSolutions.BrowseAllSolutions).Click();
             WaitForPageNotToBeDisplayed();
         }
 
         public void OpenFoundationSolutions()
         {
             PageDisplayed();
-            driver.FindElement(pages.BrowseSolutions.BrowseFoundationSolutions).Click();
+            driver.FindElement(Objects.Pages.BrowseSolutions.BrowseFoundationSolutions).Click();
             WaitForPageNotToBeDisplayed();
         }
 
         public bool CompareAllSolutionsTileIsDisplayed()
         {
             PageDisplayed();
-            wait.Until(d => d.FindElements(pages.BrowseSolutions.CompareAllSolutions).Count > 0);
-            return driver.FindElement(pages.BrowseSolutions.CompareAllSolutions).Displayed;
+            wait.Until(d => d.FindElements(Objects.Pages.BrowseSolutions.CompareAllSolutions).Count > 0);
+            return driver.FindElement(Objects.Pages.BrowseSolutions.CompareAllSolutions).Displayed;
 
         }
 
         public void OpenCompareAllSolutions()
         {
             PageDisplayed();
-            driver.FindElement(pages.BrowseSolutions.CompareAllSolutions).Click();
+            driver.FindElement(Objects.Pages.BrowseSolutions.CompareAllSolutions).Click();
             WaitForPageNotToBeDisplayed();
         }
     }

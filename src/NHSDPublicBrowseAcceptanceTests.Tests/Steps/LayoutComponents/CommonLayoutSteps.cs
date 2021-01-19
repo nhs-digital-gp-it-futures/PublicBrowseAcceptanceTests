@@ -6,13 +6,11 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.LayoutComponents
     [Binding]
     public sealed class CommonLayoutSteps
     {
-        private readonly ScenarioContext _context;
         private readonly UITest _test;
 
-        public CommonLayoutSteps(UITest test, ScenarioContext context)
+        public CommonLayoutSteps(UITest test)
         {
             _test = test;
-            _context = context;
         }
 
         [Given(@"the User chooses any Page in the application")]

@@ -6,13 +6,11 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.Homepage
     [Binding]
     public class Homepage
     {
-        private readonly ScenarioContext _context;
         private readonly UITest _test;
 
         public Homepage(UITest test, ScenarioContext context)
         {
             _test = test;
-            _context = context;
         }
 
         [Given(@"the User chooses to view the Buying Catalogue Homepage")]

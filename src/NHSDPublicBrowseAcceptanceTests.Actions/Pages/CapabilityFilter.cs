@@ -16,20 +16,20 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
 
         public void CapbilityFilterDisplayed()
         {
-            wait.Until(d => d.FindElement(pages.CapabilityFilter.Capabilities).Displayed);
+            wait.Until(d => d.FindElement(Objects.Pages.CapabilityFilter.Capabilities).Displayed);
         }
 
         public void ClickCapabilityContinueButton()
         {
             CapbilityFilterDisplayed();
-            driver.FindElement(pages.CapabilityFilter.ApplyCapabilityFilter).Click();
+            driver.FindElement(Objects.Pages.CapabilityFilter.ApplyCapabilityFilter).Click();
 
-            wait.Until(d => d.FindElement(pages.Common.GeneralPageTitle).Text == "Catalogue Solution – results");
+            wait.Until(d => d.FindElement(Objects.Pages.Common.GeneralPageTitle).Text == "Catalogue Solution – results");
         }
 
         public void CapabilityNamesShown(IEnumerable<Capability> capabilities)
         {
-            var capabilityLabels = driver.FindElements(pages.CapabilityFilter.Capabilities)
+            var capabilityLabels = driver.FindElements(Objects.Pages.CapabilityFilter.Capabilities)
                 .Select(s => s.FindElement(By.TagName("label")).Text);
 
             capabilityLabels.Should().BeEquivalentTo(capabilities.Select(s => s.Name));
@@ -37,13 +37,13 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
 
         public string SelectCapability(string connectionString)
         {
-            wait.Until(d => driver.FindElement(pages.CapabilityFilter.Capabilities).Displayed);
+            wait.Until(d => driver.FindElement(Objects.Pages.CapabilityFilter.Capabilities).Displayed);
             var selectedCapabilities =
                 SqlExecutor.Execute<string>(connectionString, Queries.GetSelectedCapabilities, null);
 
             var randomCapabilityName = RandomInformation.GetRandomItem(selectedCapabilities);
 
-            driver.FindElements(pages.CapabilityFilter.Capabilities)
+            driver.FindElements(Objects.Pages.CapabilityFilter.Capabilities)
                 .First(s => s.FindElement(By.TagName("label")).Text.ToLower().Contains(randomCapabilityName.ToLower()))
                 .FindElement(By.TagName("input")).Click();
 

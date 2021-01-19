@@ -18,7 +18,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
         /// <returns></returns>
         public IWebElement GetFirstSolution()
         {
-            return driver.FindElements(pages.SolutionsList.Solutions).First();
+            return driver.FindElements(Objects.Pages.SolutionsList.Solutions).First();
         }
 
         /// <summary>
@@ -35,40 +35,40 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
 
         public void OpenRandomSolution()
         {
-            var solutions = driver.FindElements(pages.SolutionsList.Solutions);
+            var solutions = driver.FindElements(Objects.Pages.SolutionsList.Solutions);
             var random = new Random();
-            var solution = solutions[random.Next(solutions.Count)].FindElement(pages.SolutionsList.SolutionName)
+            var solution = solutions[random.Next(solutions.Count)].FindElement(Objects.Pages.SolutionsList.SolutionName)
                 .FindElement(By.TagName("a"));
             solution.Click();
         }
 
         public void OpenNamedSolution(string solutionName)
         {
-            var solution = driver.FindElements(pages.SolutionsList.SolutionName).Where(s => s.Text.Equals(solutionName))
+            var solution = driver.FindElements(Objects.Pages.SolutionsList.SolutionName).Where(s => s.Text.Equals(solutionName))
                 .First().FindElement(By.TagName("a"));
             solution.Click();
         }
 
         public IList<string> GetListOfSolutionNames()
         {
-            var solutions = driver.FindElements(pages.SolutionsList.Solutions)
-                .Select(s => s.FindElement(pages.SolutionsList.SolutionName).Text).ToList();
+            var solutions = driver.FindElements(Objects.Pages.SolutionsList.Solutions)
+                .Select(s => s.FindElement(Objects.Pages.SolutionsList.SolutionName).Text).ToList();
             return solutions;
         }
 
         public void OpenRandomFoundationSolution()
         {
-            var solutions = driver.FindElements(pages.SolutionsList.Solutions)
+            var solutions = driver.FindElements(Objects.Pages.SolutionsList.Solutions)
                 .Where(s => FoundationIndicatorDisplayed(s)).ToList();
             var random = new Random();
-            var solution = solutions[random.Next(solutions.Count)].FindElement(pages.SolutionsList.SolutionName)
+            var solution = solutions[random.Next(solutions.Count)].FindElement(Objects.Pages.SolutionsList.SolutionName)
                 .FindElement(By.TagName("a"));
             solution.Click();
         }
 
         public bool SolutionsHaveAllSelectedCapabilities()
         {
-            IList<string> selectedCapabilities = driver.FindElements(pages.CapabilityFilter.Capabilities)
+            IList<string> selectedCapabilities = driver.FindElements(Objects.Pages.CapabilityFilter.Capabilities)
                 .Where(s => s.FindElement(By.TagName("input")).GetProperty("checked") == "checked").Select(s => s.Text)
                 .ToList();
 
@@ -83,12 +83,12 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
 
         public int GetSolutionSupplierNameCount()
         {
-            return driver.FindElements(pages.SolutionsList.SolutionSupplierName).Where(s => s.Text.Length > 0).Count();
+            return driver.FindElements(Objects.Pages.SolutionsList.SolutionSupplierName).Where(s => s.Text.Length > 0).Count();
         }
 
         public int GetSolutionNameCount()
         {
-            return driver.FindElements(pages.SolutionsList.SolutionName).Where(s => s.Text.Length > 0).Count();
+            return driver.FindElements(Objects.Pages.SolutionsList.SolutionName).Where(s => s.Text.Length > 0).Count();
         }
 
         /// <summary>
@@ -100,11 +100,11 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
         {
             var solCount = 0;
 
-            var solutionsCount = driver.FindElements(pages.SolutionsList.Solutions).Count;
+            var solutionsCount = driver.FindElements(Objects.Pages.SolutionsList.Solutions).Count;
 
             for (var i = 0; i < solutionsCount; i++)
             {
-                var solution = driver.FindElements(pages.SolutionsList.Solutions)[i];
+                var solution = driver.FindElements(Objects.Pages.SolutionsList.Solutions)[i];
 
                 var capabilities = solution.FindElements(By.CssSelector("[data-test-id=capability-section-value]"));
 
@@ -121,17 +121,17 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
 
         public int GetSolutionCapabilityListCount()
         {
-            return driver.FindElements(pages.SolutionsList.SolutionCapabilityList).Count;
+            return driver.FindElements(Objects.Pages.SolutionsList.SolutionCapabilityList).Count;
         }
 
         public int GetSolutionSummaryCount()
         {
-            return driver.FindElements(pages.SolutionsList.SolutionSummary).Where(s => s.Text.Length > 0).Count();
+            return driver.FindElements(Objects.Pages.SolutionsList.SolutionSummary).Where(s => s.Text.Length > 0).Count();
         }
 
         public int GetSolutionsWithCapabilityCount(string capabilityName)
         {
-            return driver.FindElements(pages.SolutionsList.SolutionCapabilityName)
+            return driver.FindElements(Objects.Pages.SolutionsList.SolutionCapabilityName)
                 .Where(s => s.Text.Equals(capabilityName)).Count();
         }
 
@@ -152,7 +152,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
         /// <returns></returns>
         public int GetSolutionsCount()
         {
-            return driver.FindElements(pages.SolutionsList.Solutions).Count;
+            return driver.FindElements(Objects.Pages.SolutionsList.Solutions).Count;
         }
 
         /// <summary>
@@ -171,7 +171,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
         /// </summary>
         public void WaitForSolutionToBeDisplayed()
         {
-            wait.Until(s => s.FindElement(pages.SolutionsList.Solutions));
+            wait.Until(s => s.FindElement(Objects.Pages.SolutionsList.Solutions));
         }
 
         /// <summary>
@@ -230,24 +230,24 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
         /// <returns></returns>
         public int GetFoundationSolutionIndicatorCount()
         {
-            return driver.FindElements(pages.SolutionsList.FoundationSolutionIndicators).Count;
+            return driver.FindElements(Objects.Pages.SolutionsList.FoundationSolutionIndicators).Count;
         }
 
         public bool CompareSolutionsButtonIsDisplayed()
         {
-            return driver.FindElements(pages.SolutionsList.CompareSolutions).Count > 0;
+            return driver.FindElements(Objects.Pages.SolutionsList.CompareSolutions).Count > 0;
         }
 
         public string GetCompareSolutionsButtonUrl()
         {
-            return driver.FindElement(pages.SolutionsList.CompareSolutions).GetAttribute("href");
+            return driver.FindElement(Objects.Pages.SolutionsList.CompareSolutions).GetAttribute("href");
         }
 
         private bool FoundationIndicatorDisplayed(IWebElement element)
         {
             try
             {
-                element.FindElement(pages.SolutionsList.FoundationSolutionIndicators);
+                element.FindElement(Objects.Pages.SolutionsList.FoundationSolutionIndicators);
                 return true;
             }
             catch
