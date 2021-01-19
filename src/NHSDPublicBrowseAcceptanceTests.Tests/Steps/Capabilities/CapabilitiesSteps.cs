@@ -9,18 +9,16 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.Capabilities
 {
     [Binding]
     public sealed class CapabilitiesSteps
-    {
-        private readonly ScenarioContext _context;
+    {   
         private readonly UITest _test;
 
         private readonly IEnumerable<Capability> capabilities;
         private string selectedCapability;
         private int solutionsForCapability;
 
-        public CapabilitiesSteps(UITest test, ScenarioContext context)
+        public CapabilitiesSteps(UITest test)
         {
             _test = test;
-            _context = context;
             capabilities = SqlExecutor.Execute<Capability>(_test.ConnectionString, Queries.GetAllCapabilities, null);
         }
 

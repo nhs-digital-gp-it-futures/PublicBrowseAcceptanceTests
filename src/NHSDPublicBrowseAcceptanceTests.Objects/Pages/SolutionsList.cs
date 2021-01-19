@@ -5,13 +5,13 @@ namespace NHSDPublicBrowseAcceptanceTests.Objects.Pages
 {
     public sealed class SolutionsList
     {
-        public By Solutions => CustomBy.DataTestId("solution-card");
-        public By SolutionName => CustomBy.DataTestId("solution-card-name");
-        public By SolutionSupplierName => CustomBy.DataTestId("solution-card-supplier");
-        public By SolutionSummary => CustomBy.DataTestId("solution-card-summary");
-        public By SolutionCapabilityList => CustomBy.DataTestId("capability-list");
-        public By SolutionCapabilityName => CustomBy.DataTestId("capability-list-item");
-        public By FoundationSolutionIndicators => CustomBy.DataTestId("solution-card-foundation");
-        public By CompareSolutions => CustomBy.DataTestId("compare-button", "a");
+        public static By Solutions => CustomBy.DataTestId("solution-card");
+        public static By SolutionName => CustomBy.DataTestId("solution-card-name");
+        public static By SolutionSupplierName => CustomBy.DataTestId("solution-card-supplier");
+        public static By SolutionSummary => CustomBy.DataTestId("solution-card-summary");
+        public static By SolutionCapabilityList => CustomBy.DataTestId("capability-list");
+        public static By SolutionCapabilityName => CustomBy.DataTestId("capability-list-item");
+        public static By FoundationSolutionIndicators => CustomBy.DataTestId("solution-card-foundation");
+        public static By CompareSolutions => CustomBy.DataTestId("compare-button", "a");
     }
 }

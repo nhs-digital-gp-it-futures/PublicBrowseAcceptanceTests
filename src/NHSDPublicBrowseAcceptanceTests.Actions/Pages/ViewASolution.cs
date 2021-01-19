@@ -24,69 +24,69 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
 
         public string GetSolutionId()
         {
-            return driver.FindElement(pages.ViewSingleSolution.SolutionId).Text.Replace("Solution ID: ", "");
+            return driver.FindElement(Objects.Pages.ViewSingleSolution.SolutionId).Text.Replace("Solution ID: ", "");
         }
 
         public void SupplierNameDisplayed()
         {
-            driver.FindElement(pages.ViewSingleSolution.SolutionSupplierName).Displayed.Should().BeTrue();
+            driver.FindElement(Objects.Pages.ViewSingleSolution.SolutionSupplierName).Displayed.Should().BeTrue();
         }
 
         public string GetSolutionName()
         {
-            return driver.FindElement(pages.ViewSingleSolution.SolutionName).Text;
+            return driver.FindElement(Objects.Pages.ViewSingleSolution.SolutionName).Text;
         }
 
         public string GetSolutionSummary()
         {
-            return driver.FindElement(pages.ViewSingleSolution.SolutionSummary).Text;
+            return driver.FindElement(Objects.Pages.ViewSingleSolution.SolutionSummary).Text;
         }
 
         public string GetSolutionLastUpdated()
         {
-            return driver.FindElement(pages.ViewSingleSolution.SolutionLastUpdated).Text
+            return driver.FindElement(Objects.Pages.ViewSingleSolution.SolutionLastUpdated).Text
                 .Replace("Solution information last updated: ", "");
         }
 
         public string GetSolutionAboutUrl()
         {
-            return driver.FindElement(pages.ViewSingleSolution.SolutionAboutUrl).Text;
+            return driver.FindElement(Objects.Pages.ViewSingleSolution.SolutionAboutUrl).Text;
         }
 
         public IList<string> GetFeatures()
         {
-            return driver.FindElements(pages.ViewSingleSolution.Features).Select(s => s.Text).ToList();
+            return driver.FindElements(Objects.Pages.ViewSingleSolution.Features).Select(s => s.Text).ToList();
         }
 
         public bool CapabilitiesListDisplayed()
         {
-            return driver.FindElement(pages.ViewSingleSolution.SolutionCapabilities).Displayed;
+            return driver.FindElement(Objects.Pages.ViewSingleSolution.SolutionCapabilities).Displayed;
         }
 
         public bool AttachmentDownloadLinkDisplayed()
         {
-            return driver.FindElements(pages.ViewSingleSolution.AttachmentDownloadLink).Count > 0;
+            return driver.FindElements(Objects.Pages.ViewSingleSolution.AttachmentDownloadLink).Count > 0;
         }
 
         public bool NhsAssuredIntegrationsDownloadLinkDisplayed()
         {
-            return driver.FindElements(pages.ViewSingleSolution.DownloadNHSAssuredIntegrationsDocumentLink).Count > 0;
+            return driver.FindElements(Objects.Pages.ViewSingleSolution.DownloadNHSAssuredIntegrationsDocumentLink).Count > 0;
         }
 
         public bool RoadmapDownloadLinkDisplayed()
         {
-            return driver.FindElements(pages.ViewSingleSolution.DownloadRoadmapDocumentLink).Count > 0;
+            return driver.FindElements(Objects.Pages.ViewSingleSolution.DownloadRoadmapDocumentLink).Count > 0;
         }
 
         public bool FoundationSolutionIndicatorDisplayed()
         {
-            return driver.FindElement(pages.ViewSingleSolution.FoundationSolutionIndicator).Displayed;
+            return driver.FindElement(Objects.Pages.ViewSingleSolution.FoundationSolutionIndicator).Displayed;
         }
 
         public IList<string> GetSolutionCapabilities()
         {
-            var capabilities = driver.FindElements(pages.ViewSingleSolution.SolutionCapabilities)
-                .Select(s => s.FindElement(pages.ViewSingleSolution.CapabilityTitle).Text)
+            var capabilities = driver.FindElements(Objects.Pages.ViewSingleSolution.SolutionCapabilities)
+                .Select(s => s.FindElement(Objects.Pages.ViewSingleSolution.CapabilityTitle).Text)
                 .Select(s => s.Split(',')[0])
                 .ToList();
             return capabilities;
@@ -94,24 +94,24 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
 
         public string GetAttachmentDownloadLinkUrl()
         {
-            return driver.FindElement(pages.ViewSingleSolution.AttachmentDownloadLink).GetAttribute("href");
+            return driver.FindElement(Objects.Pages.ViewSingleSolution.AttachmentDownloadLink).GetAttribute("href");
         }
 
         public string GetNhsAssuredIntegrationsDownloadLinkUrl()
         {
-            return driver.FindElement(pages.ViewSingleSolution.DownloadNHSAssuredIntegrationsDocumentLink)
+            return driver.FindElement(Objects.Pages.ViewSingleSolution.DownloadNHSAssuredIntegrationsDocumentLink)
                 .GetAttribute("href");
         }
 
         public string GetRoadmapDownloadLinkUrl()
         {
-            return driver.FindElement(pages.ViewSingleSolution.DownloadRoadmapDocumentLink)
+            return driver.FindElement(Objects.Pages.ViewSingleSolution.DownloadRoadmapDocumentLink)
                 .GetAttribute("href");
         }
 
         public string GetSolutionFullDescription()
         {
-            return driver.FindElement(pages.ViewSingleSolution.SolutionFullDescription).Text;
+            return driver.FindElement(Objects.Pages.ViewSingleSolution.SolutionFullDescription).Text;
         }
 
         public SolutionContactDetails GetSolutionContactDetails(bool GetName = true, bool GetDepartment = true, bool GetPhoneNumber = true, bool GetEmail = true)
@@ -119,20 +119,20 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
             SolutionContactDetails contactDetails = new();
             if (GetName)
             {
-                contactDetails.FirstName = driver.FindElement(pages.ViewSingleSolution.SolutionContactName).Text.Split(' ')[0];
-                contactDetails.LastName = driver.FindElement(pages.ViewSingleSolution.SolutionContactName).Text.Split(' ')[1];
+                contactDetails.FirstName = driver.FindElement(Objects.Pages.ViewSingleSolution.SolutionContactName).Text.Split(' ')[0];
+                contactDetails.LastName = driver.FindElement(Objects.Pages.ViewSingleSolution.SolutionContactName).Text.Split(' ')[1];
             }
             if (GetDepartment)
             {
-                contactDetails.Department = driver.FindElement(pages.ViewSingleSolution.SolutionContactDepartment).Text;
+                contactDetails.Department = driver.FindElement(Objects.Pages.ViewSingleSolution.SolutionContactDepartment).Text;
             }
             if (GetPhoneNumber)
             {
-                contactDetails.PhoneNumber = driver.FindElement(pages.ViewSingleSolution.SolutionContactPhoneNumber).Text;
+                contactDetails.PhoneNumber = driver.FindElement(Objects.Pages.ViewSingleSolution.SolutionContactPhoneNumber).Text;
             }
             if (GetEmail)
             {
-                contactDetails.Email = driver.FindElement(pages.ViewSingleSolution.SolutionContactEmail).Text;
+                contactDetails.Email = driver.FindElement(Objects.Pages.ViewSingleSolution.SolutionContactEmail).Text;
             }
 
             return contactDetails;
@@ -143,7 +143,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
             wait.Until(s =>
             {
                 s.Navigate().Refresh();
-                return s.FindElement(pages.ViewSingleSolution.RoadmapSection).Displayed;
+                return s.FindElement(Objects.Pages.ViewSingleSolution.RoadmapSection).Displayed;
             });
         }
 
@@ -152,7 +152,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
             wait.Until(s =>
             {
                 s.Navigate().Refresh();
-                return s.FindElement(pages.ViewSingleSolution.IntegrationsSection).Displayed;
+                return s.FindElement(Objects.Pages.ViewSingleSolution.IntegrationsSection).Displayed;
             });
         }
 
@@ -163,7 +163,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
                 wait.Until(s =>
                 {
                     s.Navigate().Refresh();
-                    return s.FindElement(pages.ViewSingleSolution.LearnMoreSection).Displayed;
+                    return s.FindElement(Objects.Pages.ViewSingleSolution.LearnMoreSection).Displayed;
                 });
                 return true;
             }

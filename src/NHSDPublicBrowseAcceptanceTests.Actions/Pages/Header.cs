@@ -11,17 +11,17 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
 
         public void ClickLogo()
         {
-            driver.FindElement(pages.Header.Logo).Click();
+            driver.FindElement(Objects.Pages.Header.Logo).Click();
         }
 
         public void ComponentDisplayed()
         {
-            driver.FindElement(pages.Header.Container).Displayed.Should().BeTrue();
+            driver.FindElement(Objects.Pages.Header.Container).Displayed.Should().BeTrue();
         }
 
         public void BannerDisplayed()
         {
-            driver.FindElement(pages.Header.Banner).Displayed.Should().BeTrue();
+            driver.FindElement(Objects.Pages.Header.Banner).Displayed.Should().BeTrue();
         }
     }
 }

@@ -11,22 +11,22 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
 
         public void DownloadLinkPresented()
         {
-            driver.FindElement(pages.BuyersGuide.DownloadButton).Displayed.Should().BeTrue();
+            driver.FindElement(Objects.Pages.BuyersGuide.DownloadButton).Displayed.Should().BeTrue();
         }
 
         public string GetDownloadLink()
         {
-            return driver.FindElement(pages.BuyersGuide.DownloadButton).GetAttribute("href");
+            return driver.FindElement(Objects.Pages.BuyersGuide.DownloadButton).GetAttribute("href");
         }
 
         public bool CatalogueGuidanceContentDisplayed()
         {
-            return driver.FindElement(pages.BuyersGuide.CatalogueSolutionGuide).Displayed;
+            return driver.FindElement(Objects.Pages.BuyersGuide.CatalogueSolutionGuide).Displayed;
         }
 
         public bool ServiceDeskGuidanceContentDisplayed()
         {
-            return driver.FindElement(pages.BuyersGuide.ServiceDeskGuide).Displayed;
+            return driver.FindElement(Objects.Pages.BuyersGuide.ServiceDeskGuide).Displayed;
         }
     }
 }

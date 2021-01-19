@@ -11,12 +11,12 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
 
         public void ComponentDisplayed()
         {
-            wait.Until(s => s.FindElement(pages.Footer.Container).Displayed);
+            wait.Until(s => s.FindElement(Objects.Pages.Footer.Container).Displayed);
         }
 
         public void SelectURL(string linkText)
         {
-            var links = driver.FindElements(pages.Footer.Links);
+            var links = driver.FindElements(Objects.Pages.Footer.Links);
 
             links.Single(s => s.Text.Equals(linkText)).Click();
         }

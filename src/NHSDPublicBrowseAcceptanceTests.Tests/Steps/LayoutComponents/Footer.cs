@@ -6,13 +6,11 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.LayoutComponents
     [Binding]
     public sealed class Footer
     {
-        private readonly ScenarioContext _context;
         private readonly UITest _test;
 
-        public Footer(UITest test, ScenarioContext context)
+        public Footer(UITest test)
         {
             _test = test;
-            _context = context;
         }
 
         [Then(@"it contains a Footer")]

@@ -10,7 +10,6 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions
     {
         internal readonly IWebDriver driver;
 
-        internal readonly PageCollection pages;
         internal readonly WebDriverWait wait;
 
         public Interactions(IWebDriver driver)
@@ -20,9 +19,6 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions
             // Initialize a WebDriverWait that can be reutilized by all that inherit from this class
             wait = new WebDriverWait(new SystemClock(), driver, TimeSpan.FromSeconds(10),
                 TimeSpan.FromMilliseconds(100));
-
-            // Initialize the page objects
-            pages = new PageObjects().Pages;
         }
     }
 }

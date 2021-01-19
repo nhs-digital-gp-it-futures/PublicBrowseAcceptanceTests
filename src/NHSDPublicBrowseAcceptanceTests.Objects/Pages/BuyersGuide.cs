@@ -5,10 +5,10 @@ namespace NHSDPublicBrowseAcceptanceTests.Objects.Pages
 {
     public sealed class BuyersGuide
     {
-        public By DownloadButton => CustomBy.DataTestId("subsection-button", "a");
+        public static By DownloadButton => CustomBy.DataTestId("subsection-button", "a");
 
-        public By CatalogueSolutionGuide => By.Id("catalogue-solution");
+        public static By CatalogueSolutionGuide => By.Id("catalogue-solution");
 
-        public By ServiceDeskGuide => By.Id("contact-us");
+        public static By ServiceDeskGuide => By.Id("contact-us");
     }
 }

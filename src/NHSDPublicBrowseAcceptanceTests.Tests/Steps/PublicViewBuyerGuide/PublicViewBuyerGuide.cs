@@ -9,13 +9,11 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.PublicViewBuyerGuide
     [Binding]
     public class PublicViewBuyerGuide
     {
-        private readonly ScenarioContext _context;
         private readonly UITest _test;
 
         public PublicViewBuyerGuide(UITest test, ScenarioContext context)
         {
             _test = test;
-            _context = context;
         }
 
         [When(@"the choose to access the Buyer Guide dedicated content page")]

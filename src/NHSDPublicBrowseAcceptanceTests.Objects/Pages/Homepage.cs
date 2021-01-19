@@ -5,14 +5,14 @@ namespace NHSDPublicBrowseAcceptanceTests.Objects.Pages
 {
     public class Homepage
     {
-        public By Title => By.CssSelector(".nhsuk-hero__wrapper h1");
+        public static By Title => By.CssSelector(".nhsuk-hero__wrapper h1");
 
-        public By AboutSection => CustomBy.DataTestId("about-us");
+        public static By AboutSection => CustomBy.DataTestId("about-us");
 
-        public By BrowseSolutions => CustomBy.DataTestId("browse-promo", "a h3.nhsuk-promo__heading");
+        public static By BrowseSolutions => CustomBy.DataTestId("browse-promo", "a h3.nhsuk-promo__heading");
 
-        public By GuidanceContent => CustomBy.DataTestId("guidance-promo", "a h3");
+        public static By GuidanceContent => CustomBy.DataTestId("guidance-promo", "a h3");
 
-        public By LoginLogoutLink => CustomBy.DataTestId("login-logout-component", "a");
+        public static By LoginLogoutLink => CustomBy.DataTestId("login-logout-component", "a");
     }
 }
