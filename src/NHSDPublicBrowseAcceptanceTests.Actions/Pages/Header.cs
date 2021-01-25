@@ -1,27 +1,28 @@
-﻿using FluentAssertions;
-using OpenQA.Selenium;
-
-namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
+﻿namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
 {
+    using FluentAssertions;
+    using OpenQA.Selenium;
+
     public sealed class Header : Interactions
     {
-        public Header(IWebDriver driver) : base(driver)
+        public Header(IWebDriver driver)
+            : base(driver)
         {
         }
 
         public void ClickLogo()
         {
-            driver.FindElement(Objects.Pages.Header.Logo).Click();
+            Driver.FindElement(Objects.Pages.Header.Logo).Click();
         }
 
         public void ComponentDisplayed()
         {
-            driver.FindElement(Objects.Pages.Header.Container).Displayed.Should().BeTrue();
+            Driver.FindElement(Objects.Pages.Header.Container).Displayed.Should().BeTrue();
         }
 
         public void BannerDisplayed()
         {
-            driver.FindElement(Objects.Pages.Header.Banner).Displayed.Should().BeTrue();
+            Driver.FindElement(Objects.Pages.Header.Banner).Displayed.Should().BeTrue();
         }
     }
 }

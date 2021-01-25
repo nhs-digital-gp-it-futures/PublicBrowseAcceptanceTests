@@ -1,23 +1,23 @@
-﻿using NHSDPublicBrowseAcceptanceTests.Tests.Utils;
-using TechTalk.SpecFlow;
-
-namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.LayoutComponents
+﻿namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.LayoutComponents
 {
+    using NHSDPublicBrowseAcceptanceTests.Tests.Utils;
+    using TechTalk.SpecFlow;
+
     [Binding]
     public sealed class Footer
     {
-        private readonly UITest _test;
+        private readonly UITest test;
 
         public Footer(UITest test)
         {
-            _test = test;
+            this.test = test;
         }
 
         [Then(@"it contains a Footer")]
         [Then(@"the Footer is presented")]
         public void ThenTheFooterIsPresented()
         {
-            _test.Pages.Footer.ComponentDisplayed();
+            test.Pages.Footer.ComponentDisplayed();
         }
 
         [Given(@"the User chooses to select a URL in the Footer")]
@@ -29,13 +29,13 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.LayoutComponents
         [When(@"they select (.*)")]
         public void WhenTheySelectAURL(string linkText)
         {
-            _test.Pages.Footer.SelectURL(linkText);
+            test.Pages.Footer.SelectURL(linkText);
         }
 
         [Then(@"they are directed according to the URL (.*)")]
         public void ThenTheyAreDirectedAccordingToTheURL(string href)
         {
-            _test.Pages.Common.URLContains(href);
+            test.Pages.Common.URLContains(href);
         }
     }
 }

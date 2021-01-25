@@ -1,30 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using Bogus;
-using NHSDPublicBrowseAcceptanceTests.TestData.Information;
-
-namespace NHSDPublicBrowseAcceptanceTests.TestData.Solutions
+﻿namespace NHSDPublicBrowseAcceptanceTests.TestData.Solutions
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.Linq;
+    using Bogus;
+    using NHSDPublicBrowseAcceptanceTests.TestData.Information;
+
     public static class GenerateCatalogueItem
     {
-        public static CatalogueItem GenerateNewCatalogueItem(string prefix = "Auto", bool checkForUnique = false,
-            string connectionString = null, int publishedStatus = 1)
+        public static CatalogueItem GenerateNewCatalogueItem(
+            string prefix = "Auto",
+            bool checkForUnique = false,
+            string connectionString = null,
+            int publishedStatus = 1)
         {
             var faker = new Faker();
 
-            var Id = checkForUnique ? UniqueSolIdCheck(prefix, connectionString) : RandomSolId(prefix);
+            var id = checkForUnique ? UniqueSolIdCheck(prefix, connectionString) : RandomSolId(prefix);
 
             var catalogueItem = new CatalogueItem
             {
-                CatalogueItemId = Id,
+                CatalogueItemId = id,
                 Name = faker.Name.JobTitle(),
                 PublishedStatusId = publishedStatus,
                 Created = DateTime.Now,
             };
 
-            if (Debugger.IsAttached) Console.WriteLine(catalogueItem.ToString());
+            if (Debugger.IsAttached)
+            {
+                Console.WriteLine(catalogueItem.ToString());
+            }
 
             return catalogueItem;
         }
@@ -32,7 +38,11 @@ namespace NHSDPublicBrowseAcceptanceTests.TestData.Solutions
         private static string GetSuffix(int solIdLength)
         {
             var suffix = string.Empty;
-            for (var i = 0; i < 14 - solIdLength; i++) suffix += GetRandomCharacter();
+            for (var i = 0; i < 14 - solIdLength; i++)
+            {
+                suffix += GetRandomCharacter();
+            }
+
             return suffix;
         }
 
@@ -40,7 +50,10 @@ namespace NHSDPublicBrowseAcceptanceTests.TestData.Solutions
         {
             var faker = new Faker();
             var randomChars = new List<string>();
-            for (var i = 0; i < 10; i++) randomChars.Add(faker.Random.AlphaNumeric(1));
+            for (var i = 0; i < 10; i++)
+            {
+                randomChars.Add(faker.Random.AlphaNumeric(1));
+            }
 
             return RandomInformation.GetRandomItem(randomChars);
         }
@@ -72,7 +85,10 @@ namespace NHSDPublicBrowseAcceptanceTests.TestData.Solutions
             for (var i = 0; i < 10; i++)
             {
                 solId = RandomSolId(prefix);
-                if (!existingSolIds.Contains(solId)) break;
+                if (!existingSolIds.Contains(solId))
+                {
+                    break;
+                }
             }
 
             return solId;

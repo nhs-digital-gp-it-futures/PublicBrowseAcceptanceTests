@@ -1,26 +1,19 @@
-﻿using FluentAssertions;
-using NHSDPublicBrowseAcceptanceTests.Tests.Utils;
-using TechTalk.SpecFlow;
-
-namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.LayoutComponents
+﻿namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.LayoutComponents
 {
+    using FluentAssertions;
+    using NHSDPublicBrowseAcceptanceTests.Tests.Utils;
+    using TechTalk.SpecFlow;
+
     [Binding]
     public sealed class Header
     {
-        private readonly UITest _test;
-        private readonly Settings _settings;
+        private readonly UITest test;
+        private readonly Settings settings;
 
         public Header(UITest test, Settings settings)
         {
-            _test = test;
-            _settings = settings;
-        }
-
-        [Then(@"the Header is presented")]
-        [Then(@"it contains a Header")]
-        public void ThenTheHeaderIsPresented()
-        {
-            _test.Pages.Header.ComponentDisplayed();
+            this.test = test;
+            this.settings = settings;
         }
 
         [Given(@"the User chooses to select the logo in the Header")]
@@ -28,23 +21,29 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.LayoutComponents
         {
         }
 
+        [Then(@"the Header is presented")]
+        [Then(@"it contains a Header")]
+        public void ThenTheHeaderIsPresented()
+        {
+            test.Pages.Header.ComponentDisplayed();
+        }
+
         [When(@"they click the NHS Digital logo")]
         public void WhenTheyClickTheNHSDigitalLogo()
         {
-            _test.Pages.Header.ClickLogo();
+            test.Pages.Header.ClickLogo();
         }
-
 
         [Then(@"they are directed to the domain URL")]
         public void ThenTheyAreDirectedToTheDomainURL()
         {
-            _test.Pages.Common.GetUrl().Should().Be(_settings.PublicBrowseUrl + '/');
+            test.Pages.Common.GetUrl().Should().Be(settings.PublicBrowseUrl + '/');
         }
 
         [Then(@"a banner is displayed")]
         public void ThenABannerIsDisplayed()
         {
-            _test.Pages.Header.BannerDisplayed();
+            test.Pages.Header.BannerDisplayed();
         }
     }
 }

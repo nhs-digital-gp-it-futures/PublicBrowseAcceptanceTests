@@ -1,8 +1,8 @@
-﻿using NHSDPublicBrowseAcceptanceTests.Actions.Pages;
-using OpenQA.Selenium;
-
-namespace NHSDPublicBrowseAcceptanceTests.Actions
+﻿namespace NHSDPublicBrowseAcceptanceTests.Actions
 {
+    using NHSDPublicBrowseAcceptanceTests.Actions.Pages;
+    using OpenQA.Selenium;
+
     public sealed class PageActions
     {
         public PageActions(IWebDriver driver)
@@ -17,7 +17,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions
                 Header = new Header(driver),
                 BrowseSolutions = new BrowseSolutions(driver),
                 ViewASolution = new ViewASolution(driver),
-                BuyersGuide = new BuyersGuide(driver)
+                BuyersGuide = new BuyersGuide(driver),
             };
         }
 

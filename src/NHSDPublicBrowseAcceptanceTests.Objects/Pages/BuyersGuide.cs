@@ -1,8 +1,8 @@
-﻿using NHSDPublicBrowseAcceptanceTests.Objects.Utils;
-using OpenQA.Selenium;
-
-namespace NHSDPublicBrowseAcceptanceTests.Objects.Pages
+﻿namespace NHSDPublicBrowseAcceptanceTests.Objects.Pages
 {
+    using NHSDPublicBrowseAcceptanceTests.Objects.Utils;
+    using OpenQA.Selenium;
+
     public sealed class BuyersGuide
     {
         public static By DownloadButton => CustomBy.DataTestId("subsection-button", "a");

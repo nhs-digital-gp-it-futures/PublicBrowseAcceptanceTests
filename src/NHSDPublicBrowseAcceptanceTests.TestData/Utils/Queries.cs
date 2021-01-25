@@ -46,8 +46,6 @@
                 where Solution.Id = @solutionId;
             ";
 
-        internal const string GetLastUpdated = "SELECT LastUpdated FROM @table WHERE @whereKey=@whereValue";
-
         public const string AddRandomSolutionCapability =
             "INSERT INTO SolutionCapability (SolutionId, CapabilityId, StatusId, LastUpdated, LastUpdatedBy) VALUES (@solutionId, (SELECT TOP 1 CapabilityId FROM FrameworkCapabilities ORDER BY RAND()), 1, GETDATE(), '00000000-0000-0000-0000-000000000000')";
 
@@ -76,5 +74,7 @@
 
         public const string DeleteCatalogueItem = "DELETE FROM CatalogueItem WHERE CatalogueItemId=@CatalogueItemId";
         public const string GetAllCatalogueItems = "SELECT * FROM [dbo].[CatalogueItem]";
+
+        internal const string GetLastUpdated = "SELECT LastUpdated FROM @table WHERE @whereKey=@whereValue";
     }
 }

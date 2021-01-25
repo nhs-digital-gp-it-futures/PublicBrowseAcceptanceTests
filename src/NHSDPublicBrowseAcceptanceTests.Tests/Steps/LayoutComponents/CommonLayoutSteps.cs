@@ -1,28 +1,28 @@
-﻿using NHSDPublicBrowseAcceptanceTests.Tests.Utils;
-using TechTalk.SpecFlow;
-
-namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.LayoutComponents
+﻿namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.LayoutComponents
 {
+    using NHSDPublicBrowseAcceptanceTests.Tests.Utils;
+    using TechTalk.SpecFlow;
+
     [Binding]
     public sealed class CommonLayoutSteps
     {
-        private readonly UITest _test;
+        private readonly UITest test;
 
         public CommonLayoutSteps(UITest test)
         {
-            _test = test;
+            this.test = test;
         }
 
         [Given(@"the User chooses any Page in the application")]
         public void GivenTheUserChoosesAnyPageInTheApplication()
         {
-            _test.Pages.Homepage.PageDisplayed();
+            test.Pages.Homepage.PageDisplayed();
         }
 
         [When(@"they are on a Page")]
         public void WhenTheyAreOnAPage()
         {
-            _test.Pages.Homepage.PageDisplayed();
+            test.Pages.Homepage.PageDisplayed();
         }
     }
 }

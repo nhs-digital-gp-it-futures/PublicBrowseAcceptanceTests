@@ -1,14 +1,18 @@
-﻿using OpenQA.Selenium;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net;
-
-namespace NHSDPublicBrowseAcceptanceTests.Actions.Utils
+﻿namespace NHSDPublicBrowseAcceptanceTests.Actions.Utils
 {
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Net;
+    using OpenQA.Selenium;
+
     public static class DownloadFileUtility
     {
-        public static WebClient DownloadFile(string fileName, string downloadPath, string downloadLink, IDictionary<string, string> headers = null)
+        public static WebClient DownloadFile(
+            string fileName,
+            string downloadPath,
+            string downloadLink,
+            IDictionary<string, string> headers = null)
         {
             ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
             downloadLink = TransformLocalHost(downloadLink);
@@ -45,7 +49,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Utils
             Dictionary<string, string> headers = new()
             {
                 { "user-agent", (string)useragent },
-                { "referer", (string)referer }
+                { "referer", (string)referer },
             };
             return headers;
         }

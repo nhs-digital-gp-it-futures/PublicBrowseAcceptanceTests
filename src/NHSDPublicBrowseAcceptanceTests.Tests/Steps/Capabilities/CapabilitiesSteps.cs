@@ -1,16 +1,16 @@
-﻿using System.Collections.Generic;
-using FluentAssertions;
-using NHSDPublicBrowseAcceptanceTests.TestData.Capabilities;
-using NHSDPublicBrowseAcceptanceTests.TestData.Utils;
-using NHSDPublicBrowseAcceptanceTests.Tests.Utils;
-using TechTalk.SpecFlow;
-
-namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.Capabilities
+﻿namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.Capabilities
 {
+    using System.Collections.Generic;
+    using FluentAssertions;
+    using NHSDPublicBrowseAcceptanceTests.TestData.Capabilities;
+    using NHSDPublicBrowseAcceptanceTests.TestData.Utils;
+    using NHSDPublicBrowseAcceptanceTests.Tests.Utils;
+    using TechTalk.SpecFlow;
+
     [Binding]
     public sealed class CapabilitiesSteps
-    {   
-        private readonly UITest _test;
+    {
+        private readonly UITest test;
 
         private readonly IEnumerable<Capability> capabilities;
         private string selectedCapability;
@@ -18,32 +18,34 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.Capabilities
 
         public CapabilitiesSteps(UITest test)
         {
-            _test = test;
-            capabilities = SqlExecutor.Execute<Capability>(_test.ConnectionString, Queries.GetAllCapabilities, null);
+            this.test = test;
+            capabilities = SqlExecutor.Execute<Capability>(test.ConnectionString, Queries.GetAllCapabilities, null);
         }
 
         [Given(@"no Capability is selected")]
         public void GivenNoCapabilityIsSelected()
         {
-            _test.Pages.Homepage.ClickBrowseSolutions();
-            _test.Pages.BrowseSolutions.OpenAllSolutions();
+            test.Pages.Homepage.ClickBrowseSolutions();
+            test.Pages.BrowseSolutions.OpenAllSolutions();
         }
 
         [Given(@"one or more Capability is selected")]
         public void GivenOneOrMoreCapabilityIsSelected()
         {
-            _test.Pages.Homepage.ClickBrowseSolutions();
-            _test.Pages.BrowseSolutions.OpenAllSolutions();
+            test.Pages.Homepage.ClickBrowseSolutions();
+            test.Pages.BrowseSolutions.OpenAllSolutions();
 
-            selectedCapability = _test.Pages.CapabilityFilter.SelectCapability(_test.ConnectionString);
-            solutionsForCapability = SqlExecutor.ExecuteScalar(_test.ConnectionString,
-                Queries.GetSolutionsWithCapabilityCount, new { CapabilityName = selectedCapability });
+            selectedCapability = test.Pages.CapabilityFilter.SelectCapability(test.ConnectionString);
+            solutionsForCapability = SqlExecutor.ExecuteScalar(
+                test.ConnectionString,
+                Queries.GetSolutionsWithCapabilityCount,
+                new { CapabilityName = selectedCapability });
         }
 
         [Then(@"Solution results are presented")]
         public void ThenSolutionResultsArePresented()
         {
-            _test.Pages.SolutionsList.GetSolutionsWithCapabilityCount(selectedCapability).Should()
+            test.Pages.SolutionsList.GetSolutionsWithCapabilityCount(selectedCapability).Should()
                 .Be(solutionsForCapability);
         }
 
@@ -56,14 +58,14 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.Capabilities
         [When(@"the Capabilities are presented for selection")]
         public void WhenTheCapabilitiesArePresentedForSelection()
         {
-            _test.Pages.Homepage.ClickBrowseSolutions();
-            _test.Pages.BrowseSolutions.OpenAllSolutions();
+            test.Pages.Homepage.ClickBrowseSolutions();
+            test.Pages.BrowseSolutions.OpenAllSolutions();
         }
 
         [Then(@"all of the Capabilities defined in the Capabilities and Standards model are displayed")]
         public void ThenAllOfTheCapabilitiesDefinedInTheCapabilitiesAndStandardsModelAreDisplayed()
         {
-            _test.Pages.CapabilityFilter.CapabilityNamesShown(capabilities);
+            test.Pages.CapabilityFilter.CapabilityNamesShown(capabilities);
         }
     }
 }

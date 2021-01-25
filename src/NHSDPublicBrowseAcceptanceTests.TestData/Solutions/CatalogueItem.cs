@@ -1,19 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using NHSDPublicBrowseAcceptanceTests.TestData.Utils;
-
-namespace NHSDPublicBrowseAcceptanceTests.TestData.Solutions
+﻿namespace NHSDPublicBrowseAcceptanceTests.TestData.Solutions
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using NHSDPublicBrowseAcceptanceTests.TestData.Utils;
+
     public sealed class CatalogueItem
     {
-
         public string CatalogueItemId { get; set; }
+
         public string Name { get; set; }
+
         public int CatalogueItemTypeId { get; set; } = 1;
+
         public string SupplierId { get; set; } = "100000";
+
         public int PublishedStatusId { get; set; } = 1;
+
         public DateTime Created { get; set; }
+
+        public static IEnumerable<string> RetrieveAll(string connectionString)
+        {
+            var query = Queries.GetAllCatalogueItems;
+            return SqlExecutor.Execute<CatalogueItem>(connectionString, query, null).Select(c => c.CatalogueItemId);
+        }
 
         public CatalogueItem Retrieve(string connectionString)
         {
@@ -37,12 +47,6 @@ namespace NHSDPublicBrowseAcceptanceTests.TestData.Solutions
         {
             var query = Queries.DeleteCatalogueItem;
             SqlExecutor.Execute<CatalogueItem>(connectionString, query, this);
-        }
-
-        public static IEnumerable<string> RetrieveAll(string connectionString)
-        {
-            var query = Queries.GetAllCatalogueItems;
-            return SqlExecutor.Execute<CatalogueItem>(connectionString, query, null).Select(c => c.CatalogueItemId);
         }
     }
 }

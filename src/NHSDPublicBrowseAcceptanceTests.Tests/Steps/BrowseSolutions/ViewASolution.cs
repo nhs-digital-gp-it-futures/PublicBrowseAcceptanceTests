@@ -1,174 +1,178 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-using System.Text.RegularExpressions;
-using FluentAssertions;
-using NHSDPublicBrowseAcceptanceTests.TestData.Capabilities;
-using NHSDPublicBrowseAcceptanceTests.TestData.Solutions;
-using NHSDPublicBrowseAcceptanceTests.TestData.Utils;
-using NHSDPublicBrowseAcceptanceTests.Tests.Utils;
-using TechTalk.SpecFlow;
-
-namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
+﻿namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
 {
+    using System;
+    using System.IO;
+    using System.Linq;
+    using System.Text.RegularExpressions;
+    using FluentAssertions;
+    using NHSDPublicBrowseAcceptanceTests.TestData.Capabilities;
+    using NHSDPublicBrowseAcceptanceTests.TestData.Solutions;
+    using NHSDPublicBrowseAcceptanceTests.TestData.Utils;
+    using NHSDPublicBrowseAcceptanceTests.Tests.Utils;
+    using TechTalk.SpecFlow;
+
     [Binding]
     public class ViewASolution
     {
-        private const string dateFormat = "dd MMMM yyyy";
-        private readonly ScenarioContext _context;
-        private readonly UITest _test;
-        private readonly Settings _settings;
-        private string _expectedLastUpdatedDate;
+        private const string DateFormat = "dd MMMM yyyy";
+        private readonly ScenarioContext context;
+        private readonly UITest test;
+        private readonly Settings settings;
+        private string expectedLastUpdatedDate;
 
         public ViewASolution(UITest test, ScenarioContext context, Settings settings)
         {
-            _test = test;
-            _context = context;
-            _settings = settings;
+            this.test = test;
+            this.context = context;
+            this.settings = settings;
         }
 
         [Given(@"that a User views a Solution")]
         public void GivenThatAUserViewsASolution()
         {
-            new ViewSolutionsList(_test).GivenThatAUserHasChosenToViewAListOfAllSolutions();
-            _test.Pages.SolutionsList.OpenRandomSolution();
+            new ViewSolutionsList(test).GivenThatAUserHasChosenToViewAListOfAllSolutions();
+            test.Pages.SolutionsList.OpenRandomSolution();
         }
 
         [Given(@"that a User views a created Solution")]
         public void GivenThatAUserViewsACreatedSolution()
         {
-            _test.CatalogueItem = GenerateCatalogueItem.GenerateNewCatalogueItem(checkForUnique: true,
-                connectionString: _test.ConnectionString, publishedStatus: 3);
-            _test.CatalogueItem.Create(_test.ConnectionString);
-            _test.Solution = GenerateSolution.GenerateNewSolution(_test.CatalogueItem.CatalogueItemId, 0, false);
-            _test.Solution.Create(_test.ConnectionString);
-            _context.Add("DeleteSolution", true);
-            Capability.AddRandomCapabilityToSolution(_test.ConnectionString, _test.Solution.Id);
-            _test.Driver.Navigate().Refresh();
+            test.CatalogueItem = GenerateCatalogueItem.GenerateNewCatalogueItem(
+                checkForUnique: true,
+                connectionString: test.ConnectionString,
+                publishedStatus: 3);
+            test.CatalogueItem.Create(test.ConnectionString);
+            test.Solution = GenerateSolution.GenerateNewSolution(test.CatalogueItem.CatalogueItemId, 0, false);
+            test.Solution.Create(test.ConnectionString);
+            context.Add("DeleteSolution", true);
+            Capability.AddRandomCapabilityToSolution(test.ConnectionString, test.Solution.Id);
+            test.Driver.Navigate().Refresh();
 
-            _test.ContactDetails.Add(CreateContactDetails.NewContactDetail());
-            _test.ContactDetails[0].AddMarketingContactForSolution(_test.ConnectionString, _test.Solution.Id);
-            new ViewSolutionsList(_test).GivenThatAUserHasChosenToViewAListOfAllSolutions();
+            test.ContactDetails.Add(CreateContactDetails.NewContactDetail());
+            test.ContactDetails[0].AddMarketingContactForSolution(test.ConnectionString, test.Solution.Id);
+            new ViewSolutionsList(test).GivenThatAUserHasChosenToViewAListOfAllSolutions();
             var oldDate = new DateTime(2001, 02, 03);
-            LastUpdatedHelper.UpdateLastUpdated(oldDate, "Solution", "id", _test.Solution.Id, _test.ConnectionString);
-            LastUpdatedHelper.UpdateLastUpdated(oldDate, "MarketingContact", "SolutionId", _test.Solution.Id,
-                _test.ConnectionString);
-            _test.Pages.SolutionsList.OpenNamedSolution(_test.CatalogueItem.Name);
+            LastUpdatedHelper.UpdateLastUpdated(oldDate, "Solution", "id", test.Solution.Id, test.ConnectionString);
+            LastUpdatedHelper.UpdateLastUpdated(
+                oldDate,
+                "MarketingContact",
+                "SolutionId",
+                test.Solution.Id,
+                test.ConnectionString);
+            test.Pages.SolutionsList.OpenNamedSolution(test.CatalogueItem.Name);
         }
-
 
         [Given(@"that a User views a Foundation Solution")]
         public void GivenThatAUserViewsAFoundationSolution()
         {
-            _test.Pages.Homepage.ClickBrowseSolutions();
-            _test.Pages.BrowseSolutions.OpenFoundationSolutions();
-            _test.Pages.SolutionsList.OpenRandomSolution();
+            test.Pages.Homepage.ClickBrowseSolutions();
+            test.Pages.BrowseSolutions.OpenFoundationSolutions();
+            test.Pages.SolutionsList.OpenRandomSolution();
         }
 
         [StepDefinition(@"the User is viewing the Solution Page")]
         public void WhenTheUserIsViewingTheSolutionPage()
         {
-            _test.Pages.ViewASolution.PageDisplayed(_settings.PublicBrowseUrl);
-            var id = _test.Pages.ViewASolution.GetSolutionId();
-            _test.Solution = new Solution { Id = id }.Retrieve(_test.ConnectionString);
-            _test.CatalogueItem = new CatalogueItem { CatalogueItemId = id }.Retrieve(_test.ConnectionString);
+            test.Pages.ViewASolution.PageDisplayed(settings.PublicBrowseUrl);
+            var id = test.Pages.ViewASolution.GetSolutionId();
+            test.Solution = new Solution { Id = id }.Retrieve(test.ConnectionString);
+            test.CatalogueItem = new CatalogueItem { CatalogueItemId = id }.Retrieve(test.ConnectionString);
         }
 
         [Then(@"the page will contain Supplier Name")]
         public void ThenThePageWillContainSupplierName()
         {
-            _test.Pages.ViewASolution.SupplierNameDisplayed();
+            test.Pages.ViewASolution.SupplierNameDisplayed();
         }
 
         [Then(@"Solution Name")]
         public void ThenSolutionName()
         {
-            var solutionName = _test.Pages.ViewASolution.GetSolutionName();
-            solutionName.Should().Be(_test.CatalogueItem.Name);
+            var solutionName = test.Pages.ViewASolution.GetSolutionName();
+            solutionName.Should().Be(test.CatalogueItem.Name);
         }
 
         [Then(@"Solution Summary")]
         public void ThenSolutionSummary()
         {
-            var expected = Regex.Replace(_test.Solution.Summary, @"\s", "");
-            var solutionSummary = Regex.Replace(_test.Pages.ViewASolution.GetSolutionSummary(), @"\s", "");
+            var expected = Regex.Replace(test.Solution.Summary, @"\s", string.Empty);
+            var solutionSummary = Regex.Replace(test.Pages.ViewASolution.GetSolutionSummary(), @"\s", string.Empty);
             solutionSummary.Should().Be(expected);
         }
 
         [Then(@"Solution Full Description")]
         public void ThenSolutionFullDescription()
         {
-            var expected = Regex.Replace(_test.Solution.FullDescription, @"\s", "");
-            var solutionFullDescription = Regex.Replace(_test.Pages.ViewASolution.GetSolutionFullDescription(), @"\s", "");
+            var expected = Regex.Replace(test.Solution.FullDescription, @"\s", string.Empty);
+            var solutionFullDescription = Regex.Replace(test.Pages.ViewASolution.GetSolutionFullDescription(), @"\s", string.Empty);
             solutionFullDescription.Should().Be(expected);
         }
-
 
         [Then(@"About Solution URL")]
         public void ThenAboutSolutionURL()
         {
-            if (!string.IsNullOrEmpty(_test.Solution.AboutUrl))
+            if (!string.IsNullOrEmpty(test.Solution.AboutUrl))
             {
-                var solutionAboutUrl = _test.Pages.ViewASolution.GetSolutionAboutUrl();
-                solutionAboutUrl.Should().Be(_test.Solution.AboutUrl);
+                var solutionAboutUrl = test.Pages.ViewASolution.GetSolutionAboutUrl();
+                solutionAboutUrl.Should().Be(test.Solution.AboutUrl);
             }
         }
 
         [Then(@"Contact Details")]
         public void ThenContactDetails()
         {
+            test.ContactDetails = SqlExecutor.Execute<SolutionContactDetails>(
+                test.ConnectionString,
+                Queries.GetSolutionContactDetails,
+                new { solutionId = test.Solution.Id }).ToList();
 
-            _test.ContactDetails = SqlExecutor.Execute<SolutionContactDetails>(_test.ConnectionString,
-                Queries.GetSolutionContactDetails, new { solutionId = _test.Solution.Id }).ToList();
-
-            if (_test.ContactDetails.Count > 0)
+            if (test.ContactDetails.Count > 0)
             {
-                var contactDetails = _test.Pages.ViewASolution.GetSolutionContactDetails(
-                    !String.IsNullOrEmpty(_test.ContactDetails[0].ContactName.Trim()),
-                    !String.IsNullOrEmpty(_test.ContactDetails[0].Department),
-                    !String.IsNullOrEmpty(_test.ContactDetails[0].PhoneNumber),
-                    !String.IsNullOrEmpty(_test.ContactDetails[0].Email)
-                    );
-                contactDetails.ContactName.Should().Be(_test.ContactDetails[0].ContactName);
-                contactDetails.Department.Should().Be(_test.ContactDetails[0].Department);
-                contactDetails.Email.Should().Be(_test.ContactDetails[0].Email);
-                contactDetails.PhoneNumber.Should().Be(_test.ContactDetails[0].PhoneNumber);
+                var contactDetails = test.Pages.ViewASolution.GetSolutionContactDetails(
+                    !string.IsNullOrEmpty(test.ContactDetails[0].ContactName.Trim()),
+                    !string.IsNullOrEmpty(test.ContactDetails[0].Department),
+                    !string.IsNullOrEmpty(test.ContactDetails[0].PhoneNumber),
+                    !string.IsNullOrEmpty(test.ContactDetails[0].Email));
+                contactDetails.ContactName.Should().Be(test.ContactDetails[0].ContactName);
+                contactDetails.Department.Should().Be(test.ContactDetails[0].Department);
+                contactDetails.Email.Should().Be(test.ContactDetails[0].Email);
+                contactDetails.PhoneNumber.Should().Be(test.ContactDetails[0].PhoneNumber);
             }
         }
 
         [Then(@"list of Capabilities")]
         public void ThenListOfCapabilities()
         {
-            _test.Pages.ViewASolution.CapabilitiesListDisplayed().Should().BeTrue();
+            test.Pages.ViewASolution.CapabilitiesListDisplayed().Should().BeTrue();
         }
 
         [Then(@"Solution ID")]
         public void ThenSolutionID()
         {
-            var id = _test.Pages.ViewASolution.GetSolutionId();
-            id.Should().Be(_test.Solution.Id);
+            var id = test.Pages.ViewASolution.GetSolutionId();
+            id.Should().Be(test.Solution.Id);
         }
 
         [Then(@"there is a link for the User to download an attachment")]
         public void ThenThereIsALinkForTheUserToDownloadAnAttachment()
         {
-            _test.Pages.ViewASolution.AttachmentDownloadLinkDisplayed().Should().BeTrue();
+            test.Pages.ViewASolution.AttachmentDownloadLinkDisplayed().Should().BeTrue();
         }
 
         [Then(
             @"the page will contain an indication that the Solution meets the criteria for a Foundation Solution Set")]
         public void ThenThePageWillContainAnIndicationThatTheSolutionMeetsTheCriteriaForAFoundationSolutionSet()
         {
-            _test.Pages.ViewASolution.FoundationSolutionIndicatorDisplayed().Should().BeTrue();
+            test.Pages.ViewASolution.FoundationSolutionIndicatorDisplayed().Should().BeTrue();
         }
 
         [Then(@"the capabilities listed match the expected capabilities in the database")]
         public void ThenTheCapabilitiesListedMatchTheExpectedCapabilitiesInTheDatabase()
         {
-            var solutionId = _test.Pages.ViewASolution.GetSolutionId();
-            var capabilities = Capability.GetSolutionCapabilities(_test.ConnectionString, _test.Solution.Id)
+            var solutionId = test.Pages.ViewASolution.GetSolutionId();
+            var capabilities = Capability.GetSolutionCapabilities(test.ConnectionString, test.Solution.Id)
                 .Select(s => s.Name);
-            var actualCapabilities = _test.Pages.ViewASolution.GetSolutionCapabilities();
+            var actualCapabilities = test.Pages.ViewASolution.GetSolutionCapabilities();
             actualCapabilities.Should().BeEquivalentTo(capabilities);
         }
 
@@ -176,9 +180,9 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
         public void ThenTheDownloadMoreInformationButtonDownloadsAFile(string fileFormat)
         {
             // Filename is to match the solution ID at all times
-            var solId = _test.Pages.ViewASolution.GetSolutionId();
+            var solId = test.Pages.ViewASolution.GetSolutionId();
             var fileName = $"{solId}.{fileFormat.ToLower()}";
-            var downloadLink = _test.Pages.ViewASolution.GetAttachmentDownloadLinkUrl();
+            var downloadLink = test.Pages.ViewASolution.GetAttachmentDownloadLinkUrl();
 
             var downloadPath = Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory);
 
@@ -193,29 +197,33 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
             var updatedDate = DateTime.Now;
 
             // Use long variant of date (i.e. 12 December 2019)
-            _expectedLastUpdatedDate = ConvertDateToLongDateTime(updatedDate);
+            expectedLastUpdatedDate = ConvertDateToLongDateTime(updatedDate);
 
             var whereKey = tableName.Equals("Solution") ? "Id" : "SolutionId";
 
-            LastUpdatedHelper.UpdateLastUpdated(updatedDate, tableName, whereKey, _test.Solution.Id,
-                _test.ConnectionString);
+            LastUpdatedHelper.UpdateLastUpdated(
+                updatedDate,
+                tableName,
+                whereKey,
+                test.Solution.Id,
+                test.ConnectionString);
         }
 
         [Then(@"the page last updated date shown is updated as expected")]
         public void ThenThePageLastUpdatedDateShownIsUpdatedAsExpected()
         {
-            _test.Driver.Navigate().Refresh();
-            var actualLastUpdated = _test.Pages.ViewASolution.GetSolutionLastUpdated();
+            test.Driver.Navigate().Refresh();
+            var actualLastUpdated = test.Pages.ViewASolution.GetSolutionLastUpdated();
 
             var convertedDate = ConvertDateToLongDateTime(actualLastUpdated);
 
-            convertedDate.Should().Be(_expectedLastUpdatedDate);
+            convertedDate.Should().Be(expectedLastUpdatedDate);
         }
 
         [Then(@"Features")]
         public void ThenFeatures()
         {
-            _test.Pages.ViewASolution.GetFeatures().Should().HaveCountGreaterThan(0);
+            test.Pages.ViewASolution.GetFeatures().Should().HaveCountGreaterThan(0);
         }
 
         private static string ConvertDateToLongDateTime(string date)
@@ -225,7 +233,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
 
         private static string ConvertDateToLongDateTime(DateTime date)
         {
-            return date.ToString(dateFormat);
+            return date.ToString(DateFormat);
         }
     }
 }

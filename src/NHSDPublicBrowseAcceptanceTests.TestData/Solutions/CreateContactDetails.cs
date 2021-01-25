@@ -1,7 +1,7 @@
-﻿using Bogus;
-
-namespace NHSDPublicBrowseAcceptanceTests.TestData.Solutions
+﻿namespace NHSDPublicBrowseAcceptanceTests.TestData.Solutions
 {
+    using Bogus;
+
     public static class CreateContactDetails
     {
         public static SolutionContactDetails NewContactDetail()

@@ -1,8 +1,8 @@
-﻿using NHSDPublicBrowseAcceptanceTests.Objects.Utils;
-using OpenQA.Selenium;
-
-namespace NHSDPublicBrowseAcceptanceTests.Objects.Pages
+﻿namespace NHSDPublicBrowseAcceptanceTests.Objects.Pages
 {
+    using NHSDPublicBrowseAcceptanceTests.Objects.Utils;
+    using OpenQA.Selenium;
+
     public class Homepage
     {
         public static By Title => By.CssSelector(".nhsuk-hero__wrapper h1");
