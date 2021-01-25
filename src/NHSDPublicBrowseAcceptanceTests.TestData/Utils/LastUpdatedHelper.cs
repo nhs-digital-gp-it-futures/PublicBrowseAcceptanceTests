@@ -1,12 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace NHSDPublicBrowseAcceptanceTests.TestData.Utils
+﻿namespace NHSDPublicBrowseAcceptanceTests.TestData.Utils
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
     public static class LastUpdatedHelper
     {
-        public static void UpdateLastUpdated(DateTime lastUpdated, string table, string whereKey, string whereValue,
+        public static void UpdateLastUpdated(
+            DateTime lastUpdated,
+            string table,
+            string whereKey,
+            string whereValue,
             string connectionString)
         {
             var query = Queries.UpdateLastUpdated;

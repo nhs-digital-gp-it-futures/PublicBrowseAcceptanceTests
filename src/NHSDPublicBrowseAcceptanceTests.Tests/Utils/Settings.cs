@@ -1,17 +1,11 @@
-﻿using System;
-using System.IO;
-using Microsoft.Extensions.Configuration;
-
-namespace NHSDPublicBrowseAcceptanceTests.Tests.Utils
+﻿namespace NHSDPublicBrowseAcceptanceTests.Tests.Utils
 {
+    using System;
+    using System.IO;
+    using Microsoft.Extensions.Configuration;
+
     public class Settings
     {
-        public string HubUrl { get; }
-        public string PublicBrowseUrl { get; }
-        public string DownloadPath { get; }
-        public string Browser { get; }
-        public DatabaseSettings DatabaseSettings { get; }
-
         public Settings(IConfiguration config)
         {
             HubUrl = config.GetValue<string>("hubUrl");
@@ -20,6 +14,18 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Utils
             Browser = config.GetValue<string>("browser");
             DatabaseSettings = SetUpDatabaseSettings(config);
         }
+
+        public string HubUrl { get; }
+
+        public string PublicBrowseUrl { get; }
+
+        public string DownloadPath { get; }
+
+        public string Browser { get; }
+
+        public DatabaseSettings DatabaseSettings { get; }
+
+        private static string ConnectionStringTemplate => @"Server={0};Initial Catalog={1};Persist Security Info=false;User Id={2};Password={3}";
 
         private static DatabaseSettings SetUpDatabaseSettings(IConfiguration config)
         {
@@ -32,18 +38,9 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Utils
             return databaseSettings;
         }
 
-        private static string ConstructDatabaseConnectionString(string serverUrl, string databaseName, string user, string password) =>
-            string.Format(ConnectionStringTemplate, serverUrl, databaseName, user, password);
-
-        private static string ConnectionStringTemplate => @"Server={0};Initial Catalog={1};Persist Security Info=false;User Id={2};Password={3}";
-    }
-
-    public class DatabaseSettings
-    {
-        public string ServerUrl { get; set; }
-        public string DatabaseName { get; set; }
-        public string User { get; set; }
-        public string Password { get; set; }
-        public string ConnectionString { get; set; }
+        private static string ConstructDatabaseConnectionString(string serverUrl, string databaseName, string user, string password)
+        {
+            return string.Format(ConnectionStringTemplate, serverUrl, databaseName, user, password);
+        }
     }
 }

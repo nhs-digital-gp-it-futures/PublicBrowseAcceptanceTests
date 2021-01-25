@@ -1,7 +1,7 @@
-﻿using OpenQA.Selenium;
-
-namespace NHSDPublicBrowseAcceptanceTests.Objects.Pages
+﻿namespace NHSDPublicBrowseAcceptanceTests.Objects.Pages
 {
+    using OpenQA.Selenium;
+
     public class CapabilityFilter
     {
         public static By Capabilities => By.ClassName("nhsuk-checkboxes__item");

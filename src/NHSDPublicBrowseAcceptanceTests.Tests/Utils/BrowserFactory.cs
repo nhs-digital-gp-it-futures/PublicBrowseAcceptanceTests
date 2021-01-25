@@ -1,41 +1,24 @@
-﻿using System;
-using System.Diagnostics;
-using System.IO;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Firefox;
-using OpenQA.Selenium.Remote;
-
-namespace NHSDPublicBrowseAcceptanceTests.Tests.Utils
+﻿namespace NHSDPublicBrowseAcceptanceTests.Tests.Utils
 {
+    using System;
+    using System.Diagnostics;
+    using System.IO;
+    using OpenQA.Selenium;
+    using OpenQA.Selenium.Chrome;
+    using OpenQA.Selenium.Firefox;
+    using OpenQA.Selenium.Remote;
+
     public sealed class BrowserFactory
     {
-        private readonly Settings _settings;
+        private readonly Settings settings;
+
         public BrowserFactory(Settings settings)
         {
-            _settings = settings;
+            this.settings = settings;
             Driver = GetBrowser();
         }
 
         public IWebDriver Driver { get; }
-
-        private IWebDriver GetBrowser()
-        {
-            IWebDriver driver;
-            var browser = _settings.Browser;
-            var huburl = _settings.HubUrl;
-
-            if (Debugger.IsAttached)
-                driver = GetLocalChromeDriver();
-            else
-                driver = (browser.ToLower()) switch
-                {
-                    "chrome" or "googlechrome" => GetChromeDriver(huburl),
-                    "firefox" or "ff" or "mozilla" => GetFirefoxDriver(huburl),
-                    _ => GetLocalChromeDriver()
-                };
-            return driver;
-        }
 
         private static IWebDriver GetLocalChromeDriver()
         {
@@ -59,6 +42,29 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Utils
             options.AddArguments("headless", "window-size=1920,1080", "no-sandbox", "acceptInsecureCerts");
 
             return new RemoteWebDriver(new Uri(hubURL), options);
+        }
+
+        private IWebDriver GetBrowser()
+        {
+            IWebDriver driver;
+            var browser = this.settings.Browser;
+            var huburl = this.settings.HubUrl;
+
+            if (Debugger.IsAttached)
+            {
+                driver = GetLocalChromeDriver();
+            }
+            else
+            {
+                driver = browser.ToLower() switch
+                {
+                    "chrome" or "googlechrome" => GetChromeDriver(huburl),
+                    "firefox" or "ff" or "mozilla" => GetFirefoxDriver(huburl),
+                    _ => GetLocalChromeDriver(),
+                };
+            }
+
+            return driver;
         }
     }
 }

@@ -1,8 +1,8 @@
-﻿using NHSDPublicBrowseAcceptanceTests.Objects.Utils;
-using OpenQA.Selenium;
-
-namespace NHSDPublicBrowseAcceptanceTests.Objects.Pages
+﻿namespace NHSDPublicBrowseAcceptanceTests.Objects.Pages
 {
+    using NHSDPublicBrowseAcceptanceTests.Objects.Utils;
+    using OpenQA.Selenium;
+
     public sealed class Header
     {
         public static By Logo => By.CssSelector(".nhsuk-header__logo a");

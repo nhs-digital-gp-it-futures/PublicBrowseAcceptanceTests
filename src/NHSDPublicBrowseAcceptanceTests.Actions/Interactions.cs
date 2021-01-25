@@ -1,22 +1,21 @@
-﻿using System;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Support.UI;
-
-namespace NHSDPublicBrowseAcceptanceTests.Actions
+﻿namespace NHSDPublicBrowseAcceptanceTests.Actions
 {
+    using System;
+    using OpenQA.Selenium;
+    using OpenQA.Selenium.Support.UI;
+
     public abstract class Interactions
     {
-        internal readonly IWebDriver driver;
+        protected readonly IWebDriver Driver;
 
-        internal readonly WebDriverWait wait;
+        protected readonly WebDriverWait Wait;
 
         public Interactions(IWebDriver driver)
         {
-            this.driver = driver;
+            Driver = driver;
 
             // Initialize a WebDriverWait that can be reutilized by all that inherit from this class
-            wait = new WebDriverWait(new SystemClock(), driver, TimeSpan.FromSeconds(10),
-                TimeSpan.FromMilliseconds(100));
+            Wait = new WebDriverWait(new SystemClock(), driver, TimeSpan.FromSeconds(10), TimeSpan.FromMilliseconds(100));
         }
     }
 }

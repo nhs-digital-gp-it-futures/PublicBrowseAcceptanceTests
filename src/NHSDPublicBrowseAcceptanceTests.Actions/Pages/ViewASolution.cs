@@ -1,22 +1,23 @@
-﻿using FluentAssertions;
-using NHSDPublicBrowseAcceptanceTests.TestData.Solutions;
-using OpenQA.Selenium;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
-
-namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
+﻿namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text.RegularExpressions;
+    using FluentAssertions;
+    using NHSDPublicBrowseAcceptanceTests.TestData.Solutions;
+    using OpenQA.Selenium;
+
     public class ViewASolution : Interactions
     {
-        public ViewASolution(IWebDriver driver) : base(driver)
+        public ViewASolution(IWebDriver driver)
+            : base(driver)
         {
         }
 
         public void PageDisplayed(string url)
         {
             // Should be a better way to do this that doesn't rely on RegEx matching
-            var actual = driver.Url;
+            var actual = Driver.Url;
             var expectedPattern = $@"{url}/solutions/(capabilities-selector.*|foundation)/*";
             Regex.Match(actual, expectedPattern).Success.Should()
                 .BeTrue();
@@ -24,68 +25,68 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
 
         public string GetSolutionId()
         {
-            return driver.FindElement(Objects.Pages.ViewSingleSolution.SolutionId).Text.Replace("Solution ID: ", "");
+            return Driver.FindElement(Objects.Pages.ViewSingleSolution.SolutionId).Text.Replace("Solution ID: ", string.Empty);
         }
 
         public void SupplierNameDisplayed()
         {
-            driver.FindElement(Objects.Pages.ViewSingleSolution.SolutionSupplierName).Displayed.Should().BeTrue();
+            Driver.FindElement(Objects.Pages.ViewSingleSolution.SolutionSupplierName).Displayed.Should().BeTrue();
         }
 
         public string GetSolutionName()
         {
-            return driver.FindElement(Objects.Pages.ViewSingleSolution.SolutionName).Text;
+            return Driver.FindElement(Objects.Pages.ViewSingleSolution.SolutionName).Text;
         }
 
         public string GetSolutionSummary()
         {
-            return driver.FindElement(Objects.Pages.ViewSingleSolution.SolutionSummary).Text;
+            return Driver.FindElement(Objects.Pages.ViewSingleSolution.SolutionSummary).Text;
         }
 
         public string GetSolutionLastUpdated()
         {
-            return driver.FindElement(Objects.Pages.ViewSingleSolution.SolutionLastUpdated).Text
-                .Replace("Solution information last updated: ", "");
+            return Driver.FindElement(Objects.Pages.ViewSingleSolution.SolutionLastUpdated).Text
+                .Replace("Solution information last updated: ", string.Empty);
         }
 
         public string GetSolutionAboutUrl()
         {
-            return driver.FindElement(Objects.Pages.ViewSingleSolution.SolutionAboutUrl).Text;
+            return Driver.FindElement(Objects.Pages.ViewSingleSolution.SolutionAboutUrl).Text;
         }
 
         public IList<string> GetFeatures()
         {
-            return driver.FindElements(Objects.Pages.ViewSingleSolution.Features).Select(s => s.Text).ToList();
+            return Driver.FindElements(Objects.Pages.ViewSingleSolution.Features).Select(s => s.Text).ToList();
         }
 
         public bool CapabilitiesListDisplayed()
         {
-            return driver.FindElement(Objects.Pages.ViewSingleSolution.SolutionCapabilities).Displayed;
+            return Driver.FindElement(Objects.Pages.ViewSingleSolution.SolutionCapabilities).Displayed;
         }
 
         public bool AttachmentDownloadLinkDisplayed()
         {
-            return driver.FindElements(Objects.Pages.ViewSingleSolution.AttachmentDownloadLink).Count > 0;
+            return Driver.FindElements(Objects.Pages.ViewSingleSolution.AttachmentDownloadLink).Count > 0;
         }
 
         public bool NhsAssuredIntegrationsDownloadLinkDisplayed()
         {
-            return driver.FindElements(Objects.Pages.ViewSingleSolution.DownloadNHSAssuredIntegrationsDocumentLink).Count > 0;
+            return Driver.FindElements(Objects.Pages.ViewSingleSolution.DownloadNHSAssuredIntegrationsDocumentLink).Count > 0;
         }
 
         public bool RoadmapDownloadLinkDisplayed()
         {
-            return driver.FindElements(Objects.Pages.ViewSingleSolution.DownloadRoadmapDocumentLink).Count > 0;
+            return Driver.FindElements(Objects.Pages.ViewSingleSolution.DownloadRoadmapDocumentLink).Count > 0;
         }
 
         public bool FoundationSolutionIndicatorDisplayed()
         {
-            return driver.FindElement(Objects.Pages.ViewSingleSolution.FoundationSolutionIndicator).Displayed;
+            return Driver.FindElement(Objects.Pages.ViewSingleSolution.FoundationSolutionIndicator).Displayed;
         }
 
         public IList<string> GetSolutionCapabilities()
         {
-            var capabilities = driver.FindElements(Objects.Pages.ViewSingleSolution.SolutionCapabilities)
+            var capabilities = Driver.FindElements(Objects.Pages.ViewSingleSolution.SolutionCapabilities)
                 .Select(s => s.FindElement(Objects.Pages.ViewSingleSolution.CapabilityTitle).Text)
                 .Select(s => s.Split(',')[0])
                 .ToList();
@@ -94,45 +95,48 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
 
         public string GetAttachmentDownloadLinkUrl()
         {
-            return driver.FindElement(Objects.Pages.ViewSingleSolution.AttachmentDownloadLink).GetAttribute("href");
+            return Driver.FindElement(Objects.Pages.ViewSingleSolution.AttachmentDownloadLink).GetAttribute("href");
         }
 
         public string GetNhsAssuredIntegrationsDownloadLinkUrl()
         {
-            return driver.FindElement(Objects.Pages.ViewSingleSolution.DownloadNHSAssuredIntegrationsDocumentLink)
+            return Driver.FindElement(Objects.Pages.ViewSingleSolution.DownloadNHSAssuredIntegrationsDocumentLink)
                 .GetAttribute("href");
         }
 
         public string GetRoadmapDownloadLinkUrl()
         {
-            return driver.FindElement(Objects.Pages.ViewSingleSolution.DownloadRoadmapDocumentLink)
+            return Driver.FindElement(Objects.Pages.ViewSingleSolution.DownloadRoadmapDocumentLink)
                 .GetAttribute("href");
         }
 
         public string GetSolutionFullDescription()
         {
-            return driver.FindElement(Objects.Pages.ViewSingleSolution.SolutionFullDescription).Text;
+            return Driver.FindElement(Objects.Pages.ViewSingleSolution.SolutionFullDescription).Text;
         }
 
-        public SolutionContactDetails GetSolutionContactDetails(bool GetName = true, bool GetDepartment = true, bool GetPhoneNumber = true, bool GetEmail = true)
+        public SolutionContactDetails GetSolutionContactDetails(bool getName = true, bool getDepartment = true, bool getPhoneNumber = true, bool getEmail = true)
         {
             SolutionContactDetails contactDetails = new();
-            if (GetName)
+            if (getName)
             {
-                contactDetails.FirstName = driver.FindElement(Objects.Pages.ViewSingleSolution.SolutionContactName).Text.Split(' ')[0];
-                contactDetails.LastName = driver.FindElement(Objects.Pages.ViewSingleSolution.SolutionContactName).Text.Split(' ')[1];
+                contactDetails.FirstName = Driver.FindElement(Objects.Pages.ViewSingleSolution.SolutionContactName).Text.Split(' ')[0];
+                contactDetails.LastName = Driver.FindElement(Objects.Pages.ViewSingleSolution.SolutionContactName).Text.Split(' ')[1];
             }
-            if (GetDepartment)
+
+            if (getDepartment)
             {
-                contactDetails.Department = driver.FindElement(Objects.Pages.ViewSingleSolution.SolutionContactDepartment).Text;
+                contactDetails.Department = Driver.FindElement(Objects.Pages.ViewSingleSolution.SolutionContactDepartment).Text;
             }
-            if (GetPhoneNumber)
+
+            if (getPhoneNumber)
             {
-                contactDetails.PhoneNumber = driver.FindElement(Objects.Pages.ViewSingleSolution.SolutionContactPhoneNumber).Text;
+                contactDetails.PhoneNumber = Driver.FindElement(Objects.Pages.ViewSingleSolution.SolutionContactPhoneNumber).Text;
             }
-            if (GetEmail)
+
+            if (getEmail)
             {
-                contactDetails.Email = driver.FindElement(Objects.Pages.ViewSingleSolution.SolutionContactEmail).Text;
+                contactDetails.Email = Driver.FindElement(Objects.Pages.ViewSingleSolution.SolutionContactEmail).Text;
             }
 
             return contactDetails;
@@ -140,7 +144,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
 
         public void WaitForRoadmapSectionDisplayed()
         {
-            wait.Until(s =>
+            Wait.Until(s =>
             {
                 s.Navigate().Refresh();
                 return s.FindElement(Objects.Pages.ViewSingleSolution.RoadmapSection).Displayed;
@@ -149,7 +153,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
 
         public void WaitForIntegrationsSectionDisplayed()
         {
-            wait.Until(s =>
+            Wait.Until(s =>
             {
                 s.Navigate().Refresh();
                 return s.FindElement(Objects.Pages.ViewSingleSolution.IntegrationsSection).Displayed;
@@ -160,7 +164,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
         {
             try
             {
-                wait.Until(s =>
+                Wait.Until(s =>
                 {
                     s.Navigate().Refresh();
                     return s.FindElement(Objects.Pages.ViewSingleSolution.LearnMoreSection).Displayed;

@@ -1,34 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
-using Dapper;
-
-namespace NHSDPublicBrowseAcceptanceTests.TestData.Utils
+﻿namespace NHSDPublicBrowseAcceptanceTests.TestData.Utils
 {
+    using System.Collections.Generic;
+    using System.Data.SqlClient;
+    using Dapper;
+
     public static class SqlExecutor
     {
-        internal static T Read<T>(string connectionString, string query, SqlParameter[] sqlParameters,
-            Func<IDataReader, T> mapDataReader)
-        {
-            using SqlConnection connection = new(connectionString);
-            connection.Open();
-
-            using SqlCommand command = new(query, connection);
-            //add the params
-            command.Parameters.AddRange(sqlParameters);
-
-            var reader = command.ExecuteReader();
-            try
-            {
-                return mapDataReader(reader);
-            }
-            finally
-            {
-                reader.Close();
-            }
-        }
-
         public static IEnumerable<T> Execute<T>(string connectionString, string query, object param)
         {
             IEnumerable<T> returnValue = null;

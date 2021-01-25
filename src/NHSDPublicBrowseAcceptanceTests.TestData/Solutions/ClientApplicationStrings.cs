@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace NHSDPublicBrowseAcceptanceTests.TestData.Solutions
+﻿namespace NHSDPublicBrowseAcceptanceTests.TestData.Solutions
 {
+    using System.Collections.Generic;
+
     internal static class ClientApplicationStrings
     {
         internal const string BrowserBasedComplete =

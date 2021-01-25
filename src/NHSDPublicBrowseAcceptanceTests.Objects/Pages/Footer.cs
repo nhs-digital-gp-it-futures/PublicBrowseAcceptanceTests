@@ -1,7 +1,7 @@
-﻿using OpenQA.Selenium;
-
-namespace NHSDPublicBrowseAcceptanceTests.Objects.Pages
+﻿namespace NHSDPublicBrowseAcceptanceTests.Objects.Pages
 {
+    using OpenQA.Selenium;
+
     public class Footer
     {
         public static By Container => By.Id("nhsuk-footer");

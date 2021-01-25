@@ -1,14 +1,24 @@
-﻿using FluentAssertions;
-using OpenQA.Selenium;
-using System.IO;
-using System.Net;
-
-namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
+﻿namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
 {
+    using System.IO;
+    using System.Net;
+    using FluentAssertions;
+    using OpenQA.Selenium;
+
     public class Common : Interactions
     {
-        public Common(IWebDriver driver) : base(driver)
+        public Common(IWebDriver driver)
+            : base(driver)
         {
+        }
+
+        public static void DownloadFile(
+            string fileName,
+            string downloadPath,
+            string downloadLink)
+        {
+            using var client = new WebClient();
+            client.DownloadFile(downloadLink, Path.Combine(downloadPath, fileName));
         }
 
         /// <summary>
@@ -17,7 +27,7 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
         /// </summary>
         public void WaitForPageLoad()
         {
-            wait.Until(s => s.FindElement(By.ClassName("nhsuk-footer")));
+            Wait.Until(s => s.FindElement(By.ClassName("nhsuk-footer")));
         }
 
         /// <summary>
@@ -25,28 +35,22 @@ namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
         /// </summary>
         public void ClickLogo()
         {
-            driver.FindElement(Objects.Pages.Common.NHSLogo).Click();
+            Driver.FindElement(Objects.Pages.Common.NHSLogo).Click();
         }
 
         public void PageDisplayed(string pageTitle)
         {
-            driver.FindElement(Objects.Pages.Common.PageTitle).Text.Should().Be(pageTitle);
+            Driver.FindElement(Objects.Pages.Common.PageTitle).Text.Should().Be(pageTitle);
         }
 
         public void URLContains(string href)
         {
-            driver.Url.Should().Contain(href);
+            Driver.Url.Should().Contain(href);
         }
 
         public string GetUrl()
         {
-            return driver.Url;
-        }
-
-        public static void DownloadFile(string fileName, string downloadPath, string downloadLink)
-        {
-            using var client = new WebClient();
-            client.DownloadFile(downloadLink, Path.Combine(downloadPath, fileName));
+            return Driver.Url;
         }
     }
 }
