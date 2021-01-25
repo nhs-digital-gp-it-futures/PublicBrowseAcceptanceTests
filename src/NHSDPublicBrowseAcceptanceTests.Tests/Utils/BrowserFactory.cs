@@ -47,8 +47,8 @@
         private IWebDriver GetBrowser()
         {
             IWebDriver driver;
-            var browser = this.settings.Browser;
-            var huburl = this.settings.HubUrl;
+            var browser = settings.Browser;
+            var huburl = settings.HubUrl;
 
             if (Debugger.IsAttached)
             {
