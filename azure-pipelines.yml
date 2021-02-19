@@ -60,11 +60,17 @@ steps:
   displayName: Selenium Grid Setup
 
 - task: DotNetCoreCLI@2
+  displayName: 'Run dotnet build'
+  inputs:
+    command: build
+    projects: '**/*.csproj'
+
+- task: DotNetCoreCLI@2
   displayName: 'Run tests'
   inputs:
     command: test
     projects: '**/*.csproj'
-    arguments: '-v n'
+    arguments: '-v n --no-build'
   env:
     DB__PASSWORD: $(gpitfuturesdevdbpassword) 
     AZUREBLOBSTORAGE__CONNECTIONSTRING: $(gpitdevstorageaccountconnectionstring)
