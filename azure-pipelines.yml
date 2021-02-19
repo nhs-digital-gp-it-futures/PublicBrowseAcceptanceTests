@@ -62,9 +62,14 @@ steps:
 - bash: |
     export DB__PASSWORD="$(gpitfuturesdevdbpassword)" 
     export AZUREBLOBSTORAGE__CONNECTIONSTRING="$(gpitdevstorageaccountconnectionstring)"
+  displayName: Set env variables
 
-    dotnet test src/NHSDPublicBrowseAcceptanceTests.Tests/*.csproj -v n
-  displayName: Run Acceptance Tests
+- task: DotNetCoreCLI@2
+    displayName: 'Run tests'
+    inputs:
+      command: test
+      projects: '**/*.csproj'
+      arguments: '-v n'
   
 - task: Docker@2
   condition: and(always(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
