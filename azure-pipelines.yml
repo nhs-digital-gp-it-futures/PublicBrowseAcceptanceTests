@@ -22,10 +22,6 @@ variables:
     value: bc-development-bapi
   - name: AZUREBLOBSTORAGE__CONTAINERNAME
     value: buyingcatalogue-development-helm-documents
-  - name: DB__PASSWORD
-    value: $(gpitfuturesdevdbpassword) 
-  - name: AZUREBLOBSTORAGE__CONNECTIONSTRING
-    value: $(gpitdevstorageaccountconnectionstring)
   - group: dev-secrets
 
 steps:
@@ -73,6 +69,9 @@ steps:
     command: test
     projects: '**/*.csproj'
     arguments: '-v n'
+  env:
+    DB__PASSWORD: $(gpitfuturesdevdbpassword) 
+    AZUREBLOBSTORAGE__CONNECTIONSTRING: $(gpitdevstorageaccountconnectionstring)
   
 - task: Docker@2
   condition: and(always(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
