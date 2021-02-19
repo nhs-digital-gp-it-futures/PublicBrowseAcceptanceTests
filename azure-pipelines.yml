@@ -22,6 +22,10 @@ variables:
     value: bc-development-bapi
   - name: AZUREBLOBSTORAGE__CONTAINERNAME
     value: buyingcatalogue-development-helm-documents
+  - name: DB__PASSWORD
+    value: $(gpitfuturesdevdbpassword) 
+  - name: AZUREBLOBSTORAGE__CONNECTIONSTRING
+    value: $(gpitdevstorageaccountconnectionstring)
   - group: dev-secrets
 
 steps:
@@ -59,10 +63,9 @@ steps:
     if [ $? -ne 0 ]; then exit 1; fi
   displayName: Selenium Grid Setup
 
-- bash: |
-    export DB__PASSWORD="$(gpitfuturesdevdbpassword)" 
-    export AZUREBLOBSTORAGE__CONNECTIONSTRING="$(gpitdevstorageaccountconnectionstring)"
-  displayName: Set env variables
+#- bash: |
+#    
+#  displayName: Set env variables
 
 - task: DotNetCoreCLI@2
   displayName: 'Run tests'
