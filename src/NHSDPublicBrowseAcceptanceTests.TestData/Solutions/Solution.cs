@@ -3,13 +3,14 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
     using NHSDPublicBrowseAcceptanceTests.TestData.Utils;
 
     public sealed class Solution
     {
-        public string Id { get; set; }
+        public string Id => SolutionId;
 
-        public string SolutionId => Id;
+        public string SolutionId { get; set; }
 
         public string Version { get; set; }
 
@@ -38,36 +39,5 @@
         public DateTime LastUpdated { get; set; }
 
         public Guid LastUpdatedBy { get; set; }
-
-        public static IEnumerable<string> RetrieveAll(string connectionString)
-        {
-            var query = Queries.GetAllSolutions;
-
-            return SqlExecutor.Execute<Solution>(connectionString, query, null).Select(s => s.Id);
-        }
-
-        public Solution Retrieve(string connectionString)
-        {
-            var query = Queries.GetSolution;
-            return SqlExecutor.Execute<Solution>(connectionString, query, this).Single();
-        }
-
-        public void Create(string connectionString)
-        {
-            var query = Queries.CreateNewSolution;
-            SqlExecutor.Execute<Solution>(connectionString, query, this);
-        }
-
-        public void Update(string connectionString)
-        {
-            var query = Queries.UpdateSolution;
-            SqlExecutor.Execute<Solution>(connectionString, query, this);
-        }
-
-        public void Delete(string connectionString)
-        {
-            var query = Queries.DeleteSolution;
-            SqlExecutor.Execute<Solution>(connectionString, query, this);
-        }
     }
 }

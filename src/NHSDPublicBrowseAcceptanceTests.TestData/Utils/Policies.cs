@@ -6,11 +6,11 @@
 
     internal static class Policies
     {
-        internal static ISyncPolicy RetryPolicy()
+        internal static IAsyncPolicy RetryPolicy()
         {
             return Policy.Handle<SqlException>()
                 .Or<TimeoutException>()
-                .WaitAndRetry(3, retryAttempt => TimeSpan.FromMilliseconds(500));
+                .WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromMilliseconds(500));
         }
     }
 }

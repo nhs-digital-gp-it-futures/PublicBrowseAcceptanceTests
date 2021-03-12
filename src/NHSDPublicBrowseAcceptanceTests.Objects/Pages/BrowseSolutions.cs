@@ -10,9 +10,9 @@
         public static By BrowseLinkSections => By.ClassName("nhsuk-promo__heading");
 
         public static By BrowseFoundationSolutions =>
-            CustomBy.DataTestId("foundation-solutions-promo", "a h3.nhsuk-promo__heading");
+            CustomBy.DataTestId("foundation-solutions-promo", "a");
 
-        public static By BrowseAllSolutions => CustomBy.DataTestId("all-solutions-promo", "a h3.nhsuk-promo__heading");
+        public static By BrowseAllSolutions => CustomBy.DataTestId("all-solutions-promo", "a");
 
         public static By CompareAllSolutions => CustomBy.DataTestId("compare-promo", "a");
     }

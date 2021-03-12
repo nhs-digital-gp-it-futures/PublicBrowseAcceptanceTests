@@ -1,7 +1,9 @@
 namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps
 {
+    using System.Threading.Tasks;
     using BoDi;
     using Microsoft.Extensions.Configuration;
+    using NHSDPublicBrowseAcceptanceTests.TestData.Extensions;
     using NHSDPublicBrowseAcceptanceTests.Tests.Utils;
     using TechTalk.SpecFlow;
 
@@ -29,15 +31,15 @@ namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps
         }
 
         [AfterScenario]
-        public void AfterScenario()
+        public async Task AfterScenario()
         {
             var test = objectContainer.Resolve<UITest>();
             test.Driver.Quit();
 
             if (context.ContainsKey("DeleteSolution") && (bool)context["DeleteSolution"])
             {
-                test.Solution.Delete(test.ConnectionString);
-                test.CatalogueItem.Delete(test.ConnectionString);
+                await test.Solution.DeleteAsync(test.ConnectionString);
+                await test.CatalogueItem.DeleteAsync(test.ConnectionString);
             }
         }
     }

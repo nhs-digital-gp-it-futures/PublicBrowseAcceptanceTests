@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
     using FluentAssertions;
     using NHSDPublicBrowseAcceptanceTests.TestData.Capabilities;
     using NHSDPublicBrowseAcceptanceTests.TestData.Information;
@@ -36,11 +37,11 @@
             capabilityLabels.Should().BeEquivalentTo(capabilities.Select(s => s.Name));
         }
 
-        public string SelectCapability(string connectionString)
+        public async Task<string> SelectCapabilityAsync(string connectionString)
         {
             Wait.Until(d => Driver.FindElement(Objects.Pages.CapabilityFilter.Capabilities).Displayed);
             var selectedCapabilities =
-                SqlExecutor.Execute<string>(connectionString, Queries.GetSelectedCapabilities, null);
+                await SqlExecutor.ExecuteAsync<string>(connectionString, Queries.GetSelectedCapabilities, null);
 
             var randomCapabilityName = RandomInformation.GetRandomItem(selectedCapabilities);
 

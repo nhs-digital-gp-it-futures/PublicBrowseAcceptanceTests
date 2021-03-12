@@ -4,8 +4,10 @@
     using System.IO;
     using System.Linq;
     using System.Text.RegularExpressions;
+    using System.Threading.Tasks;
     using FluentAssertions;
     using NHSDPublicBrowseAcceptanceTests.TestData.Capabilities;
+    using NHSDPublicBrowseAcceptanceTests.TestData.Extensions;
     using NHSDPublicBrowseAcceptanceTests.TestData.Solutions;
     using NHSDPublicBrowseAcceptanceTests.TestData.Utils;
     using NHSDPublicBrowseAcceptanceTests.Tests.Utils;
@@ -14,11 +16,9 @@
     [Binding]
     public class ViewASolution
     {
-        private const string DateFormat = "dd MMMM yyyy";
         private readonly ScenarioContext context;
         private readonly UITest test;
         private readonly Settings settings;
-        private string expectedLastUpdatedDate;
 
         public ViewASolution(UITest test, ScenarioContext context, Settings settings)
         {
@@ -35,29 +35,32 @@
         }
 
         [Given(@"that a User views a created Solution")]
-        public void GivenThatAUserViewsACreatedSolution()
+        public async Task GivenThatAUserViewsACreatedSolution()
         {
-            test.CatalogueItem = GenerateCatalogueItem.GenerateNewCatalogueItem(
+            test.CatalogueItem = await GenerateCatalogueItem.GenerateNewCatalogueItemAsync(
                 checkForUnique: true,
                 connectionString: test.ConnectionString,
                 publishedStatus: 3);
-            test.CatalogueItem.Create(test.ConnectionString);
+            await test.CatalogueItem.CreateAsync(test.ConnectionString);
+
             test.Solution = GenerateSolution.GenerateNewSolution(test.CatalogueItem.CatalogueItemId, 0, false);
-            test.Solution.Create(test.ConnectionString);
+            await test.Solution.CreateAsync(test.ConnectionString);
             context.Add("DeleteSolution", true);
-            Capability.AddRandomCapabilityToSolution(test.ConnectionString, test.Solution.Id);
+
+            await Capability.AddRandomCapabilityToSolutionAsync(test.ConnectionString, test.CatalogueItem.CatalogueItemId);
             test.Driver.Navigate().Refresh();
 
             test.ContactDetails.Add(CreateContactDetails.NewContactDetail());
-            test.ContactDetails[0].AddMarketingContactForSolution(test.ConnectionString, test.Solution.Id);
+            await test.ContactDetails[0].AddMarketingContactForSolution(test.ConnectionString, test.CatalogueItem.CatalogueItemId);
+
             new ViewSolutionsList(test).GivenThatAUserHasChosenToViewAListOfAllSolutions();
             var oldDate = new DateTime(2001, 02, 03);
-            LastUpdatedHelper.UpdateLastUpdated(oldDate, "Solution", "id", test.Solution.Id, test.ConnectionString);
-            LastUpdatedHelper.UpdateLastUpdated(
+            await LastUpdatedHelper.UpdateLastUpdated(oldDate, "Solution", "id", test.CatalogueItem.CatalogueItemId, test.ConnectionString);
+            await LastUpdatedHelper.UpdateLastUpdated(
                 oldDate,
                 "MarketingContact",
                 "SolutionId",
-                test.Solution.Id,
+                test.CatalogueItem.CatalogueItemId,
                 test.ConnectionString);
             test.Pages.SolutionsList.OpenNamedSolution(test.CatalogueItem.Name);
         }
@@ -71,12 +74,12 @@
         }
 
         [StepDefinition(@"the User is viewing the Solution Page")]
-        public void WhenTheUserIsViewingTheSolutionPage()
+        public async Task WhenTheUserIsViewingTheSolutionPage()
         {
             test.Pages.ViewASolution.PageDisplayed(settings.PublicBrowseUrl);
             var id = test.Pages.ViewASolution.GetSolutionId();
-            test.Solution = new Solution { Id = id }.Retrieve(test.ConnectionString);
-            test.CatalogueItem = new CatalogueItem { CatalogueItemId = id }.Retrieve(test.ConnectionString);
+            test.Solution = await new Solution { SolutionId = id }.RetrieveAsync(test.ConnectionString);
+            test.CatalogueItem = await new CatalogueItem { CatalogueItemId = id }.RetrieveAsync(test.ConnectionString);
         }
 
         [Then(@"the page will contain Supplier Name")]
@@ -119,12 +122,12 @@
         }
 
         [Then(@"Contact Details")]
-        public void ThenContactDetails()
+        public async Task ThenContactDetails()
         {
-            test.ContactDetails = SqlExecutor.Execute<SolutionContactDetails>(
+            test.ContactDetails = (await SqlExecutor.ExecuteAsync<SolutionContactDetails>(
                 test.ConnectionString,
                 Queries.GetSolutionContactDetails,
-                new { solutionId = test.Solution.Id }).ToList();
+                new { solutionId = test.Solution.Id })).ToList();
 
             if (test.ContactDetails.Count > 0)
             {
@@ -150,7 +153,7 @@
         public void ThenSolutionID()
         {
             var id = test.Pages.ViewASolution.GetSolutionId();
-            id.Should().Be(test.Solution.Id);
+            id.Should().Be(test.CatalogueItem.CatalogueItemId);
         }
 
         [Then(@"there is a link for the User to download an attachment")]
@@ -159,81 +162,26 @@
             test.Pages.ViewASolution.AttachmentDownloadLinkDisplayed().Should().BeTrue();
         }
 
-        [Then(
-            @"the page will contain an indication that the Solution meets the criteria for a Foundation Solution Set")]
+        [Then(@"the page will contain an indication that the Solution meets the criteria for a Foundation Solution Set")]
         public void ThenThePageWillContainAnIndicationThatTheSolutionMeetsTheCriteriaForAFoundationSolutionSet()
         {
             test.Pages.ViewASolution.FoundationSolutionIndicatorDisplayed().Should().BeTrue();
         }
 
         [Then(@"the capabilities listed match the expected capabilities in the database")]
-        public void ThenTheCapabilitiesListedMatchTheExpectedCapabilitiesInTheDatabase()
+        public async Task ThenTheCapabilitiesListedMatchTheExpectedCapabilitiesInTheDatabase()
         {
             var solutionId = test.Pages.ViewASolution.GetSolutionId();
-            var capabilities = Capability.GetSolutionCapabilities(test.ConnectionString, test.Solution.Id)
+            var capabilities = (await Capability.GetSolutionCapabilitiesAsync(test.ConnectionString, test.CatalogueItem.CatalogueItemId))
                 .Select(s => s.Name);
             var actualCapabilities = test.Pages.ViewASolution.GetSolutionCapabilities();
             actualCapabilities.Should().BeEquivalentTo(capabilities);
-        }
-
-        [Then(@"the Download more information button downloads a '(.*)' file")]
-        public void ThenTheDownloadMoreInformationButtonDownloadsAFile(string fileFormat)
-        {
-            // Filename is to match the solution ID at all times
-            var solId = test.Pages.ViewASolution.GetSolutionId();
-            var fileName = $"{solId}.{fileFormat.ToLower()}";
-            var downloadLink = test.Pages.ViewASolution.GetAttachmentDownloadLinkUrl();
-
-            var downloadPath = Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory);
-
-            downloadLink.Should().Contain(fileName);
-
-            Actions.Pages.Common.DownloadFile(fileName, downloadPath, downloadLink);
-        }
-
-        [When(@"the LastUpdated value in the (.*) table is updated")]
-        public void WhenTheLastUpdatedValueInTheSolutionTableIsUpdated(string tableName)
-        {
-            var updatedDate = DateTime.Now;
-
-            // Use long variant of date (i.e. 12 December 2019)
-            expectedLastUpdatedDate = ConvertDateToLongDateTime(updatedDate);
-
-            var whereKey = tableName.Equals("Solution") ? "Id" : "SolutionId";
-
-            LastUpdatedHelper.UpdateLastUpdated(
-                updatedDate,
-                tableName,
-                whereKey,
-                test.Solution.Id,
-                test.ConnectionString);
-        }
-
-        [Then(@"the page last updated date shown is updated as expected")]
-        public void ThenThePageLastUpdatedDateShownIsUpdatedAsExpected()
-        {
-            test.Driver.Navigate().Refresh();
-            var actualLastUpdated = test.Pages.ViewASolution.GetSolutionLastUpdated();
-
-            var convertedDate = ConvertDateToLongDateTime(actualLastUpdated);
-
-            convertedDate.Should().Be(expectedLastUpdatedDate);
         }
 
         [Then(@"Features")]
         public void ThenFeatures()
         {
             test.Pages.ViewASolution.GetFeatures().Should().HaveCountGreaterThan(0);
-        }
-
-        private static string ConvertDateToLongDateTime(string date)
-        {
-            return ConvertDateToLongDateTime(Convert.ToDateTime(date));
-        }
-
-        private static string ConvertDateToLongDateTime(DateTime date)
-        {
-            return date.ToString(DateFormat);
         }
     }
 }

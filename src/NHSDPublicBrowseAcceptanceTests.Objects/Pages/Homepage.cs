@@ -9,9 +9,9 @@
 
         public static By AboutSection => CustomBy.DataTestId("about-us");
 
-        public static By BrowseSolutions => CustomBy.DataTestId("browse-promo", "a h3.nhsuk-promo__heading");
+        public static By BrowseSolutions => CustomBy.DataTestId("browse-promo", "a");
 
-        public static By GuidanceContent => CustomBy.DataTestId("guidance-promo", "a h3");
+        public static By GuidanceContent => CustomBy.DataTestId("guidance-promo", "a");
 
         public static By LoginLogoutLink => CustomBy.DataTestId("login-logout-component", "a");
     }

@@ -11,7 +11,22 @@
             "UPDATE Solution SET Version=@solutionVersion, Summary=@Summary, FullDescription=@FullDescription, Features=@Features, ClientApplication=@ClientApplication, Hosting=@Hosting, ImplementationDetail=@ImplementationDetail, RoadMap=@RoadMap, IntegrationsUrl=@IntegrationsUrl, AboutUrl=@AboutUrl, ServiceLevelAgreement=@ServiceLevelAgreement, LastUpdatedBy=@LastUpdatedBy, LastUpdated=@LastUpdated WHERE Id=@solutionId";
 
         public const string DeleteSolution = "DELETE FROM Solution WHERE Id=@solutionId";
-        public const string GetAllSolutions = "SELECT * FROM [dbo].[Solution]";
+        public const string GetAllSolutions = @"SELECT DISTINCT 
+                   ci.CatalogueItemId AS SolutionId, ci.[Name] AS SolutionName, sol.Summary AS SolutionSummary,
+                   sup.Id AS SupplierId, sup.[Name] AS SupplierName,
+                   fs.IsFoundation AS IsFoundation
+              FROM dbo.CatalogueItem AS ci
+                   INNER JOIN dbo.Solution AS sol
+                           ON sol.Id = ci.CatalogueItemId
+                   INNER JOIN dbo.Supplier AS sup
+                           ON sup.Id = ci.SupplierId
+                   INNER JOIN dbo.PublicationStatus AS ps
+                           ON ps.Id = ci.PublishedStatusId
+                   INNER JOIN dbo.SolutionCapability AS sc
+                           ON sol.Id = sc.SolutionId
+                   INNER JOIN dbo.FrameworkSolutions AS fs
+                           ON sol.Id = fs.SolutionId
+             WHERE ps.[Name] = 'Published'";
 
         public const string GetSolutionsCount =
             "SELECT COUNT(DISTINCT(SolutionId)) FROM SolutionCapability c INNER JOIN CatalogueItem ci on c.SolutionId=ci.CatalogueItemId WHERE ci.PublishedStatusId=3";
@@ -23,7 +38,21 @@
             "SELECT COUNT(DISTINCT(sc.SolutionId)) FROM SolutionCapability sc INNER JOIN CatalogueItem s on SolutionId=s.CatalogueItemId WHERE s.CatalogueItemId NOT IN ( SELECT SolutionId FROM [dbo].FrameworkSolutions WHERE IsFoundation = 1 ) AND s.PublishedStatusId = 3";
 
         public const string GetSolutionsWithCapabilityCount =
-            "SELECT COUNT(*) AS count FROM [dbo].[SolutionCapability] AS sc LEFT JOIN [dbo].[Capability] AS c ON c.Id = sc.CapabilityId LEFT JOIN [dbo].[CatalogueItem] AS sol ON sol.CatalogueItemId = sc.SolutionId WHERE c.Name = @capabilityName AND sol.PublishedStatusId=3";
+            @"SELECT DISTINCT 
+                   COUNT(*)
+              FROM dbo.CatalogueItem AS ci
+                   INNER JOIN dbo.Solution AS sol
+                           ON sol.Id = ci.CatalogueItemId
+                   INNER JOIN dbo.Supplier AS sup
+                           ON sup.Id = ci.SupplierId
+                   INNER JOIN dbo.PublicationStatus AS ps
+                           ON ps.Id = ci.PublishedStatusId
+                    INNER JOIN dbo.SolutionCapability AS sc
+                           ON sol.Id = sc.SolutionId
+                   INNER JOIN dbo.FrameworkSolutions AS fs
+                           ON sol.Id = fs.SolutionId
+             WHERE ps.[Name] = 'Published'
+             AND sc.CapabilityId = (SELECT c.Id FROM Capability AS c WHERE c.[Name] = @capabilityName)";
 
         public const string GetCapabilityById = "SELECT * FROM Capability WHERE Id=@Id";
         public const string GetAllCapabilities = "SELECT * FROM Capability";

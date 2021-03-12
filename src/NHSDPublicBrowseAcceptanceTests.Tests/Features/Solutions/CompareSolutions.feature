@@ -3,7 +3,6 @@
 	I want to compare Solutions by the Capabilities they claim
 	So that I know which capabilities the Solutions meet
 
-
 Scenario: Compare solutions - tile visible
 	Given the user navigates to view catalogue solutions
 	Then the compare all solutions tile is displayed

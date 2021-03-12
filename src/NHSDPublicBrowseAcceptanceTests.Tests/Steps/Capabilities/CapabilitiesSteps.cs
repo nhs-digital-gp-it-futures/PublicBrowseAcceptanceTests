@@ -1,6 +1,8 @@
 ﻿namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.Capabilities
 {
+    using System;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
     using FluentAssertions;
     using NHSDPublicBrowseAcceptanceTests.TestData.Capabilities;
     using NHSDPublicBrowseAcceptanceTests.TestData.Utils;
@@ -12,14 +14,14 @@
     {
         private readonly UITest test;
 
-        private readonly IEnumerable<Capability> capabilities;
+        private readonly List<Capability> capabilities;
         private string selectedCapability;
         private int solutionsForCapability;
 
         public CapabilitiesSteps(UITest test)
         {
             this.test = test;
-            capabilities = SqlExecutor.Execute<Capability>(test.ConnectionString, Queries.GetAllCapabilities, null);
+            capabilities = new List<Capability>();
         }
 
         [Given(@"no Capability is selected")]
@@ -30,16 +32,16 @@
         }
 
         [Given(@"one or more Capability is selected")]
-        public void GivenOneOrMoreCapabilityIsSelected()
+        public async Task GivenOneOrMoreCapabilityIsSelected()
         {
             test.Pages.Homepage.ClickBrowseSolutions();
             test.Pages.BrowseSolutions.OpenAllSolutions();
 
-            selectedCapability = test.Pages.CapabilityFilter.SelectCapability(test.ConnectionString);
-            solutionsForCapability = SqlExecutor.ExecuteScalar(
+            selectedCapability = await test.Pages.CapabilityFilter.SelectCapabilityAsync(test.ConnectionString);
+            solutionsForCapability = await SqlExecutor.ExecuteScalarAsync(
                 test.ConnectionString,
                 Queries.GetSolutionsWithCapabilityCount,
-                new { CapabilityName = selectedCapability });
+                new { capabilityName = selectedCapability });
         }
 
         [Then(@"Solution results are presented")]
@@ -63,9 +65,17 @@
         }
 
         [Then(@"all of the Capabilities defined in the Capabilities and Standards model are displayed")]
-        public void ThenAllOfTheCapabilitiesDefinedInTheCapabilitiesAndStandardsModelAreDisplayed()
+        public async Task ThenAllOfTheCapabilitiesDefinedInTheCapabilitiesAndStandardsModelAreDisplayed()
         {
+            await GetCapabilitiesAsync();
             test.Pages.CapabilityFilter.CapabilityNamesShown(capabilities);
+        }
+
+        private async Task GetCapabilitiesAsync()
+        {
+            var caps = await SqlExecutor.ExecuteAsync<Capability>(test.ConnectionString, Queries.GetAllCapabilities, null);
+
+            capabilities.AddRange(caps);
         }
     }
 }

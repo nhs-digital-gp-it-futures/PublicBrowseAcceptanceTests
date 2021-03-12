@@ -17,8 +17,9 @@
         }
 
         [Given(@"the User chooses to select the logo in the Header")]
-        public static void GivenTheUserChoosesToSelectTheLogoInTheHeader()
+        public static void DoNothing()
         {
+            // Does nothing
         }
 
         [Then(@"the Header is presented")]
