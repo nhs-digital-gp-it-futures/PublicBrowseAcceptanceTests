@@ -1,6 +1,9 @@
 ﻿namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
 {
+    using System.Linq;
+    using System.Threading.Tasks;
     using FluentAssertions;
+    using NHSDPublicBrowseAcceptanceTests.TestData.Solutions;
     using NHSDPublicBrowseAcceptanceTests.TestData.Utils;
     using NHSDPublicBrowseAcceptanceTests.Tests.Utils;
     using TechTalk.SpecFlow;
@@ -39,10 +42,10 @@
 
         [Then(@"there is a Card for each Solution")]
         [Then("no Solutions are excluded on the basis of the Capabilities they deliver")]
-        public void ThenThereIsACardForEachSolution()
+        public async Task ThenThereIsACardForEachSolution()
         {
             expectedNumberOfSolutions =
-                SqlExecutor.ExecuteScalar(test.ConnectionString, Queries.GetSolutionsCount, null);
+                (await SqlExecutor.ExecuteAsync<Solution>(test.ConnectionString, Queries.GetAllSolutions, null)).Count();
             var actualNumberOfSolutionCards = test.Pages.SolutionsList.GetSolutionsCount();
             actualNumberOfSolutionCards.Should().Be(expectedNumberOfSolutions);
         }
@@ -76,9 +79,9 @@
         }
 
         [Then(@"capability '(.*)' is listed in the solution capabilities")]
-        public void ThenCapabilityIsListedInTheSolutionCapabilities(string expectedCapabilityName)
+        public async Task ThenCapabilityIsListedInTheSolutionCapabilities(string expectedCapabilityName)
         {
-            var dbCount = SqlExecutor.ExecuteScalar(
+            var dbCount = await SqlExecutor.ExecuteScalarAsync(
                 test.ConnectionString,
                 Queries.GetSolutionsWithCapabilityCount,
                 new { capabilityName = expectedCapabilityName });

@@ -19,7 +19,7 @@
 
             var solution = new Solution
             {
-                Id = solutionId,
+                SolutionId = solutionId,
                 Version = faker.System.Semver(),
                 AboutUrl = faker.Internet.Url(),
                 Features = GenerateFeatures(numFeatures, faker),

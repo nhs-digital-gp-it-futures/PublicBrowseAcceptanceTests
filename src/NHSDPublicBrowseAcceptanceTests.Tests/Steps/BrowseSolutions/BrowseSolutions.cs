@@ -1,6 +1,9 @@
 ﻿namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
 {
+    using System.Linq;
+    using System.Threading.Tasks;
     using FluentAssertions;
+    using NHSDPublicBrowseAcceptanceTests.TestData.Helpers;
     using NHSDPublicBrowseAcceptanceTests.TestData.Utils;
     using NHSDPublicBrowseAcceptanceTests.Tests.Utils;
     using TechTalk.SpecFlow;
@@ -45,27 +48,22 @@
         }
 
         [Then(@"all the Foundation Solutions are included in the results")]
-        public void ThenAllTheFoundationSolutionsAreIncludedInTheResults()
+        public async Task ThenAllTheFoundationSolutionsAreIncludedInTheResults()
         {
             var numberOfFoundationSolutionsFromDb =
-                SqlExecutor.ExecuteScalar(test.ConnectionString, Queries.GetFoundationSolutionsCount, null);
+                await SqlExecutor.ExecuteScalarAsync(test.ConnectionString, Queries.GetFoundationSolutionsCount, null);
             var numberOfFoundationSolutionIndicatorsOnUi =
                 test.Pages.SolutionsList.GetFoundationSolutionIndicatorCount();
             numberOfFoundationSolutionsFromDb.Should().Be(numberOfFoundationSolutionIndicatorsOnUi);
         }
 
-        [Then(@"all Non-Foundation Solutions are included in the results")]
-        public void ThenAllNon_FoundationSolutionsAreIncludedInTheResults()
+        [Then(@"all Solutions are included in the results")]
+        public async Task ThenAllSolutionsAreIncludedInTheResults()
         {
-            var numberOfNonFoundationSolutionsFromDb = SqlExecutor.ExecuteScalar(
-                test.ConnectionString,
-                Queries.GetNonFoundationSolutionsCount,
-                null);
-            var numberOfFoundationSolutionsFromDb =
-                SqlExecutor.ExecuteScalar(test.ConnectionString, Queries.GetFoundationSolutionsCount, null);
+            var solutions = await SolutionHelper.RetrieveAllAsync(test.ConnectionString);
+            var solutionCount = solutions.Count();
             var totalNumberOfSolutionsOnUi = test.Pages.SolutionsList.GetSolutionsCount();
-            var numberOfNonFoundationsOnUI = totalNumberOfSolutionsOnUi - numberOfFoundationSolutionsFromDb;
-            numberOfNonFoundationsOnUI.Should().Be(numberOfNonFoundationSolutionsFromDb);
+            totalNumberOfSolutionsOnUi.Should().Be(solutionCount);
         }
     }
 }

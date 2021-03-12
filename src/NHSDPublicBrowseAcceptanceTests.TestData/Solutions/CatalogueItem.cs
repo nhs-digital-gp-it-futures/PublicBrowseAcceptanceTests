@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
     using NHSDPublicBrowseAcceptanceTests.TestData.Utils;
 
     public sealed class CatalogueItem
@@ -19,34 +20,34 @@
 
         public DateTime Created { get; set; }
 
-        public static IEnumerable<string> RetrieveAll(string connectionString)
+        public static async Task<IEnumerable<string>> RetrieveAllAsync(string connectionString)
         {
             var query = Queries.GetAllCatalogueItems;
-            return SqlExecutor.Execute<CatalogueItem>(connectionString, query, null).Select(c => c.CatalogueItemId);
+            return (await SqlExecutor.ExecuteAsync<CatalogueItem>(connectionString, query, null)).Select(c => c.CatalogueItemId);
         }
 
-        public CatalogueItem Retrieve(string connectionString)
+        public async Task<CatalogueItem> RetrieveAsync(string connectionString)
         {
             var query = Queries.GetCatalogueItem;
-            return SqlExecutor.Execute<CatalogueItem>(connectionString, query, this).Single();
+            return (await SqlExecutor.ExecuteAsync<CatalogueItem>(connectionString, query, this)).Single();
         }
 
-        public void Create(string connectionString)
+        public async Task CreateAsync(string connectionString)
         {
             var query = Queries.CreateNewCatalogueItem;
-            SqlExecutor.Execute<CatalogueItem>(connectionString, query, this);
+            await SqlExecutor.ExecuteAsync<CatalogueItem>(connectionString, query, this);
         }
 
-        public void Update(string connectionString)
+        public async Task UpdateAsync(string connectionString)
         {
             var query = Queries.UpdateCatalogueItem;
-            SqlExecutor.Execute<CatalogueItem>(connectionString, query, this);
+            await SqlExecutor.ExecuteAsync<CatalogueItem>(connectionString, query, this);
         }
 
-        public void Delete(string connectionString)
+        public async Task DeleteAsync(string connectionString)
         {
             var query = Queries.DeleteCatalogueItem;
-            SqlExecutor.Execute<CatalogueItem>(connectionString, query, this);
+            await SqlExecutor.ExecuteAsync<CatalogueItem>(connectionString, query, this);
         }
     }
 }

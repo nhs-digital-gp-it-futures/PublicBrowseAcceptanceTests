@@ -1,6 +1,7 @@
 ﻿namespace NHSDPublicBrowseAcceptanceTests.TestData.Solutions
 {
     using System;
+    using System.Threading.Tasks;
     using NHSDPublicBrowseAcceptanceTests.TestData.Utils;
 
     public sealed class SolutionContactDetails
@@ -21,10 +22,10 @@
 
         public Guid LastUpdatedBy { get; set; } = Guid.Empty;
 
-        public void AddMarketingContactForSolution(string connectionString, string solutionId)
+        public async Task AddMarketingContactForSolution(string connectionString, string solutionId)
         {
             var query = Queries.AddMarketingContact;
-            _ = SqlExecutor.Execute<SolutionContactDetails>(
+            await SqlExecutor.ExecuteAsync<SolutionContactDetails>(
                 query: query,
                 connectionString: connectionString,
                 param: new { solutionId, FirstName, LastName, Email, PhoneNumber, Department, LastUpdated, LastUpdatedBy });

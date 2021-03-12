@@ -14,13 +14,8 @@
         }
 
         [Given(@"the User chooses to view the Buying Catalogue Homepage")]
-        public void GivenTheUserChoosesToViewTheBuyingCatalogueHomepage()
-        {
-            test.Pages.Homepage.PageDisplayed();
-        }
-
         [When(@"the Homepage is presented")]
-        public void WhenTheHomepageIsPresented()
+        public void GivenTheUserChoosesToViewTheBuyingCatalogueHomepage()
         {
             test.Pages.Homepage.PageDisplayed();
         }

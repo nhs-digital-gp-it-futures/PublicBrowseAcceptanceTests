@@ -13,5 +13,4 @@ Scenario: Browse Foundation Solutions Only
 Scenario: Browse All Solutions
 	Given the User wants to view all Solutions
 	When the User chooses to view all Solutions
-	Then all the Foundation Solutions are included in the results
-	And all Non-Foundation Solutions are included in the results
+	Then all Solutions are included in the results

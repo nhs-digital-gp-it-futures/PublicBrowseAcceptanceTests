@@ -4,12 +4,14 @@
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
+    using System.Threading.Tasks;
     using Bogus;
+    using NHSDPublicBrowseAcceptanceTests.TestData.Helpers;
     using NHSDPublicBrowseAcceptanceTests.TestData.Information;
 
     public static class GenerateCatalogueItem
     {
-        public static CatalogueItem GenerateNewCatalogueItem(
+        public static async Task<CatalogueItem> GenerateNewCatalogueItemAsync(
             string prefix = "Auto",
             bool checkForUnique = false,
             string connectionString = null,
@@ -17,7 +19,7 @@
         {
             var faker = new Faker();
 
-            var id = checkForUnique ? UniqueSolIdCheck(prefix, connectionString) : RandomSolId(prefix);
+            var id = checkForUnique ? await UniqueSolIdCheck(prefix, connectionString) : RandomSolId(prefix);
 
             var catalogueItem = new CatalogueItem
             {
@@ -72,11 +74,11 @@
         /// <param name="prefix"></param>
         /// <param name="connectionString"></param>
         /// <returns>A unique solution ID</returns>
-        private static string UniqueSolIdCheck(string prefix, string connectionString)
+        private static async Task<string> UniqueSolIdCheck(string prefix, string connectionString)
         {
             var solution = new Solution();
 
-            var existingSolIds = Solution.RetrieveAll(connectionString).ToList();
+            var existingSolIds = (await SolutionHelper.RetrieveAllAsync(connectionString)).ToList();
 
             existingSolIds = existingSolIds.Where(s => s.StartsWith(prefix)).ToList();
 

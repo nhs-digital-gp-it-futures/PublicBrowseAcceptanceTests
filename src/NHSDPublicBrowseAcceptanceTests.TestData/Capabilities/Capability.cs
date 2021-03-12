@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
     using NHSDPublicBrowseAcceptanceTests.TestData.Utils;
 
     public sealed class Capability
@@ -15,17 +16,17 @@
 
         public List<Epic> Epics { get; set; }
 
-        public static IList<Capability> GetSolutionCapabilities(string connectionString, string solutionId)
+        public static async Task<IList<Capability>> GetSolutionCapabilitiesAsync(string connectionString, string solutionId)
         {
             var query = Queries.GetSolutionCapabilities;
-            return SqlExecutor.Execute<Capability>(connectionString, query, new { solutionId }).ToList();
+            return (await SqlExecutor.ExecuteAsync<Capability>(connectionString, query, new { solutionId })).ToList();
         }
 
-        public static void AddRandomCapabilityToSolution(string connectionString, string solutionId)
+        public static async Task AddRandomCapabilityToSolutionAsync(string connectionString, string solutionId)
         {
             var query = Queries.AddRandomSolutionCapability;
 
-            SqlExecutor.Execute<Capability>(connectionString, query, new { solutionId });
+            await SqlExecutor.ExecuteAsync<Capability>(connectionString, query, new { solutionId });
         }
     }
 }
