@@ -1,5 +1,6 @@
 ﻿namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -26,7 +27,7 @@
             CapbilityFilterDisplayed();
             Driver.FindElement(Objects.Pages.CapabilityFilter.ApplyCapabilityFilter).Click();
 
-            Wait.Until(d => d.FindElement(Objects.Pages.Common.GeneralPageTitle).Text == "Catalogue Solution – results");
+            Wait.Until(d => d.FindElement(Objects.Pages.Common.GeneralPageTitle).Text.Equals("GP IT Futures framework – results", StringComparison.CurrentCultureIgnoreCase));
         }
 
         public void CapabilityNamesShown(IEnumerable<Capability> capabilities)
