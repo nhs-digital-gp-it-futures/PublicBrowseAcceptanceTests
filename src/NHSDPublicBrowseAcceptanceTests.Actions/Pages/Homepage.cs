@@ -47,6 +47,11 @@
             Driver.FindElement(Objects.Pages.Homepage.GuidanceContent).Displayed.Should().BeTrue();
         }
 
+        public void ClickDFOCVCSolutionsCard()
+        {
+            Driver.FindElement(Objects.Pages.Homepage.DFOCVCSolutions).Click();
+        }
+
         public void ClickLoginButton()
         {
             Driver.FindElement(Objects.Pages.Homepage.LoginLogoutLink).Click();

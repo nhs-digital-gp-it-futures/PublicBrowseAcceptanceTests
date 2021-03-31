@@ -34,6 +34,12 @@
             test.Pages.SolutionsList.OpenRandomSolution();
         }
 
+        [Given(@"that a User views a Random Solution")]
+        public void GivenThatAUserViewsARandomSolution()
+        {
+            test.Pages.SolutionsList.OpenRandomSolution();
+        }
+
         [Given(@"that a User views a created Solution")]
         public async Task GivenThatAUserViewsACreatedSolution()
         {
@@ -80,6 +86,12 @@
             var id = test.Pages.ViewASolution.GetSolutionId();
             test.Solution = await new Solution { SolutionId = id }.RetrieveAsync(test.ConnectionString);
             test.CatalogueItem = await new CatalogueItem { CatalogueItemId = id }.RetrieveAsync(test.ConnectionString);
+        }
+
+        [Then(@"Framework is '(.*)'")]
+        public void ThenFrameworkIs(string framework)
+        {
+            test.Pages.ViewASolution.GetFrameworks().Should().Contain(framework);
         }
 
         [Then(@"the page will contain Supplier Name")]

@@ -9,6 +9,8 @@
 
         public static By PageTitle => By.TagName("h1");
 
-        public static By GeneralPageTitle => CustomBy.DataTestId("general-page-title");
+        public static By GeneralPageTitle => CustomBy.DataTestId("general-description", "h1");
+
+        public static By GoBackLink => By.ClassName("nhsuk-back-link__link");
     }
 }

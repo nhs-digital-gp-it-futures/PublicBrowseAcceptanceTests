@@ -14,5 +14,7 @@
         public static By GuidanceContent => CustomBy.DataTestId("guidance-promo", "a");
 
         public static By LoginLogoutLink => CustomBy.DataTestId("login-logout-component", "a");
+
+        public static By DFOCVCSolutions => CustomBy.DataTestId("dfocvc-card", "a");
     }
 }

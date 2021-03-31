@@ -3,6 +3,7 @@
     using System.Linq;
     using System.Threading.Tasks;
     using FluentAssertions;
+    using NHSDPublicBrowseAcceptanceTests.TestData.Helpers;
     using NHSDPublicBrowseAcceptanceTests.TestData.Solutions;
     using NHSDPublicBrowseAcceptanceTests.TestData.Utils;
     using NHSDPublicBrowseAcceptanceTests.Tests.Utils;
@@ -50,6 +51,15 @@
             actualNumberOfSolutionCards.Should().Be(expectedNumberOfSolutions);
         }
 
+        [Then(@"there is a Card for each (.*) Solution")]
+        public async Task ThenThereIsACardForEachDFOCVCSolutionAsync(string framework)
+        {
+            expectedNumberOfSolutions =
+                await SolutionHelper.RetrieveFrameworkSolutionsCountAsync(framework, test.ConnectionString);
+            var actualNumberOfSolutionCards = test.Pages.SolutionsList.GetSolutionsCount();
+            actualNumberOfSolutionCards.Should().Be(expectedNumberOfSolutions);
+        }
+
         [Then(@"the Card contains the Supplier Name")]
         public void ThenTheCardContainsTheSupplierName()
         {
@@ -87,6 +97,12 @@
                 new { capabilityName = expectedCapabilityName });
             var uiCount = test.Pages.SolutionsList.GetSolutionsWithCapabilityCount(expectedCapabilityName);
             uiCount.Should().Be(dbCount);
+        }
+
+        [When(@"they choose to Go Back")]
+        public void WhenTheyChooseToGoBack()
+        {
+            test.Pages.Common.ClickGoBack();
         }
     }
 }
