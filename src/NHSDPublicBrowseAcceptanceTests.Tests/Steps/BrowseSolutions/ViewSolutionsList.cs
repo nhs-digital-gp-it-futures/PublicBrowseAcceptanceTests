@@ -28,7 +28,6 @@
         [Given(@"that a User has chosen to view a list of all Solutions")]
         public void GivenThatAUserHasChosenToViewAListOfAllSolutions()
         {
-            // instantiated BrowseSolutions for reuse
             BrowseSolutions browse = new(test);
             browse.GivenIBrowseSolutions();
             browse.WhenTheUserChoosesToViewAllSolutions();
@@ -45,10 +44,9 @@
         [Then("no Solutions are excluded on the basis of the Capabilities they deliver")]
         public async Task ThenThereIsACardForEachSolution()
         {
-            expectedNumberOfSolutions =
-                (await SqlExecutor.ExecuteAsync<Solution>(test.ConnectionString, Queries.GetAllSolutions, null)).Count();
+            var expectedSolutionsCount = await SqlExecutor.ExecuteScalarAsync(test.ConnectionString, Queries.GetFrameworkSolutionCount, new { frameworkName = "GP IT Futures" });
             var actualNumberOfSolutionCards = test.Pages.SolutionsList.GetSolutionsCount();
-            actualNumberOfSolutionCards.Should().Be(expectedNumberOfSolutions);
+            actualNumberOfSolutionCards.Should().Be(expectedSolutionsCount);
         }
 
         [Then(@"there is a Card for each (.*) Solution")]
