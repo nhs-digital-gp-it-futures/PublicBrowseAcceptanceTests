@@ -60,7 +60,6 @@
             actualNumberOfSolutionCards.Should().Be(expectedNumberOfSolutions);
         }
 
-
         [Then(@"the Card contains the Supplier Name")]
         public void ThenTheCardContainsTheSupplierName()
         {
@@ -105,6 +104,5 @@
         {
             test.Pages.Common.ClickGoBack();
         }
-
     }
 }

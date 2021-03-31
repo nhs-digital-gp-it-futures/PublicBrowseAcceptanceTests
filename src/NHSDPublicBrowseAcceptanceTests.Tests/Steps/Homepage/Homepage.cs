@@ -43,6 +43,5 @@
         {
             test.Pages.Homepage.ClickDFOCVCSolutionsCard();
         }
-
     }
 }
