@@ -18,7 +18,7 @@
         {
             // Should be a better way to do this that doesn't rely on RegEx matching
             var actual = Driver.Url;
-            var expectedPattern = $@"{url}/solutions/(capabilities-selector.*|foundation)/*";
+            var expectedPattern = $@"{url}/solutions/(capabilities-selector.*|foundation|dfocvc001)/*";
             Regex.Match(actual, expectedPattern).Success.Should()
                 .BeTrue();
         }
@@ -113,6 +113,11 @@
         public string GetSolutionFullDescription()
         {
             return Driver.FindElement(Objects.Pages.ViewSingleSolution.SolutionFullDescription).Text;
+        }
+
+        public string GetFrameworks()
+        {
+            return Driver.FindElement(Objects.Pages.ViewSingleSolution.Frameworks).Text;
         }
 
         public SolutionContactDetails GetSolutionContactDetails(bool getName = true, bool getDepartment = true, bool getPhoneNumber = true, bool getEmail = true)

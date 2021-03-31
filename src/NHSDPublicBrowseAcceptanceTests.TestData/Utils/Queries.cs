@@ -104,6 +104,12 @@
         public const string DeleteCatalogueItem = "DELETE FROM CatalogueItem WHERE CatalogueItemId=@CatalogueItemId";
         public const string GetAllCatalogueItems = "SELECT * FROM [dbo].[CatalogueItem]";
 
+        public const string GetFrameworkSolutionCount = @"SELECT COUNT(*)
+                                                              FROM FrameworkSolutions AS fs
+                                                              INNER JOIN CatalogueItem AS ci ON ci.CatalogueItemId = fs.SolutionId
+                                                              WHERE FrameworkId IN(SELECT TOP(1) Id FROM Framework WHERE ShortName = @frameworkName)
+                                                              AND ci.PublishedStatusId IN (3, 4)";
+
         internal const string GetLastUpdated = "SELECT LastUpdated FROM @table WHERE @whereKey=@whereValue";
     }
 }

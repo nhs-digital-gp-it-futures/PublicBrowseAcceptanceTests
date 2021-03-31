@@ -14,7 +14,7 @@
         }
 
         [Given(@"the User chooses to view the Buying Catalogue Homepage")]
-        [When(@"the Homepage is presented")]
+        [StepDefinition(@"the Homepage is presented")]
         public void GivenTheUserChoosesToViewTheBuyingCatalogueHomepage()
         {
             test.Pages.Homepage.PageDisplayed();
@@ -37,5 +37,12 @@
         {
             test.Pages.Homepage.GuidanceContentControlDisplayed();
         }
+
+        [Given(@"that the user chooses to view DFOCVC solutions")]
+        public void GivenThatTheUserChoosesToViewDFOCVCSolutions()
+        {
+            test.Pages.Homepage.ClickDFOCVCSolutionsCard();
+        }
+
     }
 }

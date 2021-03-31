@@ -1,5 +1,6 @@
 ﻿namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
 {
+    using System;
     using System.IO;
     using System.Net;
     using FluentAssertions;
@@ -51,6 +52,11 @@
         public string GetUrl()
         {
             return Driver.Url;
+        }
+
+        public void ClickGoBack()
+        {
+            Driver.FindElement(Objects.Pages.Common.GoBackLink).Click();
         }
     }
 }

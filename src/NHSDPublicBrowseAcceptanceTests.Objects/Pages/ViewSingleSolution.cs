@@ -51,5 +51,7 @@
         public static By IntegrationsSection => CustomBy.DataTestId("view-integrations");
 
         public static By LearnMoreSection => CustomBy.DataTestId("view-learn-more");
+
+        public static By Frameworks => CustomBy.DataTestId("view-solution-page-frameworks");
     }
 }

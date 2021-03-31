@@ -1,11 +1,14 @@
-﻿Feature: ViewASolution
+﻿Feature: ViewDFOCVCSolutionCard
 	As a Public User
 	I want to view the Solution information
 	So that I can understand what the Solution is
 
+Background: 
+	Given that the user chooses to view DFOCVC solutions
+
 @SmokeTest
 Scenario: Solution Details
-	Given that a User views a Solution 
+	Given that a User views a Random Solution 
 	When the User is viewing the Solution Page
 	Then the page will contain Supplier Name
 	And Solution Name
@@ -16,16 +19,10 @@ Scenario: Solution Details
 	And list of Capabilities
 	And Solution ID
 	And Features
-	And Framework is 'GP IT Futures'
-
-@SmokeTest
-Scenario: Foundation Solution Indicator
-	Given that a User views a Foundation Solution
-	When the User is viewing the Solution Page
-	Then the page will contain an indication that the Solution meets the criteria for a Foundation Solution Set
+	And Framework is 'DFOCVC'
 
 @SmokeTest
 Scenario: Capabilities displayed correctly
-	Given that a User views a Solution	
+	Given that a User views a Random Solution
 	When the User is viewing the Solution Page
 	Then the capabilities listed match the expected capabilities in the database
