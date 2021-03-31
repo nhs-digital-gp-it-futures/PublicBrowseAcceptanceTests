@@ -16,6 +16,8 @@
 
         public void PageDisplayed(string url)
         {
+            Wait.Until(s => s.FindElements(Objects.Pages.ViewSingleSolution.SolutionId).Count == 1);
+
             // Should be a better way to do this that doesn't rely on RegEx matching
             var actual = Driver.Url;
             var expectedPattern = $@"{url}/solutions/(capabilities-selector.*|foundation|dfocvc001)/*";
