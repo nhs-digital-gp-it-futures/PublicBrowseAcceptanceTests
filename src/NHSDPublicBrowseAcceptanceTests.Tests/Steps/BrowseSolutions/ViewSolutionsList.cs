@@ -1,10 +1,8 @@
 ﻿namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
 {
-    using System.Linq;
     using System.Threading.Tasks;
     using FluentAssertions;
     using NHSDPublicBrowseAcceptanceTests.TestData.Helpers;
-    using NHSDPublicBrowseAcceptanceTests.TestData.Solutions;
     using NHSDPublicBrowseAcceptanceTests.TestData.Utils;
     using NHSDPublicBrowseAcceptanceTests.Tests.Utils;
     using TechTalk.SpecFlow;
@@ -13,11 +11,12 @@
     public class ViewSolutionsList
     {
         private readonly UITest test;
-        private int expectedNumberOfSolutions;
+        private readonly ScenarioContext context;
 
-        public ViewSolutionsList(UITest test)
+        public ViewSolutionsList(UITest test, ScenarioContext context)
         {
             this.test = test;
+            this.context = context;
         }
 
         [When("Solutions are presented")]
@@ -45,6 +44,7 @@
         public async Task ThenThereIsACardForEachSolution()
         {
             var expectedSolutionsCount = await SqlExecutor.ExecuteScalarAsync(test.ConnectionString, Queries.GetFrameworkSolutionCount, new { frameworkName = "GP IT Futures" });
+            context.Add(ContextKeys.ExpectedNumberSolutions, expectedSolutionsCount);
             var actualNumberOfSolutionCards = test.Pages.SolutionsList.GetSolutionsCount();
             actualNumberOfSolutionCards.Should().Be(expectedSolutionsCount);
         }
@@ -52,8 +52,9 @@
         [Then(@"there is a Card for each (.*) Solution")]
         public async Task ThenThereIsACardForEachDFOCVCSolutionAsync(string framework)
         {
-            expectedNumberOfSolutions =
+            var expectedNumberOfSolutions =
                 await SolutionHelper.RetrieveFrameworkSolutionsCountAsync(framework, test.ConnectionString);
+            context.Add(ContextKeys.ExpectedNumberSolutions, expectedNumberOfSolutions);
             var actualNumberOfSolutionCards = test.Pages.SolutionsList.GetSolutionsCount();
             actualNumberOfSolutionCards.Should().Be(expectedNumberOfSolutions);
         }
@@ -62,28 +63,28 @@
         public void ThenTheCardContainsTheSupplierName()
         {
             var actualNumberOfSupplierNames = test.Pages.SolutionsList.GetSolutionSupplierNameCount();
-            actualNumberOfSupplierNames.Should().Be(expectedNumberOfSolutions);
+            actualNumberOfSupplierNames.Should().Be(context.Get<int>(ContextKeys.ExpectedNumberSolutions));
         }
 
         [Then(@"the Solution Name")]
         public void ThenTheSolutionName()
         {
             var actualNumberOfSolutionNames = test.Pages.SolutionsList.GetSolutionNameCount();
-            actualNumberOfSolutionNames.Should().Be(expectedNumberOfSolutions);
+            actualNumberOfSolutionNames.Should().Be(context.Get<int>(ContextKeys.ExpectedNumberSolutions));
         }
 
         [Then(@"the Solution Summary Description")]
         public void ThenTheSolutionSummaryDescription()
         {
             var actualNumberOfSolutionSummaries = test.Pages.SolutionsList.GetSolutionSummaryCount();
-            actualNumberOfSolutionSummaries.Should().Be(expectedNumberOfSolutions);
+            actualNumberOfSolutionSummaries.Should().Be(context.Get<int>(ContextKeys.ExpectedNumberSolutions));
         }
 
         [Then(@"the names of the Capabilities provided by the Solution")]
         public void ThenTheNamesOfTheCapabilitiesProvidedByTheSolution()
         {
             var actualNumberOfSolutionCapabilitiesList = test.Pages.SolutionsList.GetSolutionCapabilityListCount();
-            actualNumberOfSolutionCapabilitiesList.Should().Be(expectedNumberOfSolutions);
+            actualNumberOfSolutionCapabilitiesList.Should().Be(context.Get<int>(ContextKeys.ExpectedNumberSolutions));
         }
 
         [Then(@"capability '(.*)' is listed in the solution capabilities")]
