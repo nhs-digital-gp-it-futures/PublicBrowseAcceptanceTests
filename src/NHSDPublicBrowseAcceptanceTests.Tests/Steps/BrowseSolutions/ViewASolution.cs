@@ -30,7 +30,7 @@
         [Given(@"that a User views a Solution")]
         public void GivenThatAUserViewsASolution()
         {
-            new ViewSolutionsList(test).GivenThatAUserHasChosenToViewAListOfAllSolutions();
+            new ViewSolutionsList(test, context).GivenThatAUserHasChosenToViewAListOfAllSolutions();
             test.Pages.SolutionsList.OpenRandomSolution();
         }
 
@@ -59,7 +59,7 @@
             test.ContactDetails.Add(CreateContactDetails.NewContactDetail());
             await test.ContactDetails[0].AddMarketingContactForSolution(test.ConnectionString, test.CatalogueItem.CatalogueItemId);
 
-            new ViewSolutionsList(test).GivenThatAUserHasChosenToViewAListOfAllSolutions();
+            new ViewSolutionsList(test, context).GivenThatAUserHasChosenToViewAListOfAllSolutions();
             var oldDate = new DateTime(2001, 02, 03);
             await LastUpdatedHelper.UpdateLastUpdated(oldDate, "Solution", "id", test.CatalogueItem.CatalogueItemId, test.ConnectionString);
             await LastUpdatedHelper.UpdateLastUpdated(
