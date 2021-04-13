@@ -16,5 +16,11 @@
         public static By LoginLogoutLink => CustomBy.DataTestId("login-logout-component", "a");
 
         public static By DFOCVCSolutions => CustomBy.DataTestId("dfocvc-card", "a");
+
+        public static By NominateAnOrgControl => CustomBy.DataTestId("proxy-card", "a");
+
+        public static By NominateAnOrgLink => By.CssSelector("[data-test-id$='-nominate']");
+
+        public static By ProxyBackLink => CustomBy.DataTestId("nominate-organisation-page-back-link", "a"); 
     }
 }
