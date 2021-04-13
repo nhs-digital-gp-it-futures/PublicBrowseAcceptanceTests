@@ -47,6 +47,11 @@
             Driver.FindElement(Objects.Pages.Homepage.GuidanceContent).Displayed.Should().BeTrue();
         }
 
+        public void NominateAnOrgControlDisplayed()
+        {
+            Driver.FindElement(Objects.Pages.Homepage.NominateAnOrgControl).Displayed.Should().BeTrue();
+        }
+
         public void ClickDFOCVCSolutionsCard()
         {
             Driver.FindElement(Objects.Pages.Homepage.DFOCVCSolutions).Click();
@@ -57,11 +62,32 @@
             Driver.FindElement(Objects.Pages.Homepage.LoginLogoutLink).Click();
         }
 
+        public void ClickNominateOrg()
+        {
+            Driver.FindElement(Objects.Pages.Homepage.NominateAnOrgControl).Click();
+        }
+
         public string LoginLogoutLinkText()
         {
             Wait.Until(s => s.FindElement(Objects.Pages.Homepage.LoginLogoutLink).Displayed);
             return Driver.FindElement(Objects.Pages.Homepage.LoginLogoutLink).Text;
         }
+
+        public void ProxyInfoPageDisplayed()
+        {
+            Driver.FindElement(Objects.Pages.Common.PageTitle).Text.Should().ContainEquivalentOf("Nominate an organisation");
+        }
+
+        public void NominateAnOrgLink()
+        {
+            Driver.FindElement(By.LinkText("Nominate an organisation")).Displayed.Should().BeTrue();
+        }
+
+        public void ClickBackLink()
+        {
+            Driver.FindElement(Objects.Pages.Homepage.ProxyBackLink).Click();
+        }
+
 
         public void LogOut()
         {
@@ -73,6 +99,11 @@
             {
                 throw new WebDriverException("Log out text incorrect");
             }
+        }
+
+        public void ProcurementHubLink()
+        {
+            Driver.FindElement(By.LinkText("National Commercial and Procurement Hub")).Displayed.Should().BeTrue();
         }
     }
 }
