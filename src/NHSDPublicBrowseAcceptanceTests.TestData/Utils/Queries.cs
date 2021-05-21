@@ -55,7 +55,7 @@
              AND sc.CapabilityId = (SELECT c.Id FROM Capability AS c WHERE c.[Name] = @capabilityName);";
 
         public const string GetCapabilityById = "SELECT * FROM Capability WHERE Id=@Id;";
-        public const string GetAllCapabilities = "SELECT * FROM Capability;";
+        public const string GetAllCapabilities = "SELECT * FROM Capability WHERE Id IN (SELECT CapabilityId FROM dbo.FrameworkCapabilities WHERE FrameworkId = 'NHSDGP001') AND CategoryId = 1;";
 
         public const string GetAllEpicsByCapabilityId =
             "SELECT e.Id,e.Name,e.CapabilityId,c.Name AS Level FROM Epic AS e INNER JOIN CompliancyLevel AS c ON e.CompliancyLevelId = c.Id WHERE e.CapabilityId=@Id;";
@@ -104,12 +104,25 @@
         public const string DeleteCatalogueItem = "DELETE FROM CatalogueItem WHERE CatalogueItemId=@CatalogueItemId;";
         public const string GetAllCatalogueItems = "SELECT * FROM [dbo].[CatalogueItem];";
 
-        public const string GetFrameworkSolutionCount = @"SELECT COUNT(*)
-                                                              FROM FrameworkSolutions AS fs
-                                                              INNER JOIN CatalogueItem AS ci ON ci.CatalogueItemId = fs.SolutionId
-                                                              WHERE FrameworkId IN(SELECT TOP(1) Id FROM Framework WHERE ShortName = @frameworkName)
-                                                              AND ci.PublishedStatusId IN (3, 4);";
+        public const string GetFrameworkSolutionCount = @"SELECT DISTINCT 
+                                                        ci.CatalogueItemId,
+                                                        Count(sc.CapabilityId) AS Capabilities
+                                                    FROM dbo.CatalogueItem AS ci
+                                                        INNER JOIN dbo.Solution AS sol
+                                                                ON sol.Id = ci.CatalogueItemId
+                                                        INNER JOIN dbo.Supplier AS sup
+                                                                ON sup.Id = ci.SupplierId
+                                                        INNER JOIN dbo.PublicationStatus AS ps
+                                                                ON ps.Id = ci.PublishedStatusId
+                                                        INNER JOIN dbo.FrameworkSolutions AS fs
+                                                                ON sol.Id = fs.SolutionId   
+                                                        INNER JOIN dbo.SolutionCapability AS sc
+                                                                ON sol.Id = sc.SolutionId                          
+                                                    WHERE ps.[Name] = 'Published'
+                                                    AND fs.FrameworkId = ISNULL(@frameworkId, fs.FrameworkId)
+                                                    GROUP BY ci.CatalogueItemId";
 
         internal const string GetLastUpdated = "SELECT LastUpdated FROM @table WHERE @whereKey=@whereValue;";
+        internal const string GetFrameworkId = "SELECT Id FROM Framework WHERE ShortName = @frameworkName;";
     }
 }

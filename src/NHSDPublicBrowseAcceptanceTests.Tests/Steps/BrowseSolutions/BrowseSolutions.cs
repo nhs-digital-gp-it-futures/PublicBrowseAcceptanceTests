@@ -60,7 +60,7 @@
         [Then(@"all Solutions are included in the results")]
         public async Task ThenAllSolutionsAreIncludedInTheResults()
         {
-            var frameworkSolutionCount = await SolutionHelper.RetrieveFrameworkSolutionsCountAsync("GP IT Futures", test.ConnectionString);
+            var frameworkSolutionCount = await SolutionHelper.RetrieveFrameworkSolutionsCountAsync("NHSDGP001", test.ConnectionString);
 
             var totalNumberOfSolutionsOnUi = test.Pages.SolutionsList.GetSolutionsCount();
             totalNumberOfSolutionsOnUi.Should().Be(frameworkSolutionCount);

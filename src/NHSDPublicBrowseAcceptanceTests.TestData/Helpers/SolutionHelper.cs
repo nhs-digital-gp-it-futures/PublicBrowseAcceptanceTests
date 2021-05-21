@@ -15,11 +15,13 @@
             return (await SqlExecutor.ExecuteAsync<Solution>(connectionString, query, null)).Select(s => s.Id);
         }
 
-        public static async Task<int> RetrieveFrameworkSolutionsCountAsync(string frameworkName, string connectionString)
+        public static async Task<int> RetrieveFrameworkSolutionsCountAsync(string frameworkId, string connectionString)
         {
             var query = Queries.GetFrameworkSolutionCount;
 
-            return await SqlExecutor.ExecuteScalarAsync(connectionString, query, new { frameworkName });
+            var solutions = await SqlExecutor.ExecuteAsync<SolutionCapability>(connectionString, query, new { frameworkId });
+
+            return solutions.Count();
         }
     }
 }
