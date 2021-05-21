@@ -1,5 +1,6 @@
 ﻿namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.BrowseSolutions
 {
+    using System.Linq;
     using System.Threading.Tasks;
     using FluentAssertions;
     using NHSDPublicBrowseAcceptanceTests.TestData.Helpers;
@@ -43,7 +44,7 @@
         [Then("no Solutions are excluded on the basis of the Capabilities they deliver")]
         public async Task ThenThereIsACardForEachSolution()
         {
-            var expectedSolutionsCount = await SqlExecutor.ExecuteScalarAsync(test.ConnectionString, Queries.GetFrameworkSolutionCount, new { frameworkName = "GP IT Futures" });
+            var expectedSolutionsCount = await SolutionHelper.RetrieveFrameworkSolutionsCountAsync("NHSDGP001", test.ConnectionString);
             context.Add(ContextKeys.ExpectedNumberSolutions, expectedSolutionsCount);
             var actualNumberOfSolutionCards = test.Pages.SolutionsList.GetSolutionsCount();
             actualNumberOfSolutionCards.Should().Be(expectedSolutionsCount);
@@ -52,8 +53,10 @@
         [Then(@"there is a Card for each (.*) Solution")]
         public async Task ThenThereIsACardForEachDFOCVCSolutionAsync(string framework)
         {
+            var frameworkId = await FrameworkHelper.GetFrameworkIdAsync(framework, test.ConnectionString);
+
             var expectedNumberOfSolutions =
-                await SolutionHelper.RetrieveFrameworkSolutionsCountAsync(framework, test.ConnectionString);
+                await SolutionHelper.RetrieveFrameworkSolutionsCountAsync(frameworkId, test.ConnectionString);
             context.Add(ContextKeys.ExpectedNumberSolutions, expectedNumberOfSolutions);
             var actualNumberOfSolutionCards = test.Pages.SolutionsList.GetSolutionsCount();
             actualNumberOfSolutionCards.Should().Be(expectedNumberOfSolutions);
