@@ -35,13 +35,3 @@ Scenario: Homepage - Privacy policy and cookies link on banner
     Given the Privacy policy and cookies banner is displayed
     When the User chooses to select the Privacy policy and cookies link from the banner
     Then the Privacy policy and cookies page is presented 
-
-    @ignore - help needed for timescale step
-Scenario: Homepage -  Timescale elapsed
-    Given a User has previously visited the Buying Catalogue
-    And the Privacy policy and cookies banner has been previously dismissed
-    Given a timecsale has elapsed since a User chose to dismiss the Privacy policy and cookie banner
-    When they visit the Buying Catalogue 
-    Then the Privacy policy and cookie banner is displayed on a page
-    And it can be dismissed by the User
-#timescale = 1 year

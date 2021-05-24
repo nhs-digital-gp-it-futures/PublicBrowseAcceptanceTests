@@ -157,15 +157,5 @@
             test.Pages.Homepage.PrivacyAndCookiesPageDisplayed();
         }
 
-        // [Given(@"a timecsale has elapsed since a User chose to dismiss the Privacy policy and cookie banner")]
-        // public void GivenATimecsaleHasElapsedSinceAUserChoseToDismissThePrivacyPolicyAndCookieBanner()
-        // {
-        // var currentTime = System.DateTime.Now;
-        // var oneYear = currentTime.AddDays(370);
-
-        // inject last visit date of page to equal "oneYear"
-        // not sure where visit day is stored inpage or data base
-        // please assist
-        // }
     }
 }
