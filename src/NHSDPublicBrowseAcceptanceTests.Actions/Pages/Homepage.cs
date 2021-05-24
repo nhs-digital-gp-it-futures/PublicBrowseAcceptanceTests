@@ -1,6 +1,7 @@
 ﻿namespace NHSDPublicBrowseAcceptanceTests.Actions.Pages
 {
     using System;
+    using System.Linq;
     using FluentAssertions;
     using OpenQA.Selenium;
 
@@ -88,7 +89,6 @@
             Driver.FindElement(Objects.Pages.Homepage.ProxyBackLink).Click();
         }
 
-
         public void LogOut()
         {
             if (LoginLogoutLinkText().Equals("Log out", StringComparison.OrdinalIgnoreCase))
@@ -104,6 +104,41 @@
         public void ProcurementHubLink()
         {
             Driver.FindElement(By.LinkText("National Commercial and Procurement Hub")).Displayed.Should().BeTrue();
+        }
+
+        public void CookieBannerIsDisplayed()
+        {
+            Wait.Until(s => s.FindElements(Objects.Pages.Homepage.CookieBanner).Count == 1);
+        }
+
+        public void CookieBannerIsNotDisplayed()
+        {
+            Wait.Until(s => s.FindElements(Objects.Pages.Homepage.CookieBanner).Count == 0);
+        }
+
+        public void ClickCookieButton()
+        {
+            Driver.FindElement(Objects.Pages.Homepage.CookieButton).Click();
+        }
+
+        public void CookieButtonIsDisplayed()
+        {
+            Wait.Until(s => s.FindElements(Objects.Pages.Homepage.CookieButton).Count == 1);
+        }
+
+        public void WaitForCookieButtonNotToBeDisplayed()
+        {
+            Wait.Until(s => s.FindElements(Objects.Pages.Homepage.CookieButton).Count == 0);
+        }
+
+        public void ClickCookieLink()
+        {
+            Driver.FindElement(By.LinkText("cookies and privacy policy")).Click();
+        }
+
+        public void PrivacyAndCookiesPageDisplayed()
+        {
+            Driver.FindElement(Objects.Pages.Homepage.PrivacyAndCookiesPage).Displayed.Should().BeTrue();
         }
     }
 }

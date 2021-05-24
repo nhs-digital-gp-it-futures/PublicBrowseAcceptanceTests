@@ -1,5 +1,6 @@
 ﻿namespace NHSDPublicBrowseAcceptanceTests.Tests.Steps.Homepage
 {
+    using FluentAssertions;
     using NHSDPublicBrowseAcceptanceTests.Tests.Utils;
     using TechTalk.SpecFlow;
 
@@ -13,6 +14,8 @@
             this.test = test;
         }
 
+        [StepDefinition(@"they visit the Buying Catalogue")]
+        [Given(@"that the User is visiting the Buying Catalogue for the first time")]
         [StepDefinition(@"the Buying Catalogue homepage is presented")]
         [Given(@"that the user is on the Buying Catalogue Homepage")]
         [StepDefinition(@"the user navigates to the Buying Catalogue Homepage")]
@@ -53,7 +56,7 @@
         {
             test.Pages.Homepage.ClickNominateOrg();
         }
-        
+
         [Then(@"there is a control to nominate an organisation")]
         public void ThenThereIsAControlToNominateAnOrganisation()
         {
@@ -79,7 +82,6 @@
             test.Pages.Homepage.ProcurementHubLink();
         }
 
-
         [When(@"the user chooses to go back")]
         public void WhenTheUserChoosesToGoBack()
         {
@@ -92,6 +94,67 @@
             GivenTheUserChoosesToViewTheBuyingCatalogueHomepage();
             ThenThereIsAControlToNominateAnOrganisation();
             ThenTheProxyBuyerInformationPageIsPresented();
+        }
+
+        [Then(@"the Privacy policy and cookie banner is displayed on a page")]
+        [Then(@"they are informed that there is a Privacy policy and cookies they can visit \(e\.g\. via a banner\)")]
+        public void ThenTheyAreInformedThatThereIsAPrivacyPolicyAndCookiesTheyCanVisitE_G_ViaABanner()
+        {
+            test.Pages.Homepage.CookieBannerIsDisplayed();
+        }
+
+        [Then(@"this can be dismissed by the User")]
+        public void ThenThisCanBeDismissedByTheUser()
+        {
+            test.Pages.Homepage.CookieButtonIsDisplayed();
+        }
+
+        [Given(@"the Privacy policy and cookies banner is displayed")]
+        public void GivenThePrivacyPolicyAndCookiesBannerIsDisplayed()
+        {
+            GivenTheUserChoosesToViewTheBuyingCatalogueHomepage();
+            ThenTheyAreInformedThatThereIsAPrivacyPolicyAndCookiesTheyCanVisitE_G_ViaABanner();
+        }
+
+        [StepDefinition(@"it can be dismissed by the User")]
+        [When(@"the User chooses to dismiss")]
+        public void WhenTheUserChoosesToDismiss()
+        {
+            test.Pages.Homepage.ClickCookieButton();
+        }
+
+        [StepDefinition(@"the Privacy policy and cookies banner has been previously dismissed")]
+        [Then(@"the Privacy policy and cookies banner disappears")]
+        public void ThenThePrivacyPolicyAndCookiesBannerDisappears()
+        {
+            test.Pages.Homepage.CookieBannerIsNotDisplayed();
+        }
+
+        [Given(@"a User has previously visited the Buying Catalogue")]
+        public void GivenAUserHasPreviouslyVisitedTheBuyingCatalogue()
+        {
+            GivenTheUserChoosesToViewTheBuyingCatalogueHomepage();
+            WhenTheUserChoosesToDismiss();
+            test.Pages.Homepage.ClickNominateOrg();
+            test.Driver.Navigate().Back();
+        }
+
+        [When(@"the User chooses to select the Privacy policy and cookies link from the banner")]
+        public void WhenTheUserChoosesToSelectThePrivacyPolicyAndCookiesLinkFromTheBanner()
+        {
+            test.Pages.Homepage.ClickCookieLink();
+        }
+
+        [When(@"a page is presented")]
+        public void WhenAPageIsPresented()
+        {
+            test.Pages.Homepage.ClickNominateOrg();
+        }
+
+        [Then(@"the Privacy policy and cookies page is presented")]
+        public void ThenThePrivacyPolicyAndCookiesPageIsPresented()
+        {
+            test.Pages.Homepage.PrivacyAndCookiesPageDisplayed();
         }
 
     }

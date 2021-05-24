@@ -21,6 +21,12 @@
 
         public static By NominateAnOrgLink => By.CssSelector("[data-test-id$='-nominate']");
 
-        public static By ProxyBackLink => CustomBy.DataTestId("nominate-organisation-page-back-link", "a"); 
+        public static By ProxyBackLink => CustomBy.DataTestId("nominate-organisation-page-back-link", "a");
+
+        public static By CookieBanner => CustomBy.DataTestId("cookie-banner");
+
+        public static By CookieButton => CustomBy.DataTestId("cookie-dismiss", "a");
+
+        public static By PrivacyAndCookiesPage => CustomBy.DataTestId("main-content");
     }
 }
